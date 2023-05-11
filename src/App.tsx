@@ -1,18 +1,18 @@
-import CiinLogo from './assets/ciin-logo.png'
-
-import './App.css'
+import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import Layout from "./components/Layout";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
-
   return (
     <>
-      <div>
-        <div>
-          <img src={CiinLogo} className="logo" alt="Ciin logo" />
-        </div>
-      </div>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Dashboard />} />
+        </Route>
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
