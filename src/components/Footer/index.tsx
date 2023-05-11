@@ -5,31 +5,26 @@ import ContexLogo from "../../assets/context-logo.png";
 
 const Footer: React.FC = () => {
   return (
-    <Flex
-      justify="space-between"
-      p="16px 30px"
-      border="1px solid red"
-      bg="#063768"
-     minWidth="900px"
-      height="150px"
-    >
-      <Flex justify="center" border="1px solid green">
-        {/* LHS */}
-        <Flex direction="column" border="1px solid yellow">
-          <Flex align="center" alignItems="center" mb="32px">
+    <Flex justify="center" p="22px 10px" bg="blue.700" height="150px">
+      <Flex width="70%">
+        {/* LEFT SIDE */}
+        <Flex
+          width="60%"
+          flexWrap="wrap"
+          direction="column"
+          justify="space-between"
+        >
+          <Flex justify="space-between">
             <Box
-              pr={4}
               color="#FFFFFF"
               fontWeight={700}
               fontSize="12px"
               lineHeight="22px"
-              width="70px"
               cursor="pointer"
             >
               <Text>Home</Text>
             </Box>
             <Box
-              pr={4}
               color="#FFFFFF"
               fontWeight={700}
               fontSize="12px"
@@ -39,9 +34,7 @@ const Footer: React.FC = () => {
               <Text>Publications</Text>
             </Box>
             <Flex
-              alignItems="center"
-              pr={2}
-              p="10px"
+              align="center"
               color="#FFFFFF"
               fontWeight={700}
               fontSize="12px"
@@ -52,9 +45,7 @@ const Footer: React.FC = () => {
               <Icon as={NavArrowDown} />
             </Flex>
             <Flex
-              alignItems="center"
-              pr={2}
-              p="10px"
+              align="center"
               color="#FFFFFF"
               fontWeight={700}
               fontSize="12px"
@@ -65,55 +56,44 @@ const Footer: React.FC = () => {
               <Icon as={NavArrowDown} />
             </Flex>
             <Flex
-              alignItems="center"
-              pr={2}
-              p="10px"
+              align="center"
               color="#FFFFFF"
               fontWeight={700}
               fontSize="12px"
               lineHeight="22px"
               cursor="pointer"
             >
-              <Text mr={1}>Management</Text>
+              <Text pr={1}>Management</Text>
               <Icon as={NavArrowDown} />
             </Flex>
             <Flex
-              alignItems="center"
-              mr={1}
-              p="10px"
+              align="center"
               color="#FFFFFF"
               fontWeight={700}
               fontSize="12px"
               lineHeight="22px"
               cursor="pointer"
             >
-              <Text>
-                Data export
-              </Text>
+              <Text pr={1}>Data export</Text>
               <Icon as={NavArrowDown} />
             </Flex>
             <Box
               alignItems="center"
-              mr={2}
-              p="10px"
               color="#FFFFFF"
               fontWeight={700}
               fontSize="12px"
               lineHeight="22px"
               cursor="pointer"
-              width="80px"
             >
               <Text>Contact us</Text>
             </Box>
           </Flex>
-          <Flex position="relative" left="-35px">
+          <Flex justify="space-between" position="relative" left="-50px">
             <Text
-              mr={4}
               color="#FFFFFF"
               fontWeight={700}
               fontSize="10px"
               lineHeight="22px"
-              width="220px"
               textTransform="uppercase"
             >
               Copyright © 2022 Contex Group Inc.
@@ -123,7 +103,6 @@ const Footer: React.FC = () => {
               fontWeight={700}
               fontSize="10px"
               lineHeight="22px"
-              width="110px"
               textTransform="uppercase"
               cursor="pointer"
             >
@@ -134,14 +113,12 @@ const Footer: React.FC = () => {
               fontWeight={700}
               fontSize="10px"
               lineHeight="22px"
-              width="110px"
               textTransform="uppercase"
               cursor="pointer"
             >
               Privacy
             </Text>
             <Text
-            ml={4}
               color="#FFFFFF"
               fontWeight={700}
               fontSize="10px"
@@ -153,21 +130,22 @@ const Footer: React.FC = () => {
             </Text>
           </Flex>
         </Flex>
-        {/* FHS */}
-        <Flex direction="column" align="flex-end" position="relative" left="50px" top="10px" border="1px solid yellow">
-            <Image pb={4} width="164.76px" height="40px" src={ContexLogo} cursor="pointer" />
-            <Text
-            ml={4}
-              color="#FFFFFF"
-              fontWeight={700}
-              fontSize="10px"
-              lineHeight="14px"
-              width="140px"
-              textAlign="right"
-              textTransform="uppercase"
-            >
-              Contex Group Inc. 1100 René-Lévesque Blivd W. Montréal, QC H3B 4X9 (514) 392-2009
-            </Text>
+        {/* RIGHT SIDE */}
+        <Flex flexGrow={1} direction="column" align="flex-end">
+          <Image pb={4} width="164.76px" height="40px" src={ContexLogo} />
+          <Text
+            color="#FFFFFF"
+            fontWeight={700}
+            fontSize="10px"
+            lineHeight="16px"
+            textAlign="right"
+            textTransform="uppercase"
+          >
+            Contex Group Inc.
+            <br /> 1100 René-Lévesque Blivd W.
+            <br /> Montréal, QC H3B 4X9
+            <br /> (514) 392-2009
+          </Text>
         </Flex>
       </Flex>
     </Flex>
