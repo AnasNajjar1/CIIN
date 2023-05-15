@@ -61,17 +61,15 @@ const Footer: React.FC = () => {
         <Flex flexGrow={1} direction="column" align="flex-end">
           <Image
             pb={4}
-            width="150px"
-            height="45px"
             src={ContexLogo}
-            alt="contex logo"
+            alt="contex-logo"
           />
-          <Text sx={rightTextStyle}>
-            Contex Group Inc.
-            <br /> 1100 René-Lévesque Blivd W.
-            <br /> Montréal, QC H3B 4X9
-            <br /> (514) 392-2009
-          </Text>
+          <Box>
+            <Text sx={rightTextStyle}> Contex Group Inc.</Text>
+            <Text sx={rightTextStyle}>1100 René-Lévesque Blivd W.</Text>
+            <Text sx={rightTextStyle}>Montréal, QC H3B 4X9</Text>
+            <Text sx={rightTextStyle}>(514) 392-2009</Text>
+          </Box>
         </Flex>
       </Flex>
     </Flex>

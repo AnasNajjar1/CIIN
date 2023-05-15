@@ -25,7 +25,7 @@ Your app is ready to be deployed!
 
 ### `npm run lint`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+ Lets you execute linting from the terminal.
 
 ## Installation process
 
@@ -36,6 +36,8 @@ If you aren't satisfied with the build tool and configuration choices, you can `
 ## Dependencies
 
 - [React router dom](https://reactrouter.com/en/main) library to manage routing for React web applications
+- [Iconoir](https://iconoir.com/) library to manage icons for React web applications
+
 
 ## Directory Structure
 
@@ -49,15 +51,16 @@ If you aren't satisfied with the build tool and configuration choices, you can `
         ├── store
         ├── utils
         ├── hooks
-        ├── App.js
-        └── index.js
+        ├── store
+        ├── App.tsx
+        └── main.tsx
 
-- The assets folder contains all of the project's static files, such as your logo, fonts, images, and favicons.
+- The assets folder contains all of the project's static files, such as your logo, fonts and images.
 - Components folder contains a bit collection of UI codes such as buttons, forms, avatars, and so on.
 - The pages folder contains all your React application's web pages.
 - Services folder contains code that allows you to interact with external API resources.
 - The utils folder contains reusable function snippets for performing quick tasks like text truncation or down casing.
 - Hooks folder contains codes and logic that can be reused across multiple components.
-- The store folder houses your state management files, such as Redux, which are used to make certain functions and variables available throughout your application.
-- App.js The main component of your React application. This file connects all components and views.
-- Index.js file is the React application's entry point. It is responsible for bootstrapping the React library and mounting it on the root element.
+- The store folder houses your state management files, such as Redux,Contexts which are used to make certain functions and variables available throughout your application.
+- App.tsx The main component of your React application. This file connects all components and views.
+- main.tsx file is the React application's entry point. It is responsible for bootstrapping the React library and mounting it on the root element.
