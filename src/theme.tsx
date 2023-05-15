@@ -28,4 +28,9 @@ const colors = {
   },
 };
 
-export const theme = extendTheme({ colors });
+const fonts = {
+    heading: `Inter`,
+    body: `Lato`,
+};
+
+export const theme = extendTheme({ colors, fonts });
