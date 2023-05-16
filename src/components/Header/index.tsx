@@ -1,7 +1,8 @@
-import { Button, Flex, Icon, Image, Text } from "@chakra-ui/react";
+import { Flex, Image, Text } from "@chakra-ui/react";
+import Button from "../Button";
 import CiinLogo from "../../assets/ciin-logo.png";
-import { ArrowRight } from "iconoir-react";
 import React from "react";
+import { ArrowRight } from "iconoir-react";
 import { textContainerStyle, textStyle } from "./styles";
 
 const Header: React.FC = () => {
@@ -23,14 +24,14 @@ const Header: React.FC = () => {
           </Flex>
         </Flex>
         <Flex direction="column" align="flex-end" flexGrow={1}>
-          <Button variant="outline" size="sm" onClick={() => {}}>
-            <Flex align="center">
-              <Text pr={2} fontFamily="body">
-                Login
-              </Text>
-              <Icon as={ArrowRight} />
-            </Flex>
-          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            text="Login"
+            direction="right"
+            icon={ArrowRight}
+            click={() => {}}
+          />
         </Flex>
       </Flex>
     </Flex>
