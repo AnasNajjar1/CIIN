@@ -7,6 +7,7 @@ import SidebarIconsMenu from "../SidebarIconsMenu";
 import SidebarMenu from "../SidebarMenu";
 import Footer from "../Footer";
 import { appBackgroundColor } from "../../utils/constants.ts";
+import Header from "../Header/index.tsx";
 
 export const Layout = () => {
   const [isOpenSideMenu, setIsOpenSideMenu] = useState<boolean>(false);
@@ -17,6 +18,9 @@ export const Layout = () => {
 
   return (
     <Flex h="100%">
+      <Box position="fixed" top={0} w="100%">
+        <Header />
+      </Box>
       {isOpenSideMenu ? (
         <motion.aside
           initial={{ width: 0, height: "calc(100% - 150px)" }}
