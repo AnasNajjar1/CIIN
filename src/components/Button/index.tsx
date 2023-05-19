@@ -5,7 +5,7 @@ type ButtonProps = {
   variant: string;
   size: string;
   text: string;
-  click: React.MouseEventHandler<HTMLButtonElement>;
+  click: any;
   direction: string;
   icon: any;
 };
