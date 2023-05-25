@@ -8,6 +8,7 @@ import SidebarMenu from "../SidebarMenu";
 import Footer from "../Footer";
 import { appBackgroundColor } from "../../utils/constants.ts";
 import Header from "../Header/index.tsx";
+import HomePage from "../HomePage/index.tsx";
 
 export const Layout = () => {
   const location = useLocation();
@@ -63,7 +64,10 @@ export const Layout = () => {
       >
         <Outlet />
       </Box>
-      <Box position="fixed" bottom={0} w="100%">
+      <Box w="100%">
+        <HomePage />
+      </Box>
+      <Box position="fixed" bottom={0} w="100%" zIndex={3}>
         <Footer />
       </Box>
     </Flex>
