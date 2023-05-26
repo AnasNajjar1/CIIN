@@ -19,11 +19,9 @@ import CirIcon from "../../assets/cir_icon.svg";
 import {
   bottomFirstTextStyle,
   bottomSecondTextStyle,
-  cardFirstTextStyle,
-  cardSecondTextStyle,
-  cardThirdTextStyle,
   imageStyle,
 } from "./styles";
+import HomePageCard from "../Card/HomePageCard";
 
 const HomePageSecondSection: React.FC = () => {
   return (
@@ -34,80 +32,52 @@ const HomePageSecondSection: React.FC = () => {
           <Flex>
             <Box mr={4} position="relative">
               <Image sx={imageStyle} src={Bourse} alt="bourse" />
-              <Card>
-                <CardBody>
-                  <Stack padding="10px" spacing={3} alignItems="center">
-                    <Box pt={8}>
-                      <Text sx={cardFirstTextStyle}>Sales</Text>
-                    </Box>
-                    <Box pt={10}>
-                      <Text sx={cardSecondTextStyle}>
-                        Prospect potential clients
-                      </Text>
-                    </Box>
-                    <Box pb={4}>
-                      <Text sx={cardThirdTextStyle}>
-                        We have over 1000 pension plans and
-                        <br /> 800 foundations & endowments listed in
-                        <br /> the database.
-                      </Text>
-                    </Box>
-                  </Stack>
-                </CardBody>
-              </Card>
+              <HomePageCard
+                firstBoxPaddingTop={8}
+                secondBoxPaddingTop={10}
+                thirdBoxPaddingBottom={4}
+                firstText="Sales"
+                secondText="Prospect potential clients"
+                thirdText={[
+                  "We have over 1000 pension plans and ",
+                  <br />,
+                  "800 foundations & endowments listed in ",
+                  <br />,
+                  "the database.",
+                ]}
+              />
             </Box>
             <Box mr={4} position="relative">
               <Image sx={imageStyle} src={Analysis} alt="analysis" />
-              <Card>
-                <CardBody>
-                  <Stack padding="10px" spacing={3} alignItems="center">
-                    <Box pt={8}>
-                      <Text sx={cardFirstTextStyle}>
-                        Competitive
-                        <br /> Intelligence
-                      </Text>
-                    </Box>
-                    <Box pt={1}>
-                      <Text sx={cardSecondTextStyle}>
-                        Analyze your competition
-                      </Text>
-                    </Box>
-                    <Box pb={10}>
-                      <Text sx={cardThirdTextStyle}>
-                        Understand the mandates your
-                        <br /> competitors are currently working on
-                      </Text>
-                    </Box>
-                  </Stack>
-                </CardBody>
-              </Card>
+              <HomePageCard
+                firstBoxPaddingTop={8}
+                secondBoxPaddingTop={1}
+                thirdBoxPaddingBottom={10}
+                firstText={["Competitive ", <br />, "Intelligence"]}
+                secondText="Analyze your competition"
+                thirdText={[
+                  "Understand the mandates your ",
+                  <br />,
+                  "competitors are currently working on",
+                ]}
+              />
             </Box>
             <Box position="relative">
               <Image sx={imageStyle} src={Report} alt="report" />
-              <Card>
-                <CardBody>
-                  <Stack padding="10px" spacing={3} alignItems="center">
-                    <Box pt={8}>
-                      <Text sx={cardFirstTextStyle}>
-                        Market
-                        <br /> Analysis
-                      </Text>
-                    </Box>
-                    <Box pt={1}>
-                      <Text sx={cardSecondTextStyle}>
-                        Understand the canadian market
-                      </Text>
-                    </Box>
-                    <Box pb={4}>
-                      <Text sx={cardThirdTextStyle}>
-                        Dig deep into the pension and foundation
-                        <br /> & endowment markets with granular
-                        <br /> analytics
-                      </Text>
-                    </Box>
-                  </Stack>
-                </CardBody>
-              </Card>
+              <HomePageCard
+                firstBoxPaddingTop={8}
+                secondBoxPaddingTop={1}
+                thirdBoxPaddingBottom={4}
+                firstText={["Market ", <br />, "Analysis"]}
+                secondText="Understand the canadian market"
+                thirdText={[
+                  "Dig deep into the pension and foundation ",
+                  <br />,
+                  "& endowment markets with granular ",
+                  <br />,
+                  "analytics",
+                ]}
+              />
             </Box>
           </Flex>
           {/* Bottom Side */}
