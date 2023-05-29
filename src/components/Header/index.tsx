@@ -4,7 +4,7 @@ import CiinLogo from "../../assets/ciin-logo.png";
 import React, { useState } from "react";
 import { ArrowRight } from "iconoir-react";
 import { textContainerStyle, textStyle } from "./styles";
-import AuthModal from "../Modal/AuthModal";
+import AuthModal from "../AuthModal";
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,7 +24,7 @@ const Header: React.FC = () => {
         isOpen={isOpen}
         onClose={closeModal}
         view={view}
-        setView={setView}
+        switchView={(viewType)=>setView(viewType)}
       />
       <Flex justify="center" p="22px 10px" bg="white" height="90px">
         <Flex width="70%" justify="space-between">

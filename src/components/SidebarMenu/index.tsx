@@ -14,35 +14,54 @@ interface SidebarMenuProps {
 export const SidebarMenu = ({ handleClickSwap }: SidebarMenuProps) => {
   return (
     <Box bg="white" h="100%" w="100%" sx={sidebarContainer}>
-      <Flex pb={15}>
+      <Flex>
         <Box p="20px 40px 20px 20px">
           <Image src={CiinBlueIcon} alt="ciin-blue-icon" />
         </Box>
         <Box>
           <Box p="10px 0px">
-            <Image src={SwapIcon} alt="swap-icon" cursor="pointer" onClick={handleClickSwap} />
+            <Image
+              src={SwapIcon}
+              alt="swap-icon"
+              cursor="pointer"
+              onClick={handleClickSwap}
+            />
           </Box>
           <Box p="15px 0px">
             <Image src={SearchIcon} cursor="pointer" alt="search-icon" />
           </Box>
         </Box>
       </Flex>
+      <Box>
+        {sidebarMenuList.map((el: sidebarMenuListType, index: number) => (
+          <Box sx={sidebarIconContainer} key={index}>
+            <Flex cursor="pointer">
+              <Image src={el.icon} alt={`${el.icon}-icon`} pr="11px" />
+              <Heading
+                as="h4"
+                fontSize={16}
+                fontWeight={600}
+                pt="2px"
+                color="blue.600"
+              >
+                {el.title}
+              </Heading>
+            </Flex>
+          </Box>
+        ))}
+      </Box>
 
-      {sidebarMenuList.map((el: sidebarMenuListType, index: number) => (
-        <Box sx={sidebarIconContainer} key={index}>
-          <Flex cursor="pointer">
-            <Image src={el.icon} alt={`${el.icon}-icon`} pr="11px" />
-            <Heading as="h4" fontSize={16} fontWeight={600} pt="2px" color="blue.600">
-              {el.title}
-            </Heading>
-          </Flex>
-        </Box>
-      ))}
-      <Box pt={20}>
+      <Box pb="20px">
         <Box sx={sidebarIconContainer}>
           <Flex cursor="pointer">
             <Image src={LogOutIcon} alt="LogOutIcon-icon" pr="11px" />
-            <Heading as="h4" fontSize={16} fontWeight={600} pt="2px" color="blue.600">
+            <Heading
+              as="h4"
+              fontSize={16}
+              fontWeight={600}
+              pt="2px"
+              color="blue.600"
+            >
               Log out
             </Heading>
           </Flex>

@@ -1,71 +1,100 @@
-import { Flex, Input, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import React from "react";
-import { inputStyle, requiredStarTextStyle, textHeaderStyle } from "./styles";
+import Button from "../Button";
+import { ArrowRight } from "iconoir-react";
+import { textFooterStyle } from "../AuthModal/styles.tsx";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { signUpSchema } from "../../schemas/signUp/signUp.ts";
+import InputField from "../Forms/InputField.tsx";
 
 type SignUpProps = {
-  onChange: any;
+  switchLogin: () => void;
 };
 
-const SignUp: React.FC<SignUpProps> = ({ onChange }) => {
+const SignUp: React.FC<SignUpProps> = ({ switchLogin }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(signUpSchema),
+  });
+
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
   return (
     <>
-      <Flex direction="column" mb={6}>
-        <Flex>
-          <Text sx={textHeaderStyle}>Name</Text>
-          <Text sx={requiredStarTextStyle}>*</Text>
-        </Flex>
-        <Input
-          sx={inputStyle}
-          required
-          name="name"
-          placeholder="Type"
-          type="text"
-          onChange={onChange}
+      <Box mb={6}>
+        <InputField
+          fieldName="name"
+          label="Name"
+          placeholder="Name"
+          register={register}
+          errors={errors}
         />
-      </Flex>
-      <Flex direction="column" mb={6}>
-        <Text sx={textHeaderStyle}>Title</Text>
-        <Input
-          sx={inputStyle}
-          name="title"
-          placeholder="Type"
-          type="text"
-          onChange={onChange}
+      </Box>
+      <Box mb={6}>
+        <InputField
+          fieldName="title"
+          label="Title"
+          placeholder="Title"
+          register={register}
+          errors={errors}
         />
-      </Flex>
-      <Flex direction="column" mb={6}>
-        <Text sx={textHeaderStyle}>Company</Text>
-        <Input
-          sx={inputStyle}
-          name="company"
-          placeholder="Type"
-          type="text"
-          onChange={onChange}
+      </Box>
+      <Box mb={6}>
+        <InputField
+          fieldName="company"
+          label="Company"
+          placeholder="Company"
+          register={register}
+          errors={errors}
         />
-      </Flex>
-      <Flex direction="column" mb={6}>
-        <Text sx={textHeaderStyle}>Phone</Text>
-        <Input
-          sx={inputStyle}
-          name="phone"
-          placeholder="Type"
+      </Box>
+      <Box mb={6}>
+        <InputField
+          fieldName="phone"
+          label="Phone"
           type="tel"
-          onChange={onChange}
+          placeholder="phone"
+          register={register}
+          errors={errors}
         />
-      </Flex>
-      <Flex direction="column" mb={6}>
-        <Flex>
-          <Text sx={textHeaderStyle}>Email</Text>
-          <Text sx={requiredStarTextStyle}>*</Text>
-        </Flex>
-        <Input
-          sx={inputStyle}
-          required
-          name="email"
-          placeholder="Type"
+      </Box>
+      <Box mb={6}>
+        <InputField
+          fieldName="email"
+          label="Email"
           type="email"
-          onChange={onChange}
+          placeholder="Email"
+          register={register}
+          errors={errors}
         />
+      </Box>
+      <Box pb="20px">
+        <Button
+          variant="solid"
+          size="md"
+          text={"Sign up"}
+          direction="right"
+          icon={ArrowRight}
+          click={handleSubmit(onSubmit)}
+        />
+      </Box>
+      <Flex p="0px 0px 40px 0px">
+        <Text sx={textFooterStyle} color="gray.500" pr={1}>
+          Already have an account?
+        </Text>
+        <Text
+          sx={textFooterStyle}
+          color="#2676C5"
+          textDecoration="underline"
+          onClick={switchLogin}
+        >
+          Login
+        </Text>
       </Flex>
     </>
   );
