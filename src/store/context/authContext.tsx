@@ -2,8 +2,18 @@ import * as React from "react";
 import { useState } from "react";
 
 type AuthUserProviderProps = { children: React.ReactNode };
-
-const AuthUserContext = React.createContext<any | undefined>(undefined);
+interface AuthUser {
+  username: string;
+  isConnected: boolean;
+  token: string;
+}
+interface AuthUserContext {
+  authUser: AuthUser;
+  setAuthUser: React.Dispatch<React.SetStateAction<AuthUser>>;
+}
+const AuthUserContext = React.createContext<AuthUserContext | undefined>(
+  undefined,
+);
 
 function AuthUserProvider({ children }: AuthUserProviderProps) {
   const currentUserStorage = window.localStorage.getItem("currentUser");
@@ -13,7 +23,7 @@ function AuthUserProvider({ children }: AuthUserProviderProps) {
         isConnected: false,
         token: "",
       };
-  const [authUser, setAuthUser] = useState({
+  const [authUser, setAuthUser] = useState<AuthUser>({
     username: "",
     isConnected: currentUser.isConnected,
     token: currentUser.token,
