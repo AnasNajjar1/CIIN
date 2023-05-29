@@ -8,6 +8,20 @@ import DataExportIcon from "../assets/menuIcons/cloud-download.svg";
 import { sidebarMenuListType } from "./constantsTypes.ts";
 
 export const appBackgroundColor = "#F5F5F5";
+export const ROUTES = {
+  DASHBOARD: "dashboard",
+  USER: "user",
+};
+export const QueryConfig = {
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+    },
+  },
+};
+
+export const apiURI = import.meta.env.VITE_API_URI || `http://localhost:8000/`;
 export const sidebarMenuList: sidebarMenuListType[] = [
   {
     icon: DashboardIcon,
