@@ -13,7 +13,7 @@ const DashboardCard = ({ icon, title,children }: DashboardCardProps) => {
     return (
        <Box>
            <Flex pb={3}>
-               <CardIcon icon={icon} color="blue.500" />
+               <CardIcon icon={icon} />
                <Text fontWeight={700} color="blue.800" pt={1} pl={2}>
                    {title}
                </Text>

@@ -18,7 +18,7 @@ export const Layout = () => {
   };
 
   return (
-    <Flex h="100%">
+    <Flex h="100%" flexWrap={"wrap"}>
       {!isHomeView && (
         <Box position="fixed" top={0} w="100%">
           <Header />
@@ -28,7 +28,7 @@ export const Layout = () => {
         <>
           {isOpenSideMenu ? (
             <motion.aside
-              initial={{ width: 0, height: "calc(100% - 150px)" }}
+              initial={{ width: 0 }}
               animate={{
                 width: 320,
               }}
@@ -41,7 +41,7 @@ export const Layout = () => {
             </motion.aside>
           ) : (
             <motion.aside
-              initial={{ width: 0, height: "calc(100% - 150px)" }}
+              initial={{ width: 0 }}
               animate={{
                 width: 80,
               }}
@@ -56,14 +56,10 @@ export const Layout = () => {
         </>
       )}
 
-      <Box
-        h="calc(100% - 150px)"
-        w={isHomeView ? "calc(100% - 80px)" : "100%"}
-        bg={appBackgroundColor}
-      >
+      <Box flex="1" bg={appBackgroundColor}>
         <Outlet />
       </Box>
-      <Box position="fixed" bottom={0} w="100%">
+      <Box mt="auto" w="100%">
         <Footer />
       </Box>
     </Flex>
