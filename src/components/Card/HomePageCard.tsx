@@ -4,7 +4,7 @@ import {
   cardFirstTextStyle,
   cardSecondTextStyle,
   cardThirdTextStyle,
-} from "../HomePageSecondSection/styles";
+} from "../../pages/Home/HomePageSecondSection/styles";
 
 type HomePageCardProps = {
   firstBoxPaddingTop: number;

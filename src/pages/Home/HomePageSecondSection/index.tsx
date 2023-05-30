@@ -1,32 +1,24 @@
-import {
-  Flex,
-  Text,
-  Card,
-  CardBody,
-  Stack,
-  Box,
-  Image,
-} from "@chakra-ui/react";
+import { Flex, Text, Box, Image } from "@chakra-ui/react";
 import { ArrowRight } from "iconoir-react";
-import Button from "../Button";
+import Button from "../../../components/Button";
 import React from "react";
-import Bourse from "../../assets/bourse.svg";
-import Analysis from "../../assets/analysis.svg";
-import Report from "../../assets/report.svg";
-import BenefitsIcon from "../../assets/benefits_icon.svg";
-import AdvantagesIcon from "../../assets/advantages_icon.svg";
-import CirIcon from "../../assets/cir_icon.svg";
+import Bourse from "../../../assets/bourse.svg";
+import Analysis from "../../../assets/analysis.svg";
+import Report from "../../../assets/report.svg";
+import BenefitsIcon from "../../../assets/benefits_icon.svg";
+import AdvantagesIcon from "../../../assets/advantages_icon.svg";
+import CirIcon from "../../../assets/cir_icon.svg";
 import {
   bottomFirstTextStyle,
   bottomSecondTextStyle,
   imageStyle,
 } from "./styles";
-import HomePageCard from "../Card/HomePageCard";
+import HomePageCard from "../../../components/Card/HomePageCard";
 
 const HomePageSecondSection: React.FC = () => {
   return (
     <>
-      <Flex justify="center" padding="80px 0">
+      <Flex justify="center" padding="90px 0px 70px  0px">
         <Flex direction="column">
           {/* Upper Side */}
           <Flex>

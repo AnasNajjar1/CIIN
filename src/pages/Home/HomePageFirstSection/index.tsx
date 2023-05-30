@@ -1,8 +1,8 @@
 import { Flex, Box, Text, Image } from "@chakra-ui/react";
 import { ArrowRight } from "iconoir-react";
 import React from "react";
-import Button from "../Button";
-import InstitutionalAnalysis from "../../assets/institutionalAnalysis.svg";
+import Button from "../../../components/Button";
+import InstitutionalAnalysis from "../../../assets/institutionalAnalysis.svg";
 import { firstTextStyle, secondTextStyle } from "./styles";
 
 const HomePageFirstSection: React.FC = () => {

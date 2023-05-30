@@ -8,7 +8,6 @@ import SidebarMenu from "../SidebarMenu";
 import Footer from "../Footer";
 import { appBackgroundColor } from "../../utils/constants.ts";
 import Header from "../Header/index.tsx";
-import HomePage from "../HomePage/index.tsx";
 
 export const Layout = () => {
   const location = useLocation();
@@ -21,7 +20,7 @@ export const Layout = () => {
   return (
     <Flex h="100%">
       {!isHomeView && (
-        <Box position="fixed" top={0} w="100%">
+        <Box position="fixed" top={0} w="100%" zIndex={3}>
           <Header />
         </Box>
       )}
@@ -60,12 +59,9 @@ export const Layout = () => {
       <Box
         h="calc(100% - 150px)"
         w={isHomeView ? "calc(100% - 80px)" : "100%"}
-        bg={appBackgroundColor}
+        bg={isHomeView ? appBackgroundColor : "white"}
       >
         <Outlet />
-      </Box>
-      <Box w="100%">
-        <HomePage />
       </Box>
       <Box position="fixed" bottom={0} w="100%" zIndex={3}>
         <Footer />
