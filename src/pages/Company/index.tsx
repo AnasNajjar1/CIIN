@@ -14,10 +14,11 @@ import Link from "../../components/Link";
 import DashboardCard from "../../components/DashboardCard";
 import EmailIcon from "../../icons/emailIcon";
 import Tabs from "../../components/Tabs";
+import Contacts from "./contacts";
 
 const Company = () => {
   return (
-    <Box pl="50px" pr="190px" pt="176px">
+    <Box p="176px 190px 50px 50px">
       <HStack spacing="24px" mb="27px">
         <Button
           variant="outline"
@@ -82,7 +83,27 @@ const Company = () => {
           </GridItem>
         </Grid>
       </DashboardCard>
-      <Tabs tabs={{ mt: "40px" }} />
+      <Tabs
+        tabs={{ mt: "40px" }}
+        items={[
+          {
+            title: "Overview",
+            component: <p>Overview</p>,
+          },
+          {
+            title: "Contacts",
+            component: <Contacts />,
+          },
+          {
+            title: "Assets",
+            component: <p>Assets</p>,
+          },
+          {
+            title: "Associates",
+            component: <p>Associates</p>,
+          },
+        ]}
+      />
     </Box>
   );
 };

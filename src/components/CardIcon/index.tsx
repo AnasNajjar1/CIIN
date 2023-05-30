@@ -5,7 +5,7 @@ type CardIconProps = {
   color?: string;
 };
 
-const CardIcon = ({ icon, color = "white" }: CardIconProps) => {
+const CardIcon = ({ icon, color = "blue.500" }: CardIconProps) => {
   return (
     <Box
       p="6px 8px"
