@@ -1,4 +1,4 @@
-import { Flex, Image, Text } from "@chakra-ui/react";
+import { Flex, Icon, Image, Text } from "@chakra-ui/react";
 import Button from "../Button";
 import CiinLogo from "../../assets/ciin-logo.png";
 import React, { useState } from "react";
@@ -24,7 +24,7 @@ const Header: React.FC = () => {
         isOpen={isOpen}
         onClose={closeModal}
         view={view}
-        switchView={(viewType)=>setView(viewType)}
+        switchView={(viewType) => setView(viewType)}
       />
       <Flex justify="center" p="22px 10px" bg="white" height="90px">
         <Flex width="70%" justify="space-between">
@@ -46,14 +46,14 @@ const Header: React.FC = () => {
             <Button
               variant="outline"
               size="sm"
-              text="Login"
-              direction="right"
-              icon={ArrowRight}
-              click={() => {
+              rightIcon={<Icon as={ArrowRight} />}
+              onClick={() => {
                 setView("login");
                 openModal();
               }}
-            />
+            >
+              Login
+            </Button>
           </Flex>
         </Flex>
       </Flex>

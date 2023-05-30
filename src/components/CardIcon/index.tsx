@@ -14,6 +14,9 @@ const CardIcon = ({ icon, color = "white" }: CardIconProps) => {
       backgroundColor="white"
       width="32px"
       height="32px"
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
     >
       <Icon as={icon} color={color} />
     </Box>

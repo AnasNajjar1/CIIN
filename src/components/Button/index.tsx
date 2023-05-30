@@ -1,44 +1,14 @@
 import React from "react";
-import { Button as ButtonItem, Flex, Icon, Text } from "@chakra-ui/react";
+import { Button as ButtonChakra, Text } from "@chakra-ui/react";
 
-type ButtonProps = {
-  variant: string;
-  size: string;
-  text: string;
-  click: any;
-  direction: string;
-  icon: any;
-};
-
-const Button: React.FC<ButtonProps> = ({
-  variant,
-  size,
-  text,
-  click,
-  direction,
-  icon,
+const Button: React.FC<React.ComponentProps<typeof ButtonChakra>> = ({
+  children,
+  ...rest
 }) => {
   return (
-    <ButtonItem variant={variant} size={size} onClick={click}>
-      <Flex align="center">
-        {direction === "right" && (
-          <>
-            <Text pr={2} fontFamily="body">
-              {text}
-            </Text>
-            <Icon as={icon} />
-          </>
-        )}
-        {direction === "left" && (
-          <>
-            <Icon as={icon} />
-            <Text pl={2} fontFamily="body">
-              {text}
-            </Text>
-          </>
-        )}
-      </Flex>
-    </ButtonItem>
+    <ButtonChakra display="flex" alignItems="center" {...rest}>
+      <Text fontFamily="body">{children}</Text>
+    </ButtonChakra>
   );
 };
 export default Button;
