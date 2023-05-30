@@ -1,7 +1,7 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
-import { Dashboard, Home } from "./pages";
+import { Company, Dashboard, Home } from "./pages";
 import { AxiosInterceptor } from "./services/request.ts";
 import { ROUTES } from "./utils/constants.ts";
 import { AuthUserProvider } from "./store/context/authContext.tsx";
@@ -22,6 +22,7 @@ function App() {
               >
                 <Route path={`${ROUTES.DASHBOARD}`} element={<Dashboard />} />
                 <Route path={`${ROUTES.USERPROFILE}`} element={<UserProfile />} />
+                <Route path={`${ROUTES.COMPANY}`} element={<Company />} />
               </Route>
             </Route>
           </Routes>

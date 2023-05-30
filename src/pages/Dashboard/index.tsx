@@ -31,9 +31,7 @@ export const Dashboard = () => {
         </Flex>
       </Flex>
       <Box pt={4}>
-        <Text color="blue.800" fontWeight={700} fontSize={32}>
-          Welcome!
-        </Text>
+     <Text textStyle="h3">Welcome!</Text>
       </Box>
       <Box pt={50}>
         <Grid templateColumns="repeat(2, 1fr)" gap={6}>
@@ -57,22 +55,12 @@ export const Dashboard = () => {
                     </Text>
                   </Box>
                   <Box>
-                    <Text
-                      pt="2"
-                      fontWeight={600}
-                      fontSize="14px"
-                      color="blue.800"
-                    >
+                    <Text pt="2" textStyle="sm">
                       Acadian Asset Management LLC
                     </Text>
                   </Box>
                   <Box>
-                    <Text
-                      pt="2"
-                      fontWeight={600}
-                      fontSize="14px"
-                      color="blue.800"
-                    >
+                    <Text pt="2" textStyle="sm">
                       AGF Mangement Limited
                     </Text>
                   </Box>
@@ -84,22 +72,12 @@ export const Dashboard = () => {
             <DashboardCard icon={BookmarkEmpty} title="Favourites">
               <Stack divider={<StackDivider />} spacing="1" height="200px">
                 <Box>
-                  <Text
-                    pt="2"
-                    fontWeight={600}
-                    fontSize="14px"
-                    color="blue.800"
-                  >
+                  <Text pt="2" textStyle="sm">
                     Children’s Aid Society of Toronto
                   </Text>
                 </Box>
                 <Box>
-                  <Text
-                    pt="2"
-                    fontWeight={600}
-                    fontSize="14px"
-                    color="blue.800"
-                  >
+                  <Text pt="2" textStyle="sm">
                     Letko, Brosseau & Associates Inc.
                   </Text>
                 </Box>
@@ -110,32 +88,17 @@ export const Dashboard = () => {
             <DashboardCard icon={EmptyPage} title="Saved reports">
               <Stack spacing="1" height="150px">
                 <Box>
-                  <Text
-                    pt="2"
-                    fontWeight={600}
-                    fontSize="14px"
-                    color="blue.800"
-                  >
+                  <Text pt="2" textStyle="sm">
                     Fondation J. Armand Bombardier
                   </Text>
                 </Box>
                 <Box>
-                  <Text
-                    pt="2"
-                    fontWeight={600}
-                    fontSize="14px"
-                    color="blue.800"
-                  >
+                  <Text pt="2" textStyle="sm">
                     AGF Mangement Limited
                   </Text>
                 </Box>
                 <Box>
-                  <Text
-                    pt="2"
-                    fontWeight={600}
-                    fontSize="14px"
-                    color="blue.800"
-                  >
+                  <Text pt="2" textStyle="sm">
                     Letko, Brosseau & Associates Inc.
                   </Text>
                 </Box>
@@ -146,12 +109,7 @@ export const Dashboard = () => {
             <DashboardCard icon={Search} title="Search Queries">
               <Stack spacing="1" height="150px">
                 <Box>
-                  <Text
-                    pt="2"
-                    fontWeight={600}
-                    fontSize="14px"
-                    color="blue.800"
-                  >
+                  <Text pt="2" textStyle="sm">
                     Fondation J. Armand Bombardier
                   </Text>
                 </Box>

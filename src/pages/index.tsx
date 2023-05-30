@@ -1,4 +1,5 @@
 import Dashboard from "./Dashboard";
 import Home from "./Home";
+import Company from "./Company";
 
-export { Home, Dashboard };
+export { Home, Dashboard, Company };
