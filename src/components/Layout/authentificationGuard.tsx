@@ -1,14 +1,11 @@
 import { useAuthUser } from "../../store/context/authContext";
-import { Navigate } from "react-router-dom";
-interface Props {
-  children: React.ReactNode;
-}
-const AuthentificationGuard = ({ children }: Props) => {
+import { Navigate, Outlet } from "react-router-dom";
+const AuthentificationGuard = () => {
   const { authUser } = useAuthUser();
   if (!authUser?.isConnected) {
     return <Navigate to="/" replace={true} />;
   }
-  return <>{children}</>;
+  return <Outlet />;
 };
 
 export default AuthentificationGuard;

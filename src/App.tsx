@@ -1,5 +1,5 @@
 import "./App.css";
-import { Outlet, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import { Dashboard, Home } from "./pages";
 import { AxiosInterceptor } from "./services/request.ts";
@@ -17,11 +17,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route
                 path={`/${ROUTES.USER}`}
-                element={
-                  <AuthentificationGuard>
-                    <Outlet />
-                  </AuthentificationGuard>
-                }
+                element={<AuthentificationGuard />}
               >
                 <Route path={`${ROUTES.DASHBOARD}`} element={<Dashboard />} />
               </Route>
