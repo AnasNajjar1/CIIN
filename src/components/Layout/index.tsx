@@ -16,7 +16,10 @@ export const Layout = () => {
   const onClickSwap = () => {
     setIsOpenSideMenu(!isOpenSideMenu);
   };
-
+  const variants = {
+    open: { width: 320 },
+    closed: { width: 80 },
+  };
   return (
     <Flex h="100%" flexWrap={"wrap"}>
       {!isHomeView && (
@@ -25,43 +28,28 @@ export const Layout = () => {
         </Box>
       )}
       {isHomeView && (
-        <>
+        <motion.aside
+          initial={{ width: 80, height: "100%" }}
+          animate={isOpenSideMenu ? "open" : "closed"}
+          exit={{
+            width: 80,
+            transition: { delay: 0.7, duration: 0.3 },
+          }}
+          variants={variants}
+        >
           {isOpenSideMenu ? (
-            <motion.aside
-              initial={{ width: 0 }}
-              animate={{
-                width: 320,
-              }}
-              exit={{
-                width: 0,
-                transition: { delay: 0.7, duration: 0.3 },
-              }}
-            >
-              <SidebarMenu handleClickSwap={onClickSwap} />
-            </motion.aside>
+            <SidebarMenu handleClickSwap={onClickSwap} />
           ) : (
-            <motion.aside
-              initial={{ width: 0 }}
-              animate={{
-                width: 80,
-              }}
-              exit={{
-                width: 0,
-                transition: { delay: 0.7, duration: 0.3 },
-              }}
-            >
-              <SidebarIconsMenu handleClickSwap={onClickSwap} />
-            </motion.aside>
+            <SidebarIconsMenu handleClickSwap={onClickSwap} />
           )}
-        </>
+        </motion.aside>
       )}
 
       <Box flex="1" bg={appBackgroundColor}>
         <Outlet />
       </Box>
-      <Box mt="auto" w="100%">
-        <Footer />
-      </Box>
+
+      <Footer />
     </Flex>
   );
 };

@@ -11,7 +11,13 @@ import {
 
 const Footer: React.FC = () => {
   return (
-    <Flex justify="center" p="22px 10px" bg="blue.700" height="150px">
+    <Flex
+      w="100%"
+      justify="center"
+      p="22px 10px"
+      bg="blue.700"
+      height="150px"
+    >
       <Flex width="70%">
         {/* LEFT SIDE */}
         <Flex sx={leftContainerStyle} direction="column">
@@ -59,11 +65,7 @@ const Footer: React.FC = () => {
         </Flex>
         {/* RIGHT SIDE */}
         <Flex flexGrow={1} direction="column" align="flex-end">
-          <Image
-            pb={4}
-            src={ContexLogo}
-            alt="contex-logo"
-          />
+          <Image pb={4} src={ContexLogo} alt="contex-logo" />
           <Box>
             <Text sx={rightTextStyle}> Contex Group Inc.</Text>
             <Text sx={rightTextStyle}>1100 René-Lévesque Blivd W.</Text>
