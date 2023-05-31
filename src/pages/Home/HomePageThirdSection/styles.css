@@ -1,0 +1,11 @@
+.slider {
+  display: "flex";
+  margin-left: 35px;
+  justify-content: "center";
+  align-items: "center";
+  width: 90%;
+}
+
+.slider .slick-list {
+  padding: 0px 35px !important;
+}
