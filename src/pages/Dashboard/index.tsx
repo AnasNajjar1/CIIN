@@ -1,18 +1,36 @@
 import {
   Box,
+  Flex,
   Grid,
   GridItem,
   Stack,
   StackDivider,
   Text,
+  Image,
 } from "@chakra-ui/react";
 import { EyeEmpty, BookmarkEmpty, EmptyPage, Search } from "iconoir-react";
 import DashboardCard from "../../components/DashboardCard";
+import Person from "../../assets/menuIcons/person.svg";
+import { bigIconContainerStyle, bigIconStyle } from "../User/styles";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../utils/constants";
 
 export const Dashboard = () => {
+  const navigate = useNavigate();
+
   return (
     <Box p="85px 190px 60px 60px">
-      <Box>
+      <Flex width="100%" justify="end">
+        <Flex
+          sx={bigIconContainerStyle}
+          onClick={() => {
+            navigate(`/${ROUTES.USER}/${ROUTES.USERPROFILE}`);
+          }}
+        >
+          <Image sx={bigIconStyle} src={Person} />
+        </Flex>
+      </Flex>
+      <Box pt={4}>
         <Text color="blue.800" fontWeight={700} fontSize={32}>
           Welcome!
         </Text>
@@ -23,21 +41,38 @@ export const Dashboard = () => {
             <DashboardCard icon={EyeEmpty} title="Recently visited">
               <Box height="200px">
                 <Box>
-                  <Text fontWeight={700} fontSize="18px" color="blue.800">Companies</Text>
+                  <Text fontWeight={700} fontSize="18px" color="blue.800">
+                    Companies
+                  </Text>
                 </Box>
                 <Stack divider={<StackDivider />} spacing="1" pt="20px">
                   <Box>
-                    <Text pt="2" fontWeight={600} fontSize="14px" color="blue.800">
+                    <Text
+                      pt="2"
+                      fontWeight={600}
+                      fontSize="14px"
+                      color="blue.800"
+                    >
                       View a summary of all your clients over the last month.
                     </Text>
                   </Box>
                   <Box>
-                    <Text pt="2" fontWeight={600} fontSize="14px" color="blue.800">
+                    <Text
+                      pt="2"
+                      fontWeight={600}
+                      fontSize="14px"
+                      color="blue.800"
+                    >
                       Acadian Asset Management LLC
                     </Text>
                   </Box>
                   <Box>
-                    <Text pt="2" fontWeight={600} fontSize="14px" color="blue.800">
+                    <Text
+                      pt="2"
+                      fontWeight={600}
+                      fontSize="14px"
+                      color="blue.800"
+                    >
                       AGF Mangement Limited
                     </Text>
                   </Box>
@@ -49,12 +84,22 @@ export const Dashboard = () => {
             <DashboardCard icon={BookmarkEmpty} title="Favourites">
               <Stack divider={<StackDivider />} spacing="1" height="200px">
                 <Box>
-                  <Text pt="2" fontWeight={600} fontSize="14px" color="blue.800">
+                  <Text
+                    pt="2"
+                    fontWeight={600}
+                    fontSize="14px"
+                    color="blue.800"
+                  >
                     Children’s Aid Society of Toronto
                   </Text>
                 </Box>
                 <Box>
-                  <Text pt="2" fontWeight={600} fontSize="14px" color="blue.800">
+                  <Text
+                    pt="2"
+                    fontWeight={600}
+                    fontSize="14px"
+                    color="blue.800"
+                  >
                     Letko, Brosseau & Associates Inc.
                   </Text>
                 </Box>
@@ -63,19 +108,34 @@ export const Dashboard = () => {
           </GridItem>
           <GridItem w="100%">
             <DashboardCard icon={EmptyPage} title="Saved reports">
-              <Stack  spacing="1" height="150px">
+              <Stack spacing="1" height="150px">
                 <Box>
-                  <Text pt="2" fontWeight={600} fontSize="14px" color="blue.800">
+                  <Text
+                    pt="2"
+                    fontWeight={600}
+                    fontSize="14px"
+                    color="blue.800"
+                  >
                     Fondation J. Armand Bombardier
                   </Text>
                 </Box>
                 <Box>
-                  <Text pt="2" fontWeight={600} fontSize="14px" color="blue.800">
+                  <Text
+                    pt="2"
+                    fontWeight={600}
+                    fontSize="14px"
+                    color="blue.800"
+                  >
                     AGF Mangement Limited
                   </Text>
                 </Box>
                 <Box>
-                  <Text pt="2" fontWeight={600} fontSize="14px" color="blue.800">
+                  <Text
+                    pt="2"
+                    fontWeight={600}
+                    fontSize="14px"
+                    color="blue.800"
+                  >
                     Letko, Brosseau & Associates Inc.
                   </Text>
                 </Box>
@@ -86,7 +146,12 @@ export const Dashboard = () => {
             <DashboardCard icon={Search} title="Search Queries">
               <Stack spacing="1" height="150px">
                 <Box>
-                  <Text pt="2" fontWeight={600} fontSize="14px" color="blue.800">
+                  <Text
+                    pt="2"
+                    fontWeight={600}
+                    fontSize="14px"
+                    color="blue.800"
+                  >
                     Fondation J. Armand Bombardier
                   </Text>
                 </Box>

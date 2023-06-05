@@ -11,6 +11,7 @@ export const appBackgroundColor = "#F5F5F5";
 export const ROUTES = {
   DASHBOARD: "dashboard",
   USER: "user",
+  USERPROFILE: "user-profile",
 };
 export const QueryConfig = {
   defaultOptions: {

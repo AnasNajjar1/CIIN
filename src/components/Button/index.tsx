@@ -6,8 +6,8 @@ type ButtonProps = {
   size: string;
   text: string;
   click: any;
-  direction: string;
-  icon: any;
+  direction?: string;
+  icon?: any;
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -15,7 +15,7 @@ const Button: React.FC<ButtonProps> = ({
   size,
   text,
   click,
-  direction,
+  direction = null,
   icon,
 }) => {
   return (
@@ -35,6 +35,11 @@ const Button: React.FC<ButtonProps> = ({
             <Text pl={2} fontFamily="body">
               {text}
             </Text>
+          </>
+        )}
+        {direction === null && (
+          <>
+            <Text fontFamily="body">{text}</Text>
           </>
         )}
       </Flex>
