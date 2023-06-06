@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { Flex } from "@chakra-ui/react";
 import { Outlet, useLocation } from "react-router-dom";
 import SidebarIconsMenu from "../SidebarIconsMenu";
 import SidebarMenu from "../SidebarMenu";
@@ -58,6 +57,7 @@ export const Layout = () => {
         )}
       </GridItem>
       <GridItem area={"main"} bg={appBackgroundColor}>
+        {isHomeView && <DashboardHeader />}
         <Outlet />
       </GridItem>
       <GridItem area={"footer"}>
