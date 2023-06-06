@@ -31,7 +31,7 @@ export const Layout = () => {
     >
       <GridItem area={"header"}>
         {!isHomeView && (
-          <Box position="fixed" top={0} w="100%">
+          <Box position="fixed" top={0} w="100%" zIndex={10}>
             <Header />
           </Box>
         )}

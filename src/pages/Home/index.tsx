@@ -13,7 +13,7 @@ const Home: React.FC = () => {
         {/* Second Section */}
         <HomePageSecondSection />
         {/* Third Section */}
-        <HomePageThirdSection />
+        {/* <HomePageThirdSection /> */}
       </Flex>
     </>
   );
