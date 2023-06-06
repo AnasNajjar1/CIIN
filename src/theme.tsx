@@ -36,6 +36,12 @@ const fonts = {
 
 export const theme = extendTheme({
   textStyles: {
+    h4: {
+      fontSize: "24px",
+      color: "blue.800",
+      fontWeight: "bold",
+      lineHeight: "32px",
+    },
     h3: {
       fontSize: "32px",
       color: "blue.800",
