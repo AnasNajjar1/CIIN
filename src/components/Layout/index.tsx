@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { Flex } from "@chakra-ui/react";
 import { Outlet, useLocation } from "react-router-dom";
@@ -21,36 +21,48 @@ export const Layout = () => {
     closed: { width: 80 },
   };
   return (
-    <Flex h="100%" flexWrap={"wrap"}>
-      {!isHomeView && (
-        <Box position="fixed" top={0} w="100%" zIndex={3}>
-          <Header />
-        </Box>
-      )}
-      {isHomeView && (
-        <motion.aside
-          initial={{ width: 80, height: "100%" }}
-          animate={isOpenSideMenu ? "open" : "closed"}
-          exit={{
-            width: 80,
-            transition: { delay: 0.7, duration: 0.3 },
-          }}
-          variants={variants}
-        >
-          {isOpenSideMenu ? (
-            <SidebarMenu handleClickSwap={onClickSwap} />
-          ) : (
-            <SidebarIconsMenu handleClickSwap={onClickSwap} />
-          )}
-        </motion.aside>
-      )}
+    <Grid
+      templateAreas={`"header header"
+                  "nav main"
+                  "footer footer"`}
+      gridTemplateRows={"minmax(min-content, 90px) auto 150px"}
+      gridTemplateColumns={"auto 1fr"}
+      h="100%"
+    >
+      <GridItem area={"header"}>
+        {!isHomeView && (
+          <Box position="fixed" top={0} w="100%">
+            <Header />
+          </Box>
+        )}
+      </GridItem>
 
-      <Box flex="1" bg={appBackgroundColor}>
+      <GridItem area={"nav"}>
+        {isHomeView && (
+          <motion.aside
+            initial={{ width: 80, height: "100%" }}
+            animate={isOpenSideMenu ? "open" : "closed"}
+            exit={{
+              width: 80,
+              transition: { delay: 0.7, duration: 0.3 },
+            }}
+            variants={variants}
+          >
+            {isOpenSideMenu ? (
+              <SidebarMenu handleClickSwap={onClickSwap} />
+            ) : (
+              <SidebarIconsMenu handleClickSwap={onClickSwap} />
+            )}
+          </motion.aside>
+        )}
+      </GridItem>
+      <GridItem area={"main"} bg={appBackgroundColor}>
         <Outlet />
-      </Box>
-
-      <Footer />
-    </Flex>
+      </GridItem>
+      <GridItem area={"footer"}>
+        <Footer />
+      </GridItem>
+    </Grid>
   );
 };
 
