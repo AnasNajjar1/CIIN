@@ -6,6 +6,7 @@ import { AxiosInterceptor } from "./services/request.ts";
 import { ROUTES } from "./utils/constants.ts";
 import { AuthUserProvider } from "./store/context/authContext.tsx";
 import AuthentificationGuard from "./components/Layout/authentificationGuard.tsx";
+import UserProfile from "./pages/User/index.tsx";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
                 element={<AuthentificationGuard />}
               >
                 <Route path={`${ROUTES.DASHBOARD}`} element={<Dashboard />} />
+                <Route path={`${ROUTES.USERPROFILE}`} element={<UserProfile />} />
               </Route>
             </Route>
           </Routes>
