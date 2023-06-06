@@ -1,35 +1,18 @@
 import {
   Box,
-  Flex,
   Grid,
   GridItem,
   Stack,
   StackDivider,
   Text,
-  Image,
 } from "@chakra-ui/react";
 import { EyeEmpty, BookmarkEmpty, EmptyPage, Search } from "iconoir-react";
 import DashboardCard from "../../components/DashboardCard";
-import Person from "../../assets/menuIcons/person.svg";
-import { bigIconContainerStyle, bigIconStyle } from "../User/styles";
-import { useNavigate } from "react-router-dom";
-import { ROUTES } from "../../utils/constants";
 
 export const Dashboard = () => {
-  const navigate = useNavigate();
 
   return (
-    <Box p="85px 190px 60px 60px">
-      <Flex width="100%" justify="end">
-        <Flex
-          sx={bigIconContainerStyle}
-          onClick={() => {
-            navigate(`/${ROUTES.USER}/${ROUTES.USERPROFILE}`);
-          }}
-        >
-          <Image sx={bigIconStyle} src={Person} />
-        </Flex>
-      </Flex>
+    <Box p="60px 190px 60px 60px">
       <Box pt={4}>
      <Text textStyle="h3">Welcome!</Text>
       </Box>

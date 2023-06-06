@@ -34,7 +34,6 @@ const HomePageFirstSection: React.FC = () => {
           <Flex flexGrow={1} align="flex-end" direction="column">
             <Box width="100%">
               <Image
-                width="350px"
                 src={InstitutionalAnalysis}
                 alt="institutional analysis"
               />
