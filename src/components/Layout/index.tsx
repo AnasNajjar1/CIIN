@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { Flex } from "@chakra-ui/react";
 import { Outlet, useLocation } from "react-router-dom";
@@ -16,57 +16,53 @@ export const Layout = () => {
   const onClickSwap = () => {
     setIsOpenSideMenu(!isOpenSideMenu);
   };
-
+  const variants = {
+    open: { width: 320 },
+    closed: { width: 80 },
+  };
   return (
-    <Flex h="100%">
-      {!isHomeView && (
-        <Box position="fixed" top={0} w="100%" zIndex={3}>
-          <Header />
-        </Box>
-      )}
-      {isHomeView && (
-        <>
-          {isOpenSideMenu ? (
-            <motion.aside
-              initial={{ width: 0, height: "calc(100% - 150px)" }}
-              animate={{
-                width: 320,
-              }}
-              exit={{
-                width: 0,
-                transition: { delay: 0.7, duration: 0.3 },
-              }}
-            >
-              <SidebarMenu handleClickSwap={onClickSwap} />
-            </motion.aside>
-          ) : (
-            <motion.aside
-              initial={{ width: 0, height: "calc(100% - 150px)" }}
-              animate={{
-                width: 80,
-              }}
-              exit={{
-                width: 0,
-                transition: { delay: 0.7, duration: 0.3 },
-              }}
-            >
-              <SidebarIconsMenu handleClickSwap={onClickSwap} />
-            </motion.aside>
-          )}
-        </>
-      )}
+    <Grid
+      templateAreas={`"header header"
+                  "nav main"
+                  "footer footer"`}
+      gridTemplateRows={"minmax(min-content, 90px) auto 150px"}
+      gridTemplateColumns={"auto 1fr"}
+      h="100%"
+    >
+      <GridItem area={"header"}>
+        {!isHomeView && (
+          <Box position="fixed" top={0} w="100%" zIndex={10}>
+            <Header />
+          </Box>
+        )}
+      </GridItem>
 
-      <Box
-        h="calc(100% - 150px)"
-        w={isHomeView ? "calc(100% - 80px)" : "100%"}
-        bg={isHomeView ? appBackgroundColor : "white"}
-      >
+      <GridItem area={"nav"}>
+        {isHomeView && (
+          <motion.aside
+            initial={{ width: 80, height: "100%" }}
+            animate={isOpenSideMenu ? "open" : "closed"}
+            exit={{
+              width: 80,
+              transition: { delay: 0.7, duration: 0.3 },
+            }}
+            variants={variants}
+          >
+            {isOpenSideMenu ? (
+              <SidebarMenu handleClickSwap={onClickSwap} />
+            ) : (
+              <SidebarIconsMenu handleClickSwap={onClickSwap} />
+            )}
+          </motion.aside>
+        )}
+      </GridItem>
+      <GridItem area={"main"} bg={appBackgroundColor}>
         <Outlet />
-      </Box>
-      <Box position="fixed" bottom={0} w="100%" zIndex={3}>
+      </GridItem>
+      <GridItem area={"footer"}>
         <Footer />
-      </Box>
-    </Flex>
+      </GridItem>
+    </Grid>
   );
 };
 

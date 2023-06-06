@@ -5,7 +5,7 @@ type CardIconProps = {
   color?: string;
 };
 
-const CardIcon = ({ icon, color = "white" }: CardIconProps) => {
+const CardIcon = ({ icon, color = "blue.500" }: CardIconProps) => {
   return (
     <Box
       p="6px 8px"
@@ -14,6 +14,9 @@ const CardIcon = ({ icon, color = "white" }: CardIconProps) => {
       backgroundColor="white"
       width="32px"
       height="32px"
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
     >
       <Icon as={icon} color={color} />
     </Box>

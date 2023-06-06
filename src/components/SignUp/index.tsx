@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Icon, Text } from "@chakra-ui/react";
 import React from "react";
 import Button from "../Button";
 import { ArrowRight } from "iconoir-react";
@@ -77,11 +77,11 @@ const SignUp: React.FC<SignUpProps> = ({ switchLogin }) => {
         <Button
           variant="solid"
           size="md"
-          text={"Sign up"}
-          direction="right"
-          icon={ArrowRight}
-          click={handleSubmit(onSubmit)}
-        />
+          rightIcon={<Icon as={ArrowRight} />}
+          onClick={handleSubmit(onSubmit)}
+        >
+          Sign up
+        </Button>
       </Box>
       <Flex p="0px 0px 40px 0px">
         <Text sx={textFooterStyle} color="gray.500" pr={1}>

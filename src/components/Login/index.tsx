@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Icon, Text } from "@chakra-ui/react";
 import { ArrowRight, EyeClose, Lock, User } from "iconoir-react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -68,11 +68,11 @@ const Login = ({ switchSignUp, closeModal }: LoginProps) => {
         <Button
           variant="solid"
           size="md"
-          text={"Login"}
-          direction="right"
-          icon={ArrowRight}
-          click={handleSubmit(onSubmit)}
-        />
+          rightIcon={<Icon as={ArrowRight} />}
+          onClick={handleSubmit(onSubmit)}
+        >
+          Login
+        </Button>
       </Box>
       <Flex p="0px 0px 40px 0px">
         <Text sx={textFooterStyle} color="gray.500" pr={1}>

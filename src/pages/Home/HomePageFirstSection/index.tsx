@@ -1,4 +1,4 @@
-import { Flex, Box, Text, Image } from "@chakra-ui/react";
+import { Flex, Box, Text, Image, Icon } from "@chakra-ui/react";
 import { ArrowRight } from "iconoir-react";
 import React from "react";
 import Button from "../../../components/Button";
@@ -24,11 +24,10 @@ const HomePageFirstSection: React.FC = () => {
               <Button
                 variant="outlineSolid"
                 size="md"
-                text="Sign up"
-                direction="right"
-                icon={ArrowRight}
-                click={() => {}}
-              />
+                rightIcon={<Icon as={ArrowRight} />}
+              >
+                Sign up
+              </Button>
             </Box>
           </Flex>
           {/* Right Side */}
