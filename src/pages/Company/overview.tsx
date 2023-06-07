@@ -1,8 +1,7 @@
+import ItemLegendChart from "../../components/itemLegendChart";
 import PieChart from "../../components/pieChart";
-import { pieColors } from "../../utils/constants";
 import LatestUpdate from "./LatestUpdate";
 import {
-  Box,
   Card,
   CardBody,
   CardFooter,
@@ -100,31 +99,7 @@ const items = [
     value: "No - Closed",
   },
 ];
-interface ItemLegendProps {
-  label: string;
-  index: number;
-  value: React.ReactNode;
-}
-const ItemLegend = ({ label, index, value }: ItemLegendProps) => {
-  return (
-    <Flex justify="space-between" align="center" width="100%">
-      <Flex gap="4px" align="center">
-        <Box
-          width="16px"
-          height="16px"
-          borderRadius="50%"
-          bg={pieColors[index]}
-        />
-        <Text textStyle="base" fontWeight="500">
-          {label}
-        </Text>
-      </Flex>
-      <Text textStyle="base" fontWeight="500">
-        {value}
-      </Text>
-    </Flex>
-  );
-};
+
 interface ItemProps {
   label: string;
   value: React.ReactNode;
@@ -167,7 +142,7 @@ const Overview = () => {
           <CardFooter>
             <VStack spacing="16px" width="60%" mx={"auto"}>
               {itemsLegend.map((item, index) => (
-                <ItemLegend key={item.label} {...item} index={index} />
+                <ItemLegendChart key={item.label} {...item} index={index} />
               ))}
             </VStack>
           </CardFooter>
@@ -202,7 +177,7 @@ const Overview = () => {
             <PieChart data={[940, 1207, 368]} width={177} height={177} />
             <VStack width="300px">
               {itemsLegend1.map((item, index) => (
-                <ItemLegend key={item.label} {...item} index={index} />
+                <ItemLegendChart key={item.label} {...item} index={index} />
               ))}
             </VStack>
           </CardBody>
@@ -213,7 +188,7 @@ const Overview = () => {
             <PieChart data={[100, 0, 0]} width={177} height={177} />
             <VStack spacing="16px" width="300px">
               {itemsLegend2.map((item, index) => (
-                <ItemLegend key={item.label} {...item} index={index} />
+                <ItemLegendChart key={item.label} {...item} index={index} />
               ))}
             </VStack>
           </CardBody>
