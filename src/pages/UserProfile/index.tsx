@@ -10,7 +10,7 @@ import {
   Select,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import Person from "../../assets/menuIcons/person.svg";
 import Subscription from "../../assets/subscription.svg";
 import EditIcon from "../../assets/edit.svg";
@@ -50,8 +50,26 @@ import {
   passwordInputTopContainerStyle,
 } from "./styles";
 import UserProfileCard from "../../components/Card/UserProfileCard";
+import { useAuthUser } from "../../store/context/authContext";
+import { resetPassword } from "../../services/api/resetPasswordApi";
 
 const UserProfile: React.FC = () => {
+  const { authUser } = useAuthUser();
+  const [resetPasswordForm, setResetPasswordForm] = useState({
+    old_password: "",
+    password: "",
+    password2: "",
+  });
+
+  const onChangeResetPassword = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setResetPasswordForm((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
   return (
     <>
       <Flex direction="column" p="20px 60px">
@@ -285,6 +303,8 @@ const UserProfile: React.FC = () => {
                             placeholder="Lorem123%$!"
                             _placeholder={{ color: "gray.500" }}
                             type="password"
+                            name="old_password"
+                            onChange={onChangeResetPassword}
                           />
                           <InputLeftElement
                             pb={2}
@@ -310,6 +330,8 @@ const UserProfile: React.FC = () => {
                             placeholder="Enter your password"
                             _placeholder={{ color: "gray.500" }}
                             type="password"
+                            name="password"
+                            onChange={onChangeResetPassword}
                           />
                           <InputLeftElement
                             pb={2}
@@ -341,6 +363,8 @@ const UserProfile: React.FC = () => {
                             placeholder="Enter your password"
                             _placeholder={{ color: "gray.500" }}
                             type="password"
+                            name="password2"
+                            onChange={onChangeResetPassword}
                           />
                           <InputLeftElement
                             pb={2}
@@ -357,7 +381,17 @@ const UserProfile: React.FC = () => {
               footer
               paddingFooter="0px 60px 30px 60px"
               childrenFooter={
-                <Button variant="solid" size="sm">
+                <Button
+                  variant="solid"
+                  size="sm"
+                  onClick={() => {
+                    resetPassword({
+                      id: authUser.userDetails.id,
+                      token: authUser.token,
+                      ...resetPasswordForm,
+                    });
+                  }}
+                >
                   Save changes
                 </Button>
               }

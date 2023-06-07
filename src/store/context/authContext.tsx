@@ -1,11 +1,13 @@
 import * as React from "react";
 import { useState } from "react";
+import { UserDetails } from "../../services/apiTypes/types";
 
 type AuthUserProviderProps = { children: React.ReactNode };
 interface AuthUser {
   username: string;
   isConnected: boolean;
   token: string;
+  userDetails: UserDetails;
 }
 interface AuthUserContext {
   authUser: AuthUser;
@@ -27,6 +29,7 @@ function AuthUserProvider({ children }: AuthUserProviderProps) {
     username: "",
     isConnected: currentUser.isConnected,
     token: currentUser.token,
+    userDetails: currentUser.userDetails,
   });
 
   return (
