@@ -16,6 +16,7 @@ import EmailIcon from "../../icons/emailIcon";
 import Tabs from "../../components/Tabs";
 import Contacts from "./contacts";
 import Overview from "./overview";
+import Assets from "./assets";
 
 const Company = () => {
   return (
@@ -97,7 +98,7 @@ const Company = () => {
           },
           {
             title: "Assets",
-            component: <p>Assets</p>,
+            component: <Assets/>,
           },
           {
             title: "Associates",
