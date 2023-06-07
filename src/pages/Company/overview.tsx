@@ -1,3 +1,5 @@
+import PieChart from "../../components/pieChart";
+import { pieColors } from "../../utils/constants";
 import LatestUpdate from "./LatestUpdate";
 import {
   Box,
@@ -9,96 +11,50 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Pie } from "react-chartjs-2";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
-export const data = {
-  datasets: [
-    {
-      data: [1562, 51.86, 13.0, 3.36],
-      backgroundColor: ["#042B51", "#82A8C1", "#9ACBFC", "#3B87D2"],
-    },
-  ],
-};
-export const data1 = {
-  datasets: [
-    {
-      data: [940, 1207, 368],
-      backgroundColor: ["#042B51", "#82A8C1", "#9ACBFC", "#3B87D2"],
-    },
-  ],
-};
-export const data2 = {
-  datasets: [
-    {
-      data: [100, 0, 0],
-      backgroundColor: ["#042B51", "#82A8C1", "#9ACBFC", "#3B87D2"],
-    },
-  ],
-};
-const options = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      display: false,
-    },
-  },
-};
 const itemsLegend = [
   {
     label: "Defined Benefit",
-    color: "#042B51",
     value: "95.81% ($1562)",
   },
   {
     label: "Defined Contribution",
-    color: "#82A8C1",
     value: "3.36% ($51.86)",
   },
   {
     label: "Group RRSP",
-    color: "#9ACBFC",
     value: "13.0% ($13)",
   },
   {
     label: "Other (OAC)",
-    color: "#3B87D2",
     value: "3.36% ($3.36)",
   },
 ];
 const itemsLegend1 = [
   {
     label: "Active",
-    color: "#042B51",
     value: "38.38% (940)",
   },
   {
     label: "Retired",
-    color: "#82A8C1",
     value: "61.62% (1207)",
   },
   {
     label: "Deferred",
-    color: "#9ACBFC",
     value: "38.38% (368)",
   },
 ];
 const itemsLegend2 = [
   {
     label: "Active",
-    color: "#042B51",
     value: "100% (100)",
   },
   {
     label: "Retired",
-    color: "#82A8C1",
     value: "0% (0)",
   },
   {
     label: "Deferred",
-    color: "#9ACBFC",
     value: "0% (0)",
   },
 ];
@@ -146,14 +102,19 @@ const items = [
 ];
 interface ItemLegendProps {
   label: string;
-  color: string;
+  index: number;
   value: React.ReactNode;
 }
-const ItemLegend = ({ label, color, value }: ItemLegendProps) => {
+const ItemLegend = ({ label, index, value }: ItemLegendProps) => {
   return (
     <Flex justify="space-between" align="center" width="100%">
       <Flex gap="4px" align="center">
-        <Box width="16px" height="16px" borderRadius="50%" bg={color} />
+        <Box
+          width="16px"
+          height="16px"
+          borderRadius="50%"
+          bg={pieColors[index]}
+        />
         <Text textStyle="base" fontWeight="500">
           {label}
         </Text>
@@ -196,13 +157,17 @@ const Overview = () => {
       </Text>
       <Flex gap="24px" mb="46px">
         <Card width="50%">
-          <CardBody mb="30px">
-            <Pie data={data} width="141" height="141" options={options} />
+          <CardBody mb="30px" display="flex" justifyContent="center">
+            <PieChart
+              data={[1562, 51.86, 13.0, 3.36]}
+              width={141}
+              height={141}
+            />
           </CardBody>
           <CardFooter>
             <VStack spacing="16px" width="60%" mx={"auto"}>
-              {itemsLegend.map((item) => (
-                <ItemLegend key={item.label} {...item} />
+              {itemsLegend.map((item, index) => (
+                <ItemLegend key={item.label} {...item} index={index} />
               ))}
             </VStack>
           </CardFooter>
@@ -234,12 +199,10 @@ const Overview = () => {
         <Card width="50%">
           <CardHeader textStyle="base">Defined Benefit</CardHeader>
           <CardBody mb="30px" display="flex" alignItems="center" gap="24px">
-            <Box width="177px" height="177px">
-              <Pie data={data1} width="177" height="177" options={options} />
-            </Box>
+            <PieChart data={[940, 1207, 368]} width={177} height={177} />
             <VStack width="300px">
-              {itemsLegend1.map((item) => (
-                <ItemLegend key={item.label} {...item} />
+              {itemsLegend1.map((item, index) => (
+                <ItemLegend key={item.label} {...item} index={index} />
               ))}
             </VStack>
           </CardBody>
@@ -247,13 +210,10 @@ const Overview = () => {
         <Card width="50%">
           <CardHeader textStyle="base">Defined Contribution</CardHeader>
           <CardBody mb="30px" display="flex" alignItems="center" gap="24px">
-            <Box width="177px" height="177px">
-              <Pie data={data2} width="177" height="177" options={options} />
-            </Box>
-
+            <PieChart data={[100, 0, 0]} width={177} height={177} />
             <VStack spacing="16px" width="300px">
-              {itemsLegend2.map((item) => (
-                <ItemLegend key={item.label} {...item} />
+              {itemsLegend2.map((item, index) => (
+                <ItemLegend key={item.label} {...item} index={index} />
               ))}
             </VStack>
           </CardBody>

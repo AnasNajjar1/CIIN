@@ -61,3 +61,18 @@ export const sidebarMenuList: sidebarMenuListType[] = [
     link: "",
   },
 ];
+export const pieColors = [
+  "#042B51",
+  "#82A8C1",
+  "#9ACBFC",
+  "#3B87D2",
+  "#8382C1",
+  "#C18295",
+  "#82C1A7",
+  "#B8C182",
+  "#C1A082",
+  "#C9CAD0",
+  "#DF8620",
+  "#E41B23",
+  "#66666F",
+];
