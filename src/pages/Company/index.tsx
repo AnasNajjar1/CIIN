@@ -15,6 +15,7 @@ import DashboardCard from "../../components/DashboardCard";
 import EmailIcon from "../../icons/emailIcon";
 import Tabs from "../../components/Tabs";
 import Contacts from "./contacts";
+import Associates from "./associates";
 
 const Company = () => {
   return (
@@ -100,7 +101,7 @@ const Company = () => {
           },
           {
             title: "Associates",
-            component: <p>Associates</p>,
+            component: <Associates />,
           },
         ]}
       />
