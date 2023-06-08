@@ -2,13 +2,15 @@ import { useState } from "react";
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { Outlet, useLocation } from "react-router-dom";
-import SidebarIconsMenu from "../SidebarIconsMenu";
 import SidebarMenu from "../SidebarMenu";
 import Footer from "../Footer";
 import { appBackgroundColor } from "../../utils/constants.ts";
 import Header from "../Header/index.tsx";
 import DashboardHeader from "../DashboardHeader";
-
+const variants = {
+  open: { width: 320 },
+  closed: { width: 80 },
+};
 export const Layout = () => {
   const location = useLocation();
   const [isOpenSideMenu, setIsOpenSideMenu] = useState<boolean>(false);
@@ -16,10 +18,7 @@ export const Layout = () => {
   const onClickSwap = () => {
     setIsOpenSideMenu(!isOpenSideMenu);
   };
-  const variants = {
-    open: { width: 320 },
-    closed: { width: 80 },
-  };
+
   return (
     <Grid
       templateAreas={`"header header"
@@ -48,11 +47,10 @@ export const Layout = () => {
             }}
             variants={variants}
           >
-            {isOpenSideMenu ? (
-              <SidebarMenu handleClickSwap={onClickSwap} />
-            ) : (
-              <SidebarIconsMenu handleClickSwap={onClickSwap} />
-            )}
+            <SidebarMenu
+              isOpen={isOpenSideMenu}
+              handleClickSwap={onClickSwap}
+            />
           </motion.aside>
         )}
       </GridItem>
