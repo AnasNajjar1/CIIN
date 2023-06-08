@@ -17,6 +17,7 @@ import Tabs from "../../components/Tabs";
 import Contacts from "./contacts";
 import Overview from "./overview";
 import Assets from "./assets";
+import Associates from "./associates";
 
 const Company = () => {
   return (
@@ -102,7 +103,7 @@ const Company = () => {
           },
           {
             title: "Associates",
-            component: <p>Associates</p>,
+            component: <Associates />,
           },
         ]}
       />
