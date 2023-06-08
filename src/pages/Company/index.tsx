@@ -1,5 +1,5 @@
 import { Star, Download, Mail, EditPencil } from "iconoir-react";
-import Button from "../../components/Button";
+import Button from "../../components/Shared/Button";
 import {
   Box,
   Card,
@@ -10,10 +10,10 @@ import {
   Icon,
   Text,
 } from "@chakra-ui/react";
-import Link from "../../components/Link";
+import Link from "../../components/Shared/Link";
 import DashboardCard from "../../components/DashboardCard";
 import EmailIcon from "../../icons/emailIcon";
-import Tabs from "../../components/Tabs";
+import Tabs from "../../components/Shared/Tabs";
 import Contacts from "./contacts";
 import Overview from "./overview";
 import Assets from "./assets";
@@ -99,7 +99,7 @@ const Company = () => {
           },
           {
             title: "Assets",
-            component: <Assets/>,
+            component: <Assets />,
           },
           {
             title: "Associates",

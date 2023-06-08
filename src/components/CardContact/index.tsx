@@ -1,6 +1,6 @@
 import { Card, CardBody, CardHeader, Text } from "@chakra-ui/react";
-import CardIcon from "./CardIcon";
-import Link from "./Link";
+import CardIcon from "../Shared/CardIcon";
+import Link from "../Shared/Link";
 import { User } from "iconoir-react";
 interface Contact {
   userName: string;

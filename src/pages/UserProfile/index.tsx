@@ -23,7 +23,7 @@ import {
   Lock as LockIcon,
   QuestionMark,
 } from "iconoir-react";
-import Button from "../../components/Button";
+import Button from "../../components/Shared/Button";
 import {
   arrowDownOrLockStyle,
   bottomFirstTextStyle,

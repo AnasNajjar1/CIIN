@@ -1,5 +1,5 @@
-import ItemLegendChart from "../../components/itemLegendChart";
-import PieChart from "../../components/pieChart";
+import ItemLegendChart from "../../components/Shared/ItemLegendChart";
+import PieChart from "../../components/Shared/PieChart";
 import LatestUpdate from "./LatestUpdate";
 import {
   Card,

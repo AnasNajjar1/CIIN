@@ -1,6 +1,6 @@
 import { Flex, Text, Box, Image, Icon } from "@chakra-ui/react";
 import { ArrowRight } from "iconoir-react";
-import Button from "../../../components/Button";
+import Button from "../../../components/Shared/Button";
 import React from "react";
 import Bourse from "../../../assets/bourse.svg";
 import Analysis from "../../../assets/analysis.svg";

@@ -8,7 +8,7 @@ import {
   textHeadingStyle,
   textSubHeadingStyle,
 } from "./styles";
-import GlobalModal from "../GlobalModal";
+import GlobalModal from "../Shared/GlobalModal";
 
 type AuthModalProps = {
   isOpen: boolean;

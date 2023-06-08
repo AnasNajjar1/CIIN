@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import { Chart as ChartJS, ArcElement } from "chart.js";
 import { Pie } from "react-chartjs-2";
-import { pieColors } from "../utils/constants";
+import { pieColors } from "../../../utils/constants";
 ChartJS.register(ArcElement);
 const options = {
   responsive: true,

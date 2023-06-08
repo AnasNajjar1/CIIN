@@ -1,7 +1,7 @@
 import { Flex, Box, Text, Image, Icon } from "@chakra-ui/react";
 import { ArrowRight } from "iconoir-react";
 import React from "react";
-import Button from "../../../components/Button";
+import Button from "../../../components/Shared/Button";
 import InstitutionalAnalysis from "../../../assets/institutionalAnalysis.svg";
 import { firstTextStyle, secondTextStyle } from "./styles";
 
@@ -33,10 +33,7 @@ const HomePageFirstSection: React.FC = () => {
           {/* Right Side */}
           <Flex flexGrow={1} align="flex-end" direction="column">
             <Box width="100%">
-              <Image
-                src={InstitutionalAnalysis}
-                alt="institutional analysis"
-              />
+              <Image src={InstitutionalAnalysis} alt="institutional analysis" />
             </Box>
           </Flex>
         </Flex>

@@ -8,7 +8,7 @@ import InputField from "../Forms/InputField.tsx";
 import { loginSchema } from "../../schemas/login/login.ts";
 import { login } from "../../services/api/loginApi.ts";
 import { textFooterStyle } from "../AuthModal/styles.tsx";
-import Button from "../Button";
+import Button from "../Shared/Button/index.tsx";
 import { ROUTES } from "../../utils/constants.ts";
 import useUser from "../../hooks/useUser.tsx";
 
