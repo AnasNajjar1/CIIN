@@ -1,5 +1,5 @@
 import { Flex, Icon, Image, Text } from "@chakra-ui/react";
-import Button from "../Button";
+import Button from "../Shared/Button";
 import CiinLogo from "../../assets/ciin-logo.png";
 import React, { useState } from "react";
 import { ArrowRight } from "iconoir-react";

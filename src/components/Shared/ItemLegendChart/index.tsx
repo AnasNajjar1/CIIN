@@ -1,5 +1,5 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
-import { pieColors } from "../utils/constants";
+import { pieColors } from "../../../utils/constants";
 
 interface ItemLegendChartProps {
   label: string;

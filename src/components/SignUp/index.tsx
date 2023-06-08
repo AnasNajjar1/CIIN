@@ -1,6 +1,6 @@
 import { Box, Flex, Icon, Text } from "@chakra-ui/react";
 import React from "react";
-import Button from "../Button";
+import Button from "../Shared/Button/index.tsx";
 import { ArrowRight } from "iconoir-react";
 import { textFooterStyle } from "../AuthModal/styles.tsx";
 import { useForm } from "react-hook-form";

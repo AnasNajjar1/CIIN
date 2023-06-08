@@ -1,11 +1,11 @@
 import LatestUpdate from "./latestUpdate";
 import { Flex, Text } from "@chakra-ui/layout";
-import Button from "../../components/Button";
+import Button from "../../components/Shared/Button";
 import { Icon } from "@chakra-ui/icon";
 import { EyeEmpty } from "iconoir-react";
 import { VStack } from "@chakra-ui/react";
-import Table, { Column } from "../../components/table";
-import Accordion from "../../components/accordion";
+import Table, { Column } from "../../components/Shared/Table";
+import Accordion from "../../components/Shared/Accodion";
 interface Associate {
   company: string;
   planType: string;

@@ -1,7 +1,7 @@
 import { Box, Card, CardBody, Flex, Text, VStack } from "@chakra-ui/react";
 import LatestUpdate from "./latestUpdate";
-import PieChart from "../../components/pieChart";
-import ItemLegendChart from "../../components/itemLegendChart";
+import PieChart from "../../components/Shared/PieChart";
+import ItemLegendChart from "../../components/Shared/ItemLegendChart";
 const chartAll = {
   data: [1172, 66.89, 93.72, 56.23, 52.86, 42, 25, 10, 5, 2, 0.72, 0.65, 0.38],
   itemsLegend: [
