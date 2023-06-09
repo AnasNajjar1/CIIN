@@ -130,8 +130,8 @@ const Overview = () => {
       <Text textStyle="h4" mb="24px">
         Plan Highlights
       </Text>
-      <Flex gap="24px" mb="46px">
-        <Card width="50%">
+      <Flex direction={{ base: "column", md: "row" }} gap="24px" mb="46px">
+        <Card width={{ md: "50%" }}>
           <CardBody mb="30px" display="flex" justifyContent="center">
             <PieChart
               data={[1562, 51.86, 13.0, 3.36]}
@@ -140,19 +140,19 @@ const Overview = () => {
             />
           </CardBody>
           <CardFooter>
-            <VStack spacing="16px" width="60%" mx={"auto"}>
+            <VStack spacing="16px" width={{ md: "60%" }} mx={"auto"}>
               {itemsLegend.map((item, index) => (
                 <ItemLegendChart key={item.label} {...item} index={index} />
               ))}
             </VStack>
           </CardFooter>
         </Card>
-        <Card width="50%">
+        <Card width={{ md: "50%" }}>
           <CardBody>
             <VStack
               spacing="4px"
               width="100%"
-              pl="64px"
+              pl={{ md: "64px" }}
               pt="15px"
               sx={{
                 "div:last-child": {
@@ -170,10 +170,16 @@ const Overview = () => {
       <Text textStyle="h4" mb="24px">
         Memberships
       </Text>
-      <Flex gap="24px" mb="60px">
-        <Card width="50%">
+      <Flex gap="24px" mb="60px" direction={{ base: "column", md: "row" }}>
+        <Card width={{ md: "50%" }}>
           <CardHeader textStyle="base">Defined Benefit</CardHeader>
-          <CardBody mb="30px" display="flex" alignItems="center" gap="24px">
+          <CardBody
+            mb="30px"
+            display="flex"
+            flexDirection={{ base: "column", md: "row" }}
+            alignItems="center"
+            gap="24px"
+          >
             <PieChart data={[940, 1207, 368]} width={177} height={177} />
             <VStack width="300px">
               {itemsLegend1.map((item, index) => (
@@ -182,9 +188,15 @@ const Overview = () => {
             </VStack>
           </CardBody>
         </Card>
-        <Card width="50%">
+        <Card width={{ md: "50%" }}>
           <CardHeader textStyle="base">Defined Contribution</CardHeader>
-          <CardBody mb="30px" display="flex" alignItems="center" gap="24px">
+          <CardBody
+            flexDirection={{ base: "column", md: "row" }}
+            mb="30px"
+            display="flex"
+            alignItems="center"
+            gap="24px"
+          >
             <PieChart data={[100, 0, 0]} width={177} height={177} />
             <VStack spacing="16px" width="300px">
               {itemsLegend2.map((item, index) => (
@@ -198,7 +210,7 @@ const Overview = () => {
         Comments
       </Text>
       <Card>
-        <CardBody pr="85px" py="40px">
+        <CardBody pr={{ md: "85px" }} py="40px">
           <Text textStyle="base" color="#000">
             OAC plan has 41 members, included within the DB member count. DB
             plan is a master trust and includes salaried and hourly employees.

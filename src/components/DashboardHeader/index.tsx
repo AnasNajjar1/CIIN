@@ -9,7 +9,7 @@ export const DashboardHeader = () => {
   const navigate = useNavigate();
 
   return (
-    <Box p="85px 190px 10px 60px">
+    <Box p={{ base: "85px 0 0 0", md:"85px 190px 10px 60px"}}>
       <Flex align="center" justify="space-between" width="100%">
         <Breadcrumb />
         <Flex

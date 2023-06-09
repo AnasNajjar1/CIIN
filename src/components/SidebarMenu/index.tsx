@@ -1,4 +1,11 @@
-import { Box, Image, Flex, Heading, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Image,
+  Flex,
+  Heading,
+  VStack,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import { sidebarMenuList } from "../../utils/constants.ts";
 import { sidebarMenuListType } from "../../utils/constantsTypes.ts";
 import LogOutIcon from "../../assets/menuIcons/log-out.svg";
@@ -12,18 +19,25 @@ interface SidebarMenuProps {
 }
 
 export const SidebarMenu = ({ handleClickSwap, isOpen }: SidebarMenuProps) => {
+  const [isLargerThanMD] = useMediaQuery("(min-width: 768px)");
   return (
     <Box
       bg="white"
       h="100%"
-      w="100%"
+      w={{ base: "320px", md: isOpen ? "320px" : "80px" }}
       sx={{
         display: "flex",
         flexDirection: "column",
-        position: "sticky",
-        boxShadow:
-          "0px 2px 6px rgba(0, 0, 0, 0.1), 0px 4px 48px rgba(163, 163, 163, 0.1)",
+        transition: "width 0.3s ease-in-out",
+        transform: [
+          isOpen ? "translateX(0)" : "translateX(-100%)",
+          "translateX(0)",
+        ],
       }}
+      position={{ base: "fixed", md: "static" }}
+      zIndex={10}
+      top={0}
+      className={isOpen && !isLargerThanMD ? "sidebar-menu-open-mobile" : ""}
     >
       <Flex justifyContent={"center"}>
         <Box
@@ -46,13 +60,19 @@ export const SidebarMenu = ({ handleClickSwap, isOpen }: SidebarMenuProps) => {
           </Box>
         </Box>
       </Flex>
-      <VStack mx="auto" spacing={25} alignItems="baseline" mt="250px" >
+      <VStack
+        mx="auto"
+        spacing={25}
+        alignItems="baseline"
+        mt={{ base: "auto", md: "250px" }}
+        mb={{ base: "auto", md: "0" }}
+      >
         {sidebarMenuList.map((el: sidebarMenuListType, index: number) => (
           <Flex key={index} cursor="pointer" align="center">
             <Image
               src={el.icon}
               alt={`${el.icon}-icon`}
-              sx={{ pr: isOpen ? "11px" : "0px" }}
+              pr={{ base: "11px", md: isOpen ? "11px" : "0px" }}
             />
             <Heading
               as="h4"
@@ -60,19 +80,23 @@ export const SidebarMenu = ({ handleClickSwap, isOpen }: SidebarMenuProps) => {
               fontWeight={600}
               pt="2px"
               color="blue.600"
-              display={isOpen ? "block" : "none"}
+              display={{ md: isOpen ? "block" : "none" }}
             >
               {el.title}
             </Heading>
           </Flex>
         ))}
       </VStack>
-
-      <Flex cursor="pointer" pb="20px" mx="auto" mt="200px" >
+      <Flex
+        cursor="pointer"
+        pb="20px"
+        mx="auto"
+        mt={{ base: "0", md: "200px" }}
+      >
         <Image
           src={LogOutIcon}
           alt="LogOutIcon-icon"
-          sx={{ pr: isOpen ? "11px" : "0px" }}
+          pr={{ base: "11px", md: isOpen ? "11px" : "0px" }}
         />
         <Heading
           as="h4"
@@ -80,7 +104,7 @@ export const SidebarMenu = ({ handleClickSwap, isOpen }: SidebarMenuProps) => {
           fontWeight={600}
           pt="2px"
           color="blue.600"
-          display={isOpen ? "block" : "none"}
+          display={{ md: isOpen ? "block" : "none" }}
         >
           Log out
         </Heading>
