@@ -46,6 +46,8 @@ import {
   checkCirlceStyle,
   passwordInputContainerStyle,
   bottomCardContainerStyle,
+  bottomCardTopContainerStyle,
+  passwordInputTopContainerStyle,
 } from "./styles";
 import UserProfileCard from "../../components/Card/UserProfileCard";
 
@@ -59,9 +61,13 @@ const UserProfile: React.FC = () => {
             <Text sx={titleTextStyle}>Profile detail</Text>
           </Box>
           {/* Cards Containers */}
-          <Flex justify="space-between" pt={5}>
+          <Flex
+            direction={{ base: "column", lg: "row" }}
+            justify="space-between"
+            pt={5}
+          >
             {/* Left Card Container */}
-            <Flex direction="column" width="49%">
+            <Flex direction="column" width={{ base: "80%", lg: "49%" }}>
               {/* Container Upper Side */}
               <Flex justify="space-between" align="center">
                 <Flex align="center">
@@ -126,7 +132,11 @@ const UserProfile: React.FC = () => {
               />
             </Flex>
             {/* Right Card Container */}
-            <Flex direction="column" width="49%">
+            <Flex
+              direction="column"
+              pt={{ base: 8, lg: 0 }}
+              width={{ base: "80%", lg: "49%" }}
+            >
               {/* Container Upper Side */}
               <Flex justify="space-between" align="center">
                 <Flex align="center">
@@ -154,7 +164,7 @@ const UserProfile: React.FC = () => {
                       <Text sx={inputTitleStyle}>User role</Text>
                       <Select
                         sx={selectStyle}
-                        width="196px"
+                        width={{ base: "100px", md: "140px", lg: "196px" }}
                         height="32px"
                         icon={
                           <Box pl={1.5} mb={2}>
@@ -227,8 +237,12 @@ const UserProfile: React.FC = () => {
               />
             </Flex>
           </Flex>
-          <Box pt={8}>
-            <Flex justify="space-between" align="center" width="49%">
+          <Box pt={8} width={{ base: "80%", lg: "100%" }}>
+            <Flex
+              justify="space-between"
+              align="center"
+              width={{ base: "100%", lg: "49%" }}
+            >
               <Flex align="center">
                 <Flex sx={smallIconContainerStyle}>
                   <Image sx={smallIconStyle} src={Lock} />
@@ -261,8 +275,8 @@ const UserProfile: React.FC = () => {
             <UserProfileCard
               children={
                 <>
-                  <Flex sx={bottomCardContainerStyle} pt={6}>
-                    <Flex sx={passwordInputContainerStyle}>
+                  <Flex sx={bottomCardTopContainerStyle} pt={6} width="100%">
+                    <Flex sx={passwordInputTopContainerStyle}>
                       <Text sx={inputTitleStyle}>Old password</Text>
                       <Box>
                         <InputGroup>
@@ -282,7 +296,11 @@ const UserProfile: React.FC = () => {
                       </Box>
                     </Flex>
                   </Flex>
-                  <Flex sx={bottomCardContainerStyle} justify="space-between">
+                  <Flex
+                    sx={bottomCardContainerStyle}
+                    direction={{ base: "column", lg: "row" }}
+                    justify="space-between"
+                  >
                     <Flex sx={passwordInputContainerStyle}>
                       <Text sx={inputTitleStyle}>New password</Text>
                       <Flex direction="column" pt="40px">
@@ -300,14 +318,21 @@ const UserProfile: React.FC = () => {
                             }
                           />
                         </InputGroup>
-                        <Text sx={passwordSubTextStyle} pt={1}>
-                          New password must be at least 8 characters,
-                          <br /> including at least 1 number and both lower
-                          <br /> and upper case letters
-                        </Text>
+                        <Box
+                          width={{ base: "100px", md: "140px", lg: "196px" }}
+                        >
+                          <Text sx={passwordSubTextStyle} pt={1}>
+                            New password must be at least 8 characters,
+                            <br /> including at least 1 number and both lower
+                            <br /> and upper case letters
+                          </Text>
+                        </Box>
                       </Flex>
                     </Flex>
-                    <Flex sx={passwordInputContainerStyle}>
+                    <Flex
+                      sx={passwordInputContainerStyle}
+                      pt={{ base: 6, lg: 0 }}
+                    >
                       <Text sx={inputTitleStyle}>Confirm new password</Text>
                       <Box>
                         <InputGroup>
