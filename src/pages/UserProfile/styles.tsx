@@ -1,9 +1,9 @@
 export const titleTextStyle = {
   color: "blue.800",
-  fontSize: "32px",
+  fontSize: { base: "16px", md: "32px" },
   fontWeight: 700,
   fontFamily: "body",
-  lineHeight: "42px",
+  lineHeight: { base: "18px", md: "42px" },
 };
 
 export const smallIconContainerStyle = {
@@ -25,13 +25,13 @@ export const smallIconStyle = {
 
 export const questionMarkIconStyle = {
   color: "blue.500",
-  fontSize: "16px",
+  fontSize: { base: "12px", md: "16px" },
   fontWeight: 700,
 };
 
 export const cardTitleStyle = {
   color: "blue.800",
-  fontSize: "18px",
+  fontSize: { base: "12px", md: "16px", lg: "18px" },
   fontFamily: "body",
   fontWeight: 700,
   lineHeight: "28px",
@@ -50,28 +50,28 @@ export const deleteIconStyle = {
 
 export const inputTitleStyle = {
   color: "blue.800",
-  fontSize: "16px",
+  fontSize: { base: "8px", md: "14px", lg: "16px" },
   fontFamily: "heading",
   fontWeight: 500,
-  lineHeight: "24px",
+  lineHeight: { base: "12px", md: "18px", lg: "24px" },
 };
 
 export const inputStyle = {
   color: "blue.800",
-  fontSize: "12px",
+  fontSize: { base: "5px", md: "10px", lg: "12px" },
   fontFamily: "heading",
   fontWeight: 400,
-  lineHeight: "20px",
-  width: "196px",
+  lineHeight: { base: "8px", md: "14px", lg: "20px" },
+  width: { base: "100px", md: "140px", lg: "196px" },
   height: "32px",
 };
 
 export const selectStyle = {
   color: "blue.800",
-  fontSize: "12px",
+  fontSize: { base: "5px", md: "10px", lg: "12px" },
   fontFamily: "heading",
   fontWeight: 400,
-  lineHeight: "20px",
+  lineHeight: { base: "8px", md: "14px", lg: "20px" },
 };
 
 export const calendarLeftIconStyle = {
@@ -107,45 +107,57 @@ export const checkCirlceStyle = {
 
 export const successMessageTextStyle = {
   color: "#0E3E25",
-  fontSize: "16px",
+  fontSize: { base: "10px", md: "14px", lg: "16px" },
   fontFamily: "heading",
   fontWeight: 400,
-  lineHeight: "24px",
+  lineHeight: { base: "12px", md: "18px", lg: "24px" },
 };
 
 export const bottomCardContainerStyle = {
-  width: "93%",
+  width: { base: "100%", lg: "93%" },
+  alignItems: "center",
+};
+
+export const bottomCardTopContainerStyle = {
+  width: { base: "85%", lg: "93%" },
   alignItems: "center",
 };
 
 export const passwordInputContainerStyle = {
-  width: "45%",
+  width: { base: "85%", lg: "45%" },
+  justifyContent: "space-between",
+  alignItems: "center",
+};
+
+export const passwordInputTopContainerStyle = {
+  width: { base: "100%", lg: "45%" },
   justifyContent: "space-between",
   alignItems: "center",
 };
 
 export const passwordSubTextStyle = {
   color: "gray.500",
-  fontSize: "9px",
+  fontSize: { base: "6px", sm: "7px", md: "9px" },
   fontFamily: "heading",
   fontWeight: 400,
   lineHeight: "12px",
-  whiteSpace: "nowrap",
+  whiteSpace: { base: "normal", lg: "nowrap" },
 };
 
 export const bottomFirstTextStyle = {
   color: "blue.800",
-  fontSize: "16px",
+  fontSize: { base: "5px", md: "14px", lg: "16px" },
   fontFamily: "heading",
   fontWeight: 400,
-  lineHeight: "24px",
+  lineHeight: { base: "8px", md: "18px", lg: "24px" },
+  whiteSpace: { base: "nowrap", lg: "normal" },
 };
 
 export const bottomSecondTextStyle = {
   color: "blue.300",
-  fontSize: "16px",
+  fontSize: { base: "5px", md: "14px", lg: "16px" },
   fontFamily: "heading",
   fontWeight: 400,
-  lineHeight: "24px",
+  lineHeight: { base: "8px", md: "18px", lg: "24px" },
   textDecoration: "underline",
 };
