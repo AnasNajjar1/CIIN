@@ -12,7 +12,7 @@ import LogOutIcon from "../../assets/menuIcons/log-out.svg";
 import SwapIcon from "../../assets/menuIcons/swap.svg";
 import SearchIcon from "../../assets/menuIcons/search.svg";
 import CiinBlueIcon from "../../assets/ciin-blue-logo.svg";
-
+import { stylesSidebarMenu } from "./styles.ts";
 interface SidebarMenuProps {
   handleClickSwap: () => void;
   isOpen: boolean;
@@ -26,9 +26,7 @@ export const SidebarMenu = ({ handleClickSwap, isOpen }: SidebarMenuProps) => {
       h="100%"
       w={{ base: "320px", md: isOpen ? "320px" : "80px" }}
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        transition: "width 0.3s ease-in-out",
+        ...stylesSidebarMenu,
         transform: [
           isOpen ? "translateX(0)" : "translateX(-100%)",
           "translateX(0)",
