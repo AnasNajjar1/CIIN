@@ -1,15 +1,6 @@
 import { Star, Download, Mail, EditPencil } from "iconoir-react";
 import Button from "../../components/Shared/Button";
-import {
-  Box,
-  Card,
-  CardBody,
-  Grid,
-  GridItem,
-  HStack,
-  Icon,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Card, CardBody, Flex, Icon, Stack, Text } from "@chakra-ui/react";
 import Link from "../../components/Shared/Link";
 import DashboardCard from "../../components/DashboardCard";
 import EmailIcon from "../../icons/emailIcon";
@@ -21,8 +12,8 @@ import Associates from "./associates";
 
 const Company = () => {
   return (
-    <Box p="176px 190px 50px 50px">
-      <HStack spacing="24px" mb="27px">
+    <Box p={{ base: "85px 0 0 0", md: "176px 190px 50px 50px" }}>
+      <Stack direction={{ base: "column", md: "row" }} spacing="24px" mb="27px">
         <Button
           variant="outline"
           size="sm"
@@ -53,7 +44,7 @@ const Company = () => {
         >
           Email this page
         </Button>
-      </HStack>
+      </Stack>
       <Card mb="33px">
         <CardBody
           display="flex"
@@ -61,7 +52,7 @@ const Company = () => {
           alignItems="center"
         >
           <Box>
-            <Text textStyle="h3" mb="16px">
+            <Text textStyle={{ base: "base", md: "h3" }} mb="16px">
               3M Canada Company
             </Text>
             <Link to="www.3m.com">www.3m.com</Link>
@@ -72,19 +63,23 @@ const Company = () => {
         </CardBody>
       </Card>
       <DashboardCard icon={EmailIcon} title="Contacts">
-        <Grid templateColumns="repeat(3, 1fr)" gap={50}>
-          <GridItem w="100%">
+        <Flex
+          direction={{ base: "column", md: "row" }}
+          justifyContent="space-between"
+          gap={{ base: 10, md: 0 }}
+        >
+          <Box>
             <Text textStyle="base">P.O Box 5757, 300 Tartan Drive</Text>
             <Text textStyle="base">Tel: (519) 451-2500</Text>
-          </GridItem>
-          <GridItem w="100%">
+          </Box>
+          <Box>
             <Text textStyle="base">London, Ontario, Canada, N6A 4T1</Text>
-          </GridItem>
-          <GridItem w="100%">
+          </Box>
+          <Box>
             <Text textStyle="base">Financial As of Date: 12/31/2021</Text>
             <Text textStyle="base">Latest Update: 07/06/2022</Text>
-          </GridItem>
-        </Grid>
+          </Box>
+        </Flex>
       </DashboardCard>
       <Tabs
         tabs={{ mt: "40px" }}

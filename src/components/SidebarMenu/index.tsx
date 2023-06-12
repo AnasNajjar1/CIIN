@@ -1,21 +1,47 @@
-import { Box, Image, Flex, Heading } from "@chakra-ui/react";
-import { sidebarIconContainer, sidebarContainer } from "./styles.tsx";
+import {
+  Box,
+  Image,
+  Flex,
+  Heading,
+  VStack,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import { sidebarMenuList } from "../../utils/constants.ts";
 import { sidebarMenuListType } from "../../utils/constantsTypes.ts";
 import LogOutIcon from "../../assets/menuIcons/log-out.svg";
 import SwapIcon from "../../assets/menuIcons/swap.svg";
 import SearchIcon from "../../assets/menuIcons/search.svg";
 import CiinBlueIcon from "../../assets/ciin-blue-logo.svg";
-
+import { stylesSidebarMenu } from "./styles.ts";
 interface SidebarMenuProps {
   handleClickSwap: () => void;
+  isOpen: boolean;
 }
 
-export const SidebarMenu = ({ handleClickSwap }: SidebarMenuProps) => {
+export const SidebarMenu = ({ handleClickSwap, isOpen }: SidebarMenuProps) => {
+  const [isLargerThanMD] = useMediaQuery("(min-width: 768px)");
   return (
-    <Box bg="white" h="100%" w="100%" sx={sidebarContainer}>
-      <Flex>
-        <Box p="20px 40px 20px 20px">
+    <Box
+      bg="white"
+      h="100%"
+      w={{ base: "320px", md: isOpen ? "320px" : "80px" }}
+      sx={{
+        ...stylesSidebarMenu,
+        transform: [
+          isOpen ? "translateX(0)" : "translateX(-100%)",
+          "translateX(0)",
+        ],
+      }}
+      position={{ base: "fixed", md: "static" }}
+      zIndex={10}
+      top={0}
+      className={isOpen && !isLargerThanMD ? "sidebar-menu-open-mobile" : ""}
+    >
+      <Flex justifyContent={"center"}>
+        <Box
+          p="20px 40px 20px 20px"
+          sx={{ display: isOpen ? "block" : "none" }}
+        >
           <Image src={CiinBlueIcon} alt="ciin-blue-icon" />
         </Box>
         <Box>
@@ -27,46 +53,66 @@ export const SidebarMenu = ({ handleClickSwap }: SidebarMenuProps) => {
               onClick={handleClickSwap}
             />
           </Box>
-          <Box p="15px 0px">
+          <Box p="15px 0px" sx={{ display: isOpen ? "block" : "none" }}>
             <Image src={SearchIcon} cursor="pointer" alt="search-icon" />
           </Box>
         </Box>
       </Flex>
-      <Box>
+      <VStack
+        mx="auto"
+        spacing={25}
+        alignItems="baseline"
+        mt={{ base: "auto", md: "250px" }}
+        mb={{ base: "auto", md: "0" }}
+      >
         {sidebarMenuList.map((el: sidebarMenuListType, index: number) => (
-          <Box sx={sidebarIconContainer} key={index}>
-            <Flex cursor="pointer">
-              <Image src={el.icon} alt={`${el.icon}-icon`} pr="11px" />
-              <Heading
-                as="h4"
-                fontSize={16}
-                fontWeight={600}
-                pt="2px"
-                color="blue.600"
-              >
-                {el.title}
-              </Heading>
-            </Flex>
-          </Box>
-        ))}
-      </Box>
-
-      <Box pb="20px">
-        <Box sx={sidebarIconContainer}>
-          <Flex cursor="pointer">
-            <Image src={LogOutIcon} alt="LogOutIcon-icon" pr="11px" />
+          <Flex
+            key={index}
+            cursor="pointer"
+            align="center"
+            width={{ md: isOpen ? "170px" : "auto" }}
+          >
+            <Image
+              src={el.icon}
+              alt={`${el.icon}-icon`}
+              pr={{ base: "11px", md: isOpen ? "11px" : "0px" }}
+            />
             <Heading
               as="h4"
               fontSize={16}
               fontWeight={600}
               pt="2px"
               color="blue.600"
+              display={{ md: isOpen ? "block" : "none" }}
             >
-              Log out
+              {el.title}
             </Heading>
           </Flex>
-        </Box>
-      </Box>
+        ))}
+      </VStack>
+      <Flex
+        cursor="pointer"
+        pb="20px"
+        mx="auto"
+        mt={{ base: "0", md: "200px" }}
+        width={{ md: isOpen ? "170px" : "auto" }}
+      >
+        <Image
+          src={LogOutIcon}
+          alt="LogOutIcon-icon"
+          pr={{ base: "11px", md: isOpen ? "11px" : "0px" }}
+        />
+        <Heading
+          as="h4"
+          fontSize={16}
+          fontWeight={600}
+          pt="2px"
+          color="blue.600"
+          display={{ md: isOpen ? "block" : "none" }}
+        >
+          Log out
+        </Heading>
+      </Flex>
     </Box>
   );
 };
