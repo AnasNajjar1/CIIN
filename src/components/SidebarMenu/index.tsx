@@ -66,7 +66,12 @@ export const SidebarMenu = ({ handleClickSwap, isOpen }: SidebarMenuProps) => {
         mb={{ base: "auto", md: "0" }}
       >
         {sidebarMenuList.map((el: sidebarMenuListType, index: number) => (
-          <Flex key={index} cursor="pointer" align="center">
+          <Flex
+            key={index}
+            cursor="pointer"
+            align="center"
+            width={{ md: isOpen ? "170px" : "auto" }}
+          >
             <Image
               src={el.icon}
               alt={`${el.icon}-icon`}
@@ -90,6 +95,7 @@ export const SidebarMenu = ({ handleClickSwap, isOpen }: SidebarMenuProps) => {
         pb="20px"
         mx="auto"
         mt={{ base: "0", md: "200px" }}
+        width={{ md: isOpen ? "170px" : "auto" }}
       >
         <Image
           src={LogOutIcon}
