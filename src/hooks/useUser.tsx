@@ -1,8 +1,10 @@
+import { UserDetails } from "../services/apiTypes/types";
 import { useAuthUser } from "../store/context/authContext.tsx";
 
 interface CurrentUser {
   token: string;
   isConnected: boolean;
+  userDetails: UserDetails;
 }
 
 const useUser = () => {

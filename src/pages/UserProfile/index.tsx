@@ -10,7 +10,7 @@ import {
   Select,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import Person from "../../assets/menuIcons/person.svg";
 import Subscription from "../../assets/subscription.svg";
 import EditIcon from "../../assets/edit.svg";
@@ -50,8 +50,33 @@ import {
   passwordInputTopContainerStyle,
 } from "./styles";
 import UserProfileCard from "../../components/Card/UserProfileCard";
+import { useAuthUser } from "../../store/context/authContext";
+import { resetPassword } from "../../services/api/resetPasswordApi";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { resetPasswordSchema } from "../../schemas/resetPassword/resetPassword";
+import { useMutation } from "react-query";
 
 const UserProfile: React.FC = () => {
+  const { authUser } = useAuthUser();
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const { register, handleSubmit } = useForm({
+    resolver: yupResolver(resetPasswordSchema),
+  });
+
+  const { mutate: resettingPassword } = useMutation(resetPassword, {
+    onSuccess: () => {
+      setShowSuccessMessage(true);
+    },
+  });
+  const onSubmit = (data: any) => {
+    resettingPassword({
+      ...data,
+      id: authUser.userDetails.id,
+      token: authUser.token,
+    });
+  };
+
   return (
     <>
       <Flex direction="column" p="20px 60px">
@@ -260,7 +285,7 @@ const UserProfile: React.FC = () => {
                 </Box>
               </Flex>
             </Flex>
-            <Box pt={3}>
+            <Box pt={3} display={showSuccessMessage ? "block" : "none"}>
               <Flex sx={successMessageContainerStyle}>
                 <Box pl={3} pt={1}>
                   <Icon as={CheckCircle} sx={checkCirlceStyle} />
@@ -285,6 +310,7 @@ const UserProfile: React.FC = () => {
                             placeholder="Lorem123%$!"
                             _placeholder={{ color: "gray.500" }}
                             type="password"
+                            {...register("old_password")}
                           />
                           <InputLeftElement
                             pb={2}
@@ -310,6 +336,7 @@ const UserProfile: React.FC = () => {
                             placeholder="Enter your password"
                             _placeholder={{ color: "gray.500" }}
                             type="password"
+                            {...register("password")}
                           />
                           <InputLeftElement
                             pb={2}
@@ -341,6 +368,7 @@ const UserProfile: React.FC = () => {
                             placeholder="Enter your password"
                             _placeholder={{ color: "gray.500" }}
                             type="password"
+                            {...register("password2")}
                           />
                           <InputLeftElement
                             pb={2}
@@ -357,7 +385,11 @@ const UserProfile: React.FC = () => {
               footer
               paddingFooter="0px 60px 30px 60px"
               childrenFooter={
-                <Button variant="solid" size="sm">
+                <Button
+                  variant="solid"
+                  size="sm"
+                  onClick={handleSubmit(onSubmit)}
+                >
                   Save changes
                 </Button>
               }

@@ -30,7 +30,7 @@ const Login = ({ switchSignUp, closeModal }: LoginProps) => {
 
   const { mutate: authLogin } = useMutation(login, {
     onSuccess: (response) => {
-      storeCurrentUser({ isConnected: true, token: response.token });
+      storeCurrentUser({ isConnected: true, token: response.token, userDetails: response.user });
       closeModal();
       navigate(`/${ROUTES.USER}/${ROUTES.DASHBOARD}`);
     },
