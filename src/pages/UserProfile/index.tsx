@@ -82,7 +82,7 @@ const UserProfile = () => {
       <Flex direction="column" p="20px 60px">
         {/* Upper Side */}
         <Flex direction="column">
-          <Box pt={5}>
+          <Box>
             <Text sx={titleTextStyle}>Profile detail</Text>
           </Box>
           {/* Cards Containers */}

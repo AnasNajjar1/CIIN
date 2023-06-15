@@ -4,15 +4,19 @@ import {
   secondPartHeadingTextStyle,
 } from "./styles";
 
-export const DashboardHeader = () => {
+type BreadcrumbProps = {
+  title: string;
+};
+
+export const Breadcrumb = ({ title }: BreadcrumbProps) => {
   return (
-    <Flex align="center">
+    <Flex align="center" display={title === "" ? "none" : "flex"}>
       <Text sx={firstPartHeadingTextStyle}>Home /</Text>
       <Text sx={secondPartHeadingTextStyle} pl={1}>
-        User profile
+        {title}
       </Text>
     </Flex>
   );
 };
 
-export default DashboardHeader;
+export default Breadcrumb;

@@ -10,18 +10,18 @@ export const Button: ComponentStyleConfig = {
   },
   sizes: {
     sm: {
-      padding: "0px 12px",
+      padding: { base: "0px 8px", md: "0px 10px", lg: "0px 12px" },
       borderRadius: "8px",
-      height: "42px",
-      fontSize: "14px",
-      lineHeight: "20px",
+      height: { base: "24px", md: "30px", lg: "42px" },
+      fontSize: { base: "10px", md: "14px" },
+      lineHeight: { base: "16px", md: "20px" },
     },
     md: {
-      padding: "0px 16px",
+      padding: { base: "0px 10px", md: "0px 12px", lg: "0px 16px" },
       borderRadius: "6px",
-      height: "58px",
-      fontSize: "16px",
-      lineHeight: "24px",
+      height: { base: "36px", md: "58px" },
+      fontSize: { base: "12px", md: "16px" },
+      lineHeight: { base: "18px", md: "24px" },
     },
   },
   variants: {

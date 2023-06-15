@@ -5,13 +5,21 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../utils/constants";
 import Breadcrumb from "../Breadcrumb";
 
-export const DashboardHeader = () => {
+type DashboardHeaderProps = {
+  headerTitle: string;
+};
+
+export const DashboardHeader = ({ headerTitle }: DashboardHeaderProps) => {
   const navigate = useNavigate();
 
   return (
-    <Box p={{ base: "85px 0 0 0", md:"85px 190px 10px 60px"}}>
-      <Flex align="center" justify="space-between" width="100%">
-        <Breadcrumb />
+    <Box p={{ base: "85px 0 0 0", md: "85px 60px 10px 60px" }}>
+      <Flex
+        align="center"
+        justify={headerTitle === "" ? "flex-end" : "space-between"}
+        width="100%"
+      >
+        <Breadcrumb title={headerTitle} />
         <Flex
           sx={bigIconContainerStyle}
           onClick={() => {

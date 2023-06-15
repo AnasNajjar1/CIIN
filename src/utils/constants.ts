@@ -12,6 +12,7 @@ export const ROUTES = {
   DASHBOARD: "dashboard",
   USER: "user",
   USERPROFILE: "user-profile",
+  CONTACTS: "contacts",
   FAQ: "faq",
   COMPANY: "company",
 };

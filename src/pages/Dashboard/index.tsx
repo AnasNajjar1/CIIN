@@ -12,7 +12,7 @@ import DashboardCard from "../../components/DashboardCard";
 export const Dashboard = () => {
 
   return (
-    <Box p="60px 190px 60px 60px">
+    <Box p="60px">
       <Box pt={4}>
      <Text textStyle="h3">Welcome!</Text>
       </Box>
