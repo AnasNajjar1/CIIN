@@ -1,5 +1,4 @@
 import { Card, CardBody, Stack, Box, Text } from "@chakra-ui/react";
-import React from "react";
 import {
   cardFirstTextStyle,
   cardSecondTextStyle,
@@ -15,14 +14,14 @@ type HomePageCardProps = {
   thirdText: any;
 };
 
-const HomePageCard: React.FC<HomePageCardProps> = ({
+const HomePageCard = ({
   firstBoxPaddingTop,
   secondBoxPaddingTop,
   thirdBoxPaddingBottom,
   firstText,
   secondText,
   thirdText,
-}) => {
+}: HomePageCardProps) => {
   return (
     <>
       <Card>

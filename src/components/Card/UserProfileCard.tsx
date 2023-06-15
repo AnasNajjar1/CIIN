@@ -1,5 +1,4 @@
 import { Box, Card, CardBody, CardFooter, Stack } from "@chakra-ui/react";
-import React from "react";
 
 type UserProfileCardProps = {
   children: any;
@@ -8,12 +7,12 @@ type UserProfileCardProps = {
   paddingFooter?: any;
 };
 
-const UserProfileCard: React.FC<UserProfileCardProps> = ({
+const UserProfileCard = ({
   children,
   footer = false,
   childrenFooter = null,
   paddingFooter = null,
-}) => {
+}: UserProfileCardProps) => {
   return (
     <>
       <Box pt={4}>
@@ -21,7 +20,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           <CardBody>
             <Stack alignItems="center">{children}</Stack>
           </CardBody>
-          {footer && <CardFooter p={paddingFooter}>{childrenFooter}</CardFooter>}
+          {footer && (
+            <CardFooter p={paddingFooter}>{childrenFooter}</CardFooter>
+          )}
         </Card>
       </Box>
     </>

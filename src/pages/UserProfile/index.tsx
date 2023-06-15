@@ -10,7 +10,7 @@ import {
   Select,
   Text,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { useState } from "react";
 import Person from "../../assets/menuIcons/person.svg";
 import Subscription from "../../assets/subscription.svg";
 import EditIcon from "../../assets/edit.svg";
@@ -57,7 +57,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { resetPasswordSchema } from "../../schemas/resetPassword/resetPassword";
 import { useMutation } from "react-query";
 
-const UserProfile: React.FC = () => {
+const UserProfile = () => {
   const { authUser } = useAuthUser();
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const { register, handleSubmit } = useForm({
