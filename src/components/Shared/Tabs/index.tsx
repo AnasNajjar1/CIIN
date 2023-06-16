@@ -5,7 +5,6 @@ import {
   TabPanels,
   Tab,
   TabPanel,
-  TabIndicator,
 } from "@chakra-ui/react";
 type TabsProps = Omit<React.ComponentProps<typeof TabsChakra>, "children">;
 interface Item {
@@ -16,8 +15,9 @@ interface Item {
 interface Props {
   tabs: TabsProps;
   items: Item[];
+  tabPanelsProps?: React.ComponentProps<typeof TabPanels>;
 }
-const Tabs = ({ tabs, items }: Props) => {
+const Tabs = ({ tabs, items, tabPanelsProps }: Props) => {
   return (
     <TabsChakra align="center" {...tabs}>
       <TabList>
@@ -28,7 +28,6 @@ const Tabs = ({ tabs, items }: Props) => {
               color: "blue.500",
               fontWeight: "bold",
               borderBottom: "4px solid #5E8CBA",
-
             }}
             key={index}
             {...item.props}
@@ -38,9 +37,11 @@ const Tabs = ({ tabs, items }: Props) => {
         ))}
       </TabList>
 
-      <TabPanels textAlign='left' pt='30px'>
+      <TabPanels textAlign="left" pt="30px" {...tabPanelsProps}>
         {items.map((item, index) => (
-          <TabPanel p='0' key={index}>{item.component}</TabPanel>
+          <TabPanel p="0" key={index}>
+            {item.component}
+          </TabPanel>
         ))}
       </TabPanels>
     </TabsChakra>

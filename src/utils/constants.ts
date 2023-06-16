@@ -14,6 +14,7 @@ export const ROUTES = {
   USERPROFILE: "user-profile",
   FAQ: "faq",
   COMPANY: "company",
+  UPDATECOMPANY: "company/update",
 };
 export const QueryConfig = {
   defaultOptions: {

@@ -1,6 +1,6 @@
 import { Box, Flex, Icon, Text } from "@chakra-ui/react";
 import { ArrowRight, EyeClose, Lock, User } from "iconoir-react";
-import { useForm } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -20,14 +20,10 @@ type LoginProps = {
 const Login = ({ switchSignUp, closeModal }: LoginProps) => {
   const { storeCurrentUser } = useUser();
   const navigate = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const methods = useForm({
     resolver: yupResolver(loginSchema),
   });
-
+  const { handleSubmit } = methods;
   const { mutate: authLogin } = useMutation(login, {
     onSuccess: (response) => {
       storeCurrentUser({ isConnected: true, token: response.token, userDetails: response.user });
@@ -40,27 +36,23 @@ const Login = ({ switchSignUp, closeModal }: LoginProps) => {
   };
 
   return (
-    <>
+    <FormProvider {...methods}>
       <Box mb={6}>
         <InputField
           leftIcon={User}
-          fieldName="username"
+          name="username"
           label="Username"
           placeholder="Username"
-          register={register}
-          errors={errors}
         />
       </Box>
       <Box mb={6}>
         <InputField
           rightIcon={EyeClose}
           leftIcon={Lock}
-          fieldName="password"
+          name="password"
           label="Password"
           placeholder="Enter your password"
           type="password"
-          register={register}
-          errors={errors}
         />
       </Box>
 
@@ -87,7 +79,7 @@ const Login = ({ switchSignUp, closeModal }: LoginProps) => {
           Sign up
         </Text>
       </Flex>
-    </>
+    </FormProvider>
   );
 };
 export default Login;

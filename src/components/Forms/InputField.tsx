@@ -1,71 +1,47 @@
-import { Flex, Icon, Input, Text } from "@chakra-ui/react";
-import { inputIconStyle, inputStyle, inputLabelStyle } from "./styles";
-import { UseFormRegister, FieldErrorsImpl } from "react-hook-form";
+import React from "react";
+import Field, { PropsField } from "./Field";
+import { inputIconStyle, inputStyle } from "./styles";
+import {
+  Icon,
+  Input as ChakraInput,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
+} from "@chakra-ui/react";
 
-type InputFieldProps = {
-  rightIcon?: any;
-  leftIcon?: any;
-  label?: string;
-  type?: string;
-  placeholder?: string;
-  helperText?: string;
-  register: UseFormRegister<any>;
-  fieldName: string;
-  errors: Partial<FieldErrorsImpl<any>>;
+type CustomInputProps = React.ComponentProps<typeof ChakraInput> & {
+  leftIcon?: React.ReactElement;
+  rightIcon?: React.ReactElement;
 };
+type Props = CustomInputProps & PropsField;
 
-const InputField = ({
-  rightIcon,
-  leftIcon,
-  label,
-  placeholder,
-  helperText,
-  type = "text",
-  register,
-  fieldName,
-  errors,
-}: InputFieldProps) => {
-  return (
-    <>
-      <Flex direction="column" position="relative">
-        {label && <Text sx={inputLabelStyle}>{label}</Text>}
-        {leftIcon && <Icon sx={inputIconStyle} as={leftIcon} left="10px" />}
-        {rightIcon && <Icon sx={inputIconStyle} as={rightIcon} left="212px" />}
-        <Input
-          sx={inputStyle}
-          placeholder={placeholder}
-          type={type}
-          pl={leftIcon ? "40px" : "12px"}
-          pr={rightIcon ? "40px" : "12px"}
-          {...register(fieldName)}
+const CustomInput = React.forwardRef(
+  ({ leftIcon, rightIcon, ...rest }: CustomInputProps, ref) => {
+    const { sx, ...inputProps } = rest || {};
+    return (
+      <InputGroup ref={ref}>
+        {leftIcon && (
+          <InputLeftElement pointerEvents="none">
+            <Icon sx={inputIconStyle} as={leftIcon} />
+          </InputLeftElement>
+        )}
+        <ChakraInput
+          sx={{ ...inputStyle, ...sx }}
+          width="270px"
+          height="40px"
+          {...inputProps}
         />
-        {helperText && !errors[fieldName] && (
-          <Text
-            color="gray.500"
-            fontFamily="heading"
-            fontSize="12px"
-            fontWeight={400}
-            pt={1}
-            lineHeight="16px"
-          >
-            {helperText}
-          </Text>
+        {rightIcon && (
+          <InputRightElement pointerEvents="none">
+            <Icon sx={inputIconStyle} as={rightIcon} />
+          </InputRightElement>
         )}
-        {errors[fieldName] && (
-            <Text
-                color="red.500"
-                fontFamily="heading"
-                fontSize="12px"
-                fontWeight={400}
-                pt={1}
-                lineHeight="16px"
-            >
-              {errors[fieldName]?.message as any}
-            </Text>
-        )}
-      </Flex>
-    </>
-  );
+      </InputGroup>
+    );
+  },
+);
+
+const InputField = (props: Props) => {
+  return <Field {...props} Input={CustomInput} />;
 };
-;
 export default InputField;
