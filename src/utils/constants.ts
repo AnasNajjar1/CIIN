@@ -13,6 +13,7 @@ export const ROUTES = {
   USER: "user",
   USERPROFILE: "user-profile",
   COMPANY: "company",
+  UPDATECOMPANY: "company/update",
 };
 export const QueryConfig = {
   defaultOptions: {

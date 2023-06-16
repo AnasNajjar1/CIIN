@@ -31,6 +31,10 @@ export const SidebarMenu = ({ handleClickSwap, isOpen }: SidebarMenuProps) => {
           isOpen ? "translateX(0)" : "translateX(-100%)",
           "translateX(0)",
         ],
+        boxShadow: {
+          base: isOpen ? "0px -2px 19px 0px #888888" : "none",
+          md: "none",
+        },
       }}
       position={{ base: "fixed", md: "static" }}
       zIndex={10}

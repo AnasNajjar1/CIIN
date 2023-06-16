@@ -301,7 +301,7 @@ const UserProfile: React.FC = () => {
                           />
                         </InputGroup>
                         <Text sx={passwordSubTextStyle} pt={1}>
-                          New password must be at least 8 characters,
+                          New password must be at least 4 characters,
                           <br /> including at least 1 number and both lower
                           <br /> and upper case letters
                         </Text>
