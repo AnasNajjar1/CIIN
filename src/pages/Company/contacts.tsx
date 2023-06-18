@@ -1,5 +1,5 @@
 import { VStack } from "@chakra-ui/react";
-import CardContact from "../../components/cardContact";
+import CardContact from "../../components/CardContact";
 import LatestUpdate from "./latestUpdate.tsx";
 const Contacts = () => {
   return (
