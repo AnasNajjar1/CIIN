@@ -1,6 +1,6 @@
 import ItemLegendChart from "../../components/Shared/ItemLegendChart";
 import PieChart from "../../components/Shared/PieChart";
-import LatestUpdate from "./LatestUpdate";
+import LatestUpdate from "./latestUpdate";
 import {
   Card,
   CardBody,
