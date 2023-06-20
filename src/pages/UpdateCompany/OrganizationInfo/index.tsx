@@ -21,7 +21,7 @@ const OrganizationInfo = () => {
       </Flex>
       <Flex direction="column" width={{ md: "50%" }}>
         <Text mb="32px" textStyle="h4">
-          Previous tracking
+          Office
         </Text>
         <Card
           pr={{ base: "10px", md: "100px" }}

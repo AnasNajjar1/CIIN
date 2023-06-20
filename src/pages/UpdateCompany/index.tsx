@@ -7,6 +7,7 @@ import MainContacts from "./MainContacts";
 import Button from "../../components/Shared/Button";
 import Alert from "../../components/Shared/Alert";
 import OrganizationInfo from "./OrganizationInfo";
+import Contacts from "./Contacts";
 
 const UpdateCompany = () => {
   return (
@@ -43,7 +44,7 @@ const UpdateCompany = () => {
             },
             {
               title: "Contacts",
-              component: <p>Contacts</p>,
+              component: <Contacts />,
             },
             {
               title: "Plan Summary",

@@ -1,11 +1,13 @@
+import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import InputField from "../../../components/Forms/InputField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { completedBySchema } from "../../../schemas/completedBy";
 import { Flex, Icon, IconButton, Stack } from "@chakra-ui/react";
-import { Plus } from "iconoir-react";
+import { Minus, Plus } from "iconoir-react";
 import Button from "../../../components/Shared/Button";
 const CompletedByForm = () => {
+  const [showAnotherEmail, setShowAnotherEmail] = useState(false);
   const methods = useForm({
     resolver: yupResolver(completedBySchema),
   });
@@ -20,17 +22,12 @@ const CompletedByForm = () => {
           w="100%"
         />
         <InputField
-          name="lastName1"
+          name="lastName"
           label="Last Name"
           placeholder="Last Name"
           w="100%"
         />
-        <InputField
-          name="lastName2"
-          label="Last Name"
-          placeholder="Last Name"
-          w="100%"
-        />
+        <InputField name="title" label="Title" placeholder="Title" w="100%" />
         <Flex width="100%" justify={"space-between"} position="relative">
           <InputField
             name="email"
@@ -48,11 +45,37 @@ const CompletedByForm = () => {
             top="29px"
             minW="24px"
             h="24px"
-            display="inline-block"
+            display={showAnotherEmail ? "none" : "inline-block"}
+            onClick={() => setShowAnotherEmail(true)}
           >
             <Icon as={Plus} />
           </IconButton>
         </Flex>
+        {showAnotherEmail && (
+          <Flex width="100%" justify={"space-between"} position="relative">
+            <InputField
+              name="anotherEmail"
+              label="Another Email"
+              placeholder="Another Email"
+              width={{ base: "calc(100% - 35px)", md: "100%" }}
+              flex={{ md: "1" }}
+            />
+            <IconButton
+              variant="outline"
+              px="0"
+              borderRadius="50%"
+              position="absolute"
+              right={{ base: "0", md: "-41px" }}
+              top="29px"
+              minW="24px"
+              h="24px"
+              display="inline-block"
+              onClick={() => setShowAnotherEmail(false)}
+            >
+              <Icon as={Minus} />
+            </IconButton>
+          </Flex>
+        )}
         <Flex gap="24px" width="100%">
           <InputField
             name="phone"
