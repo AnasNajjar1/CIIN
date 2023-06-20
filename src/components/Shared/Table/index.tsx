@@ -8,8 +8,11 @@ import {
 } from "@chakra-ui/table";
 export interface Column<T> {
   label: React.ReactNode;
-  key: keyof T;
+  key: keyof T & { action?: React.FC };
   width: string;
+  Cell?: React.FC<{
+    row: T;
+  }>;
 }
 interface Props<T> {
   columns: Column<T>[];
@@ -22,7 +25,7 @@ function Table<T>({ columns, data }: Props<T>) {
       sx={{ borderSpacing: "4px 0", borderCollapse: "separate" }}
     >
       <Thead h="59px">
-        <Tr sx={{ "& > :not(:first-child)": { textAlign: "center" } }}>
+        <Tr sx={{ "& > :not(:first-of-type)": { textAlign: "center" } }}>
           {columns.map((column) => (
             <Th
               bg="gray.50"
@@ -39,12 +42,14 @@ function Table<T>({ columns, data }: Props<T>) {
       <Tbody>
         {data.map((row, index) => (
           <Tr
-            sx={{ "& > :not(:first-child)": { textAlign: "center" } }}
+            sx={{ "& > :not(:first-of-type)": { textAlign: "center" } }}
             key={index}
           >
             {columns.map((column) => (
               <Td key={column.key as string}>
-                {row[column.key] as React.ReactNode}
+                {column.Cell
+                  ? column.Cell({ row })
+                  : (row[column.key] as React.ReactNode)}
               </Td>
             ))}
           </Tr>

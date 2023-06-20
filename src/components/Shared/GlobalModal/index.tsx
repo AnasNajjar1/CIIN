@@ -22,16 +22,14 @@ const GlobalModal = ({
   children,
 }: GlobalModalProps) => {
   return (
-    <>
-      <Modal size="2xl" isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent alignItems="center">
-          <ModalHeader pt="50px">{modalHeader}</ModalHeader>
-          <ModalCloseButton color="blue.800" width="16.33px" height="16.33px" />
-          <ModalBody>{children}</ModalBody>
-        </ModalContent>
-      </Modal>
-    </>
+    <Modal size="2xl" isOpen={isOpen} onClose={onClose} >
+      <ModalOverlay />
+      <ModalContent alignItems="center" >
+        <ModalHeader pt="50px">{modalHeader}</ModalHeader>
+        <ModalCloseButton color="blue.800" width="16.33px" height="16.33px" />
+        <ModalBody w='80%'>{children}</ModalBody>
+      </ModalContent>
+    </Modal>
   );
 };
 export default GlobalModal;
