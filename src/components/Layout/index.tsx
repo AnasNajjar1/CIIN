@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import { Outlet, useLocation } from "react-router-dom";
 import SidebarMenu from "../SidebarMenu";
@@ -10,10 +10,28 @@ import DashboardHeader from "../DashboardHeader";
 export const Layout = () => {
   const location = useLocation();
   const [isOpenSideMenu, setIsOpenSideMenu] = useState<boolean>(false);
+  const [headerTitle, setHeaderTitle] = useState("");
   const onClickSwap = () => {
     setIsOpenSideMenu(!isOpenSideMenu);
   };
   const isHomeView: boolean = location.pathname.includes("/user");
+
+  useEffect(() => {
+    if(location.pathname.includes("/dashboard")) {
+      setHeaderTitle("");
+    } else if(location.pathname.includes("/user-profile")) {
+      setHeaderTitle("User profile");
+    } else if(location.pathname.includes("/publications")) {
+      setHeaderTitle("Publications");
+    } else if(location.pathname.includes("/edit-publications")) {
+      setHeaderTitle("Edit publications");
+    } else if(location.pathname.includes("/faq")) {
+      setHeaderTitle("FAQ");
+    } else if(location.pathname.includes("/contacts")) {
+      setHeaderTitle("Contacts");
+    }
+  }, [location]);
+  
 
   return (
     <>
@@ -65,7 +83,7 @@ export const Layout = () => {
           bg={appBackgroundColor}
           px={{ base: "10px", md: "0" }}
         >
-          {isHomeView && <DashboardHeader />}
+          {isHomeView && <DashboardHeader headerTitle={headerTitle} />}
           <Outlet />
         </GridItem>
         <GridItem area={"footer"} px={{ base: "10px", md: "0" }}>

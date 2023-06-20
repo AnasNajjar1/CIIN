@@ -1,12 +1,11 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
-import { Dashboard, Home, UserProfile, Faq, Company } from "./pages";
+import { Dashboard, Home, UserProfile, Contacts, Faq, Company } from "./pages";
 import { AxiosInterceptor } from "./services/request.ts";
 import { ROUTES } from "./utils/constants.ts";
 import { AuthUserProvider } from "./store/context/authContext.tsx";
 import AuthentificationGuard from "./components/Layout/authentificationGuard.tsx";
-
 
 function App() {
   return (
@@ -21,8 +20,12 @@ function App() {
                 element={<AuthentificationGuard />}
               >
                 <Route path={`${ROUTES.DASHBOARD}`} element={<Dashboard />} />
-                <Route path={`${ROUTES.USERPROFILE}`} element={<UserProfile />} />
+                <Route
+                  path={`${ROUTES.USERPROFILE}`}
+                  element={<UserProfile />}
+                />
                 <Route path={`${ROUTES.FAQ}`} element={<Faq />} />
+                <Route path={`${ROUTES.CONTACTS}`} element={<Contacts />} />
                 <Route path={`${ROUTES.COMPANY}`} element={<Company />} />
               </Route>
             </Route>

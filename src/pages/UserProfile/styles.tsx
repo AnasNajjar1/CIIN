@@ -36,6 +36,7 @@ export const cardTitleStyle = {
   fontWeight: 700,
   lineHeight: "28px",
 };
+
 export const editIconStyle = {
   color: "gray.200",
   width: "10.67px",
