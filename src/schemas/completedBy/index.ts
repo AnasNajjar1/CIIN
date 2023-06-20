@@ -9,18 +9,18 @@ export const completedBySchema = yup
       .required("First name is mandatory")
       .min(4, "First name should contain at least 4 characters")
       .max(50, "First name should contain at most 50 characters"),
-    lastName1: yup
+    lastName: yup
       .string()
       .trim()
       .required("First name is mandatory")
       .min(4, "First name should contain at least 4 characters")
       .max(50, "First name should contain at most 50 characters"),
-    lastName2: yup
+    title: yup
       .string()
       .trim()
-      .required("First name is mandatory")
-      .min(4, "First name should contain at least 4 characters")
-      .max(50, "First name should contain at most 50 characters"),
+      .required("Title is mandatory")
+      .min(4, "Title should contain at least 4 characters")
+      .max(50, "Title should contain at most 50 characters"),
     email: yup
       .string()
       .trim()
