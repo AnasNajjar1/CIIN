@@ -31,9 +31,6 @@ interface Props {
   close: () => void;
 }
 const ContactForm = ({ data, close }: Props) => {
-  // {
-  //     resolver: yupResolver(completedBySchema),
-  //   }
   const methods = useForm({
     defaultValues: data,
   });
