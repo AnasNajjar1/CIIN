@@ -168,6 +168,7 @@ const Contacts = () => {
       <VStack spacing="26px" w="100%">
         <Button
           variant={"outline"}
+          size="sm"
           rightIcon={<Icon mt="3px" as={AddCircle} />}
           onClick={() => {
             setModalType("add");

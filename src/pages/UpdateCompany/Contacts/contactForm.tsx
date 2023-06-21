@@ -1,9 +1,7 @@
-import { Box, Checkbox, CheckboxGroup, Flex, Stack } from "@chakra-ui/react";
-import React from "react";
+import {  Checkbox, CheckboxGroup, Flex, Stack } from "@chakra-ui/react";
 import InputField from "../../../components/Forms/InputField";
 import Select from "../../../components/Forms/Select";
 import { useForm, FormProvider } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import Button from "../../../components/Shared/Button";
 import InputLabel from "../../../components/Shared/InputLabel";
 import { Contact } from ".";
