@@ -8,6 +8,12 @@ import Button from "../../components/Shared/Button";
 import Alert from "../../components/Shared/Alert";
 import OrganizationInfo from "./OrganizationInfo";
 import Contacts from "./Contacts";
+import { tabsPensionFund } from "./PensionFund";
+import { tabsFoundationsEndowment } from "./FoundationsEndowment";
+const companyTypes = {
+  pensionFund: tabsPensionFund,
+  foundationsEndowment: tabsFoundationsEndowment,
+};
 
 const UpdateCompany = () => {
   return (
@@ -46,26 +52,7 @@ const UpdateCompany = () => {
               title: "Contacts",
               component: <Contacts />,
             },
-            {
-              title: "Plan Summary",
-              component: <p>Plan Summary</p>,
-            },
-            {
-              title: "3rd Party Associates",
-              component: <p>3rd Party Associates</p>,
-            },
-            {
-              title: "Asset Alocation",
-              component: <p>Asset Alocation</p>,
-            },
-            {
-              title: "Details",
-              component: <p>Details</p>,
-            },
-            {
-              title: "Administrative",
-              component: <p>Administrative</p>,
-            },
+            ...companyTypes.foundationsEndowment,
           ]}
           tabPanelsProps={{
             pt: "164px",
