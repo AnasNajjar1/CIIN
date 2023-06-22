@@ -1,5 +1,5 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
-import DashboardCard from "../../components/DashboardCard";
+import DashboardCard from "../../components/Card/DashboardCard";
 import EmailIcon from "../../icons/emailIcon";
 import Tabs from "../../components/Shared/Tabs";
 import Contacts from "./contacts";

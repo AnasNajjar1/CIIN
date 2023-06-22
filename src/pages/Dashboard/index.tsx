@@ -7,7 +7,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { EyeEmpty, BookmarkEmpty, EmptyPage, Search } from "iconoir-react";
-import DashboardCard from "../../components/DashboardCard";
+import DashboardCard from "../../components/Card/DashboardCard";
 
 export const Dashboard = () => {
 
