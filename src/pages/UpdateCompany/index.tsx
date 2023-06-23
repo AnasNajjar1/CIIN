@@ -1,4 +1,4 @@
-import DashboardCard from "../../components/DashboardCard";
+import DashboardCard from "../../components/Card/DashboardCard";
 import Tabs from "../../components/Shared/Tabs";
 import BarChartIcon from "../../icons/barChartIcon";
 import FirstSectionCompany from "../Company/firstSectionCompany";

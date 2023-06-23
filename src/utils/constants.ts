@@ -14,6 +14,7 @@ export const ROUTES = {
   USERPROFILE: "user-profile",
   CONTACTS: "contacts",
   FAQ: "faq",
+  PUBLICATIONS: "publications",
   COMPANY: "company",
   UPDATECOMPANY: "company/update",
 };
