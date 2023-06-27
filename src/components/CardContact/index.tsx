@@ -3,12 +3,13 @@ import CardIcon from "../Shared/CardIcon";
 import Link from "../Shared/Link";
 import { User } from "iconoir-react";
 interface Contact {
-  userName: string;
+  firstName: string;
+  lastName: string;
   phone: string;
   email: string;
-  job: string;
+  title: string;
 }
-const CardContact = ({ userName, phone, email, job }: Contact) => {
+const CardContact = ({ firstName, lastName, phone, email, title }: Contact) => {
   return (
     <Card width="100%">
       <CardHeader
@@ -19,7 +20,7 @@ const CardContact = ({ userName, phone, email, job }: Contact) => {
         pb="0"
       >
         <CardIcon icon={User} />
-        <Text textStyle="lg">{userName}</Text>
+        <Text textStyle="lg">{`${firstName} ${lastName}`}</Text>
       </CardHeader>
       <CardBody
         pt="0"
@@ -28,7 +29,7 @@ const CardContact = ({ userName, phone, email, job }: Contact) => {
         justifyContent={"flex-start"}
       >
         <Text textStyle="base" fontWeight="500" mb="16px">
-          {job}
+          {title}
         </Text>
         <Text textStyle="base" fontWeight="500" mb="16px">
           Tel: {phone}

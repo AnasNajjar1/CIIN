@@ -1,29 +1,23 @@
 import { VStack } from "@chakra-ui/react";
 import CardContact from "../../components/CardContact";
 import LatestUpdate from "./latestUpdate.tsx";
+import { useGetContacts } from "../../hooks/api/company/contacts.ts";
 const Contacts = () => {
+  const { data: contacts } = useGetContacts();
   return (
     <>
       <LatestUpdate />
       <VStack spacing="32px" width="100%">
-        <CardContact
-          userName="Robert Martins"
-          phone="416-477-8160"
-          email="robert.martins@contexgroup.ca"
-          job="Director, Business Development & Client Relations"
-        />
-        <CardContact
-          userName="Kharrissa Oosthuyzen"
-          phone="416-477-8160"
-          email="kharrissa.oosthuyzen@contexgroup.ca"
-          job="Data analyst"
-        />
-        <CardContact
-          userName="Corinne Keov"
-          phone="416-477-8160"
-          email="corine.keov@contexgroup.ca"
-          job="Data analyst"
-        />
+        {contacts?.map(({ id, first_name, last_name, email, title,phone_number }) => (
+          <CardContact
+            key={id}
+            firstName={first_name}
+            lastName={last_name}
+            email={email}
+            title={title}
+            phone={phone_number}
+          />
+        ))}
       </VStack>
     </>
   );

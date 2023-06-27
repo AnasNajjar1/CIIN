@@ -13,6 +13,6 @@ export const loginSchema = yup
       .string()
       .trim()
       .required("Password is mandatory")
-      .min(8, "Password should contain at least 8 characters"),
+      .min(1, "Password should contain at least 8 characters"),
   })
   .required();
