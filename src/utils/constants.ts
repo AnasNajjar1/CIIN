@@ -15,6 +15,7 @@ export const ROUTES = {
   CONTACTS: "contacts",
   FAQ: "faq",
   PUBLICATIONS: "publications",
+  EDITPUBLICATIONS: "edit-publications",
   COMPANY: "company",
   UPDATECOMPANY: "company/update",
 };

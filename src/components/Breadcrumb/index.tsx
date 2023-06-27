@@ -11,7 +11,9 @@ type BreadcrumbProps = {
 export const Breadcrumb = ({ title }: BreadcrumbProps) => {
   return (
     <Flex align="center" display={title === "" ? "none" : "flex"}>
-      <Text sx={firstPartHeadingTextStyle}>Home /</Text>
+      <Text sx={firstPartHeadingTextStyle}>
+        {title === "Edit publications" ? "Home / Publications /" : "Home /"}
+      </Text>
       <Text sx={secondPartHeadingTextStyle} pl={1}>
         {title}
       </Text>
