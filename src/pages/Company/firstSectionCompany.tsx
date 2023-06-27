@@ -50,7 +50,12 @@ const FirstSectionCompany = () => {
             </Text>
             <Link to="www.3m.com">www.3m.com</Link>
           </Box>
-          <Button size="sm" leftIcon={<Icon as={EditPencil} />}>
+          <Button
+            as={"a"}
+            href="/user/company/update"
+            size="sm"
+            leftIcon={<Icon as={EditPencil} />}
+          >
             Edit company
           </Button>
         </CardBody>

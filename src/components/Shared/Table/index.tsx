@@ -26,13 +26,13 @@ function Table<T>({ columns, data }: Props<T>) {
     >
       <Thead h="59px">
         <Tr sx={{ "& > :not(:first-of-type)": { textAlign: "center" } }}>
-          {columns.map((column) => (
+          {columns.map((column, index) => (
             <Th
               bg="gray.50"
               w={column.width}
               borderRadius="8px"
               borderBottom="none"
-              key={column.key as string}
+              key={index}
             >
               {column.label}
             </Th>
@@ -45,8 +45,8 @@ function Table<T>({ columns, data }: Props<T>) {
             sx={{ "& > :not(:first-of-type)": { textAlign: "center" } }}
             key={index}
           >
-            {columns.map((column) => (
-              <Td key={column.key as string}>
+            {columns.map((column, index) => (
+              <Td key={index}>
                 {column.Cell
                   ? column.Cell({ row })
                   : (row[column.key] as React.ReactNode)}

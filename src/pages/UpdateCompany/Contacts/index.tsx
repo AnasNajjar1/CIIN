@@ -7,88 +7,57 @@ import Button from "../../../components/Shared/Button";
 import GlobalModal from "../../../components/Shared/GlobalModal";
 import { useMemo, useState } from "react";
 import ContactForm from "./contactForm";
-export interface Contact {
-  firstName: string;
-  lastName: string;
-  type: string;
-  title: string;
-  jobFunction: string[];
-  email: string;
-  phone: string;
-  ext: string;
-  publish: boolean;
-}
-const initialValueContact = {
-  firstName: "",
-  lastName: "",
-  type: "",
-  title: "",
-  jobFunction: [],
-  email: "",
-  phone: "",
-  publish: false,
-  ext: "",
-};
+import {
+  ServerStateCompanyContactsEnum,
+  useDeleteContact,
+  useGetContacts,
+} from "../../../hooks/api/company/contacts";
+import { Contact } from "../../../services/apiTypes/types";
+import { useQueryClient } from "react-query";
 
-const firstTableData = {
-  data: [
-    {
-      firstName: "Jeff Finley",
-      lastName: "Finley2",
-      type: "Consultant",
-      title:
-        "HR Leader, Canada & Latin America, Total Compensation Resource Centre",
-      jobFunction: [
-        "Management - DB",
-        "Management - Benefits",
-        "Consultant - DC/RRSP",
-      ],
-      email: "JFinley@mmm.com",
-      phone: "(519) 451-2500",
-      publish: true,
-      ext: "123",
-    },
-    {
-      firstName: "Jeff Finley2",
-      lastName: "Finley3",
-      type: "Consultant",
-      title:
-        "HR Leader, Canada & Latin America, Total Compensation Resource Centre",
-      jobFunction: [
-        "Management - DB",
-        "Management - Benefits",
-        "Consultant - DC/RRSP",
-      ],
-      email: "JFinley@mmm.com",
-      phone: "(519) 451-2500",
-      publish: false,
-      ext: "123",
-    },
-  ],
-} as { data: Contact[] };
 interface HeaderModalProps {
   type: "update" | "add";
 }
 const HeaderModal = ({ type }: HeaderModalProps) => {
   return <p>{type === "update" ? "Update Contact" : "Add Contact"}</p>;
 };
+const initialContact = {
+  phone_number: "",
+  ext: 0,
+  fax: "",
+  email: "",
+  second_email: "",
+  first_name: "",
+  last_name: "",
+  title: "",
+  type: "",
+  company:
+    "http://localhost:8000/companies/d3f58dda-3a6e-400e-88d0-e53072eaee65/",
+  main_contact: false,
+  notes: "",
+  previous_main_contact: false,
+  previous_main_contact_date_left: null,
+} as Contact;
 const Contacts = () => {
   const [openModal, setOpenModal] = useState(false);
   const [modalType, setModalType] = useState<"update" | "add">("add");
+  const { data: contacts } = useGetContacts();
+  const { mutate: deleteContact } = useDeleteContact();
   const [selectedContact, setSelectedContact] =
-    useState<Contact>(initialValueContact);
+    useState<Contact>(initialContact);
+    const queryClient = useQueryClient();
   const columns = useMemo(
     () => [
       {
         label: "Name",
-        key: "name",
+        key: "first_name",
         width: "22%",
         Cell: ({ row }: { row: Contact }) => {
           return (
             <Flex align="center" gap="12px">
               <CardIcon icon={User} />
               <span>
-                {row.firstName} {row.lastName}
+                {row.first_name} {row.last_name}
               </span>
             </Flex>
           );
@@ -101,9 +70,9 @@ const Contacts = () => {
       },
       {
         label: "Job Function",
-        key: "jobFunction",
+        key: "title",
         Cell: ({ row }: { row: Contact }) => {
-          return <p>{row.jobFunction.join(", ")}</p>;
+          return <p>{row.title}</p>;
         },
         width: "15%",
       },
@@ -114,7 +83,7 @@ const Contacts = () => {
       },
       {
         label: "Phone",
-        key: "phone",
+        key: "phone_number",
         width: "13%",
       },
       {
@@ -146,6 +115,15 @@ const Contacts = () => {
                 minWidth="20px"
                 height="20px"
                 fontSize="20px"
+                onClick={() => {
+                  deleteContact(row.id, {
+                    onSuccess: () => {
+                      queryClient.invalidateQueries(
+                        ServerStateCompanyContactsEnum.CompanyContacts,
+                      );
+                    },
+                  });
+                }}
               >
                 <Icon strokeWidth="3" as={Trash} />
               </IconButton>
@@ -154,7 +132,7 @@ const Contacts = () => {
         },
       },
     ],
-    [setModalType, setOpenModal, setSelectedContact],
+    [setModalType, setOpenModal, setSelectedContact, deleteContact],
   );
   return (
     <>
@@ -163,7 +141,11 @@ const Contacts = () => {
         onClose={() => setOpenModal(false)}
         modalHeader={<HeaderModal type={modalType} />}
       >
-        <ContactForm close={() => setOpenModal(false)} data={selectedContact} />
+        <ContactForm
+          type={modalType}
+          close={() => setOpenModal(false)}
+          data={selectedContact}
+        />
       </GlobalModal>
       <VStack spacing="26px" w="100%">
         <Button
@@ -172,7 +154,7 @@ const Contacts = () => {
           rightIcon={<Icon mt="3px" as={AddCircle} />}
           onClick={() => {
             setModalType("add");
-            setSelectedContact(initialValueContact);
+            setSelectedContact(initialContact);
             setOpenModal(true);
           }}
         >
@@ -180,16 +162,28 @@ const Contacts = () => {
         </Button>
 
         <Accordion title="Primary">
-          <Table columns={columns} data={firstTableData.data} />
+          <Table
+            columns={columns}
+            data={contacts?.filter((item) => item.type === "P") || []}
+          />
         </Accordion>
         <Accordion title="Secondary">
-          <Table columns={columns} data={firstTableData.data} />
+          <Table
+            columns={columns}
+            data={contacts?.filter((item) => item.type === "S") || []}
+          />
         </Accordion>
         <Accordion title="Board member">
-          <Table columns={columns} data={firstTableData.data} />
+          <Table
+            columns={columns}
+            data={contacts?.filter((item) => item.type === "B") || []}
+          />
         </Accordion>
         <Accordion title="Consultant">
-          <Table columns={columns} data={firstTableData.data} />
+          <Table
+            columns={columns}
+            data={contacts?.filter((item) => item.type === "C") || []}
+          />
         </Accordion>
       </VStack>
     </>

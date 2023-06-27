@@ -5,9 +5,25 @@ import { useForm, FormProvider } from "react-hook-form";
 import InputField from "../../../components/Forms/InputField";
 import Button from "../../../components/Shared/Button";
 import Textarea from "../../../components/Forms/Textarea";
-const PreviousTrackingForm = () => {
+import { Contact } from "../../../services/apiTypes/types";
+import {
+  ServerStateCompanyContactsEnum,
+  useUpdateContact,
+} from "../../../hooks/api/company/contacts";
+import { useQueryClient } from "react-query";
+interface Props {
+  contact: Contact | undefined;
+}
+const PreviousTrackingForm = ({ contact }: Props) => {
+  const queryClient = useQueryClient();
+  const { mutate: updateContact } = useUpdateContact();
   const methods = useForm({
     resolver: yupResolver(previousTrackingSchema),
+    values: {
+      contactName: `${contact?.first_name || ''} ${contact?.last_name || ''}`,
+      date: contact?.previous_main_contact_date_left,
+      notes: contact?.notes,
+    },
   });
   const { handleSubmit } = methods;
   return (
@@ -17,6 +33,7 @@ const PreviousTrackingForm = () => {
           name="contactName"
           label="Previous contact name"
           placeholder="Previous contact name"
+          disabled
           w="100%"
         />
         <InputField
@@ -24,17 +41,37 @@ const PreviousTrackingForm = () => {
           label="Date previous contact left"
           placeholder="Date previous contact left"
           w="100%"
+          disabled
         />
-        <Textarea name="notes" label="Notes" placeholder="Notes" w="100%" />
+        <Textarea
+          name="notes"
+          label="Notes"
+          placeholder="Notes"
+          w="100%"
+          disabled={!contact}
+        />
       </Stack>
-      <Button
-        size="sm"
-        mt="32px"
-        variant="outline"
-        onClick={handleSubmit((data) => console.log(data))}
-      >
-        Save changes
-      </Button>
+      {contact && (
+        <Button
+          size="sm"
+          mt="32px"
+          variant="outline"
+          onClick={handleSubmit(async (data) => {
+            await updateContact(
+              { ...contact, notes: data.notes || "" },
+              {
+                onSuccess: async () => {
+                  queryClient.invalidateQueries(
+                    ServerStateCompanyContactsEnum.CompanyContacts,
+                  );
+                },
+              },
+            );
+          })}
+        >
+          Save changes
+        </Button>
+      )}
     </FormProvider>
   );
 };
