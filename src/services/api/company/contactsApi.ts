@@ -7,7 +7,7 @@ export const getContacts = async () => {
 };
 export const updateContact = async (request: Contact) => {
   const { id, ...body } = request;
-  const response = await axios.put(`${basePath}${id}/test`, body);
+  const response = await axios.put(`${basePath}${id}/`, body);
   return response.data;
 };
 export const addContact = async (request: RequestAddContact) => {
