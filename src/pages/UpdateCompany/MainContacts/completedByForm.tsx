@@ -1,28 +1,44 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import InputField from "../../../components/Forms/InputField";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { completedBySchema } from "../../../schemas/completedBy";
 import { Flex, Icon, IconButton, Stack } from "@chakra-ui/react";
 import { Minus, Plus } from "iconoir-react";
 import Button from "../../../components/Shared/Button";
-const CompletedByForm = () => {
+import { Contact } from "../../../services/apiTypes/types";
+import { contactSchema } from "../../../schemas/contact";
+import {
+  ServerStateCompanyContactsEnum,
+  useAddContact,
+  useUpdateContact,
+} from "../../../hooks/api/company/contacts";
+import { useQueryClient } from "react-query";
+import AlertContext from "../../../store/context/alertContext";
+interface Props {
+  contact: Contact | undefined;
+}
+const CompletedByForm = ({ contact }: Props) => {
   const [showAnotherEmail, setShowAnotherEmail] = useState(false);
+  const { mutate: updateContact } = useUpdateContact();
+  const { mutate: addContact } = useAddContact();
   const methods = useForm({
-    resolver: yupResolver(completedBySchema),
+    values: contact,
+    resolver: yupResolver(contactSchema),
   });
   const { handleSubmit } = methods;
+  const queryClient = useQueryClient();
+  const alertContext = useContext(AlertContext);
   return (
     <FormProvider {...methods}>
       <Stack spacing="24px">
         <InputField
-          name="firstName"
+          name="first_name"
           label="First Name"
           placeholder="First Name"
           w="100%"
         />
         <InputField
-          name="lastName"
+          name="last_name"
           label="Last Name"
           placeholder="Last Name"
           w="100%"
@@ -44,17 +60,21 @@ const CompletedByForm = () => {
             right={{ base: "0", md: "-41px" }}
             top="29px"
             minW="24px"
-            h="24px"
-            display={showAnotherEmail ? "none" : "inline-block"}
+            height="24px"
+            display={
+              showAnotherEmail || contact?.second_email
+                ? "none"
+                : "inline-block"
+            }
             onClick={() => setShowAnotherEmail(true)}
           >
             <Icon as={Plus} />
           </IconButton>
         </Flex>
-        {showAnotherEmail && (
+        {(showAnotherEmail || contact?.second_email) && (
           <Flex width="100%" justify={"space-between"} position="relative">
             <InputField
-              name="anotherEmail"
+              name="second_email"
               label="Another Email"
               placeholder="Another Email"
               width={{ base: "calc(100% - 35px)", md: "100%" }}
@@ -68,8 +88,12 @@ const CompletedByForm = () => {
               right={{ base: "0", md: "-41px" }}
               top="29px"
               minW="24px"
-              h="24px"
-              display="inline-block"
+              height="24px"
+              display={
+                showAnotherEmail && contact?.second_email
+                  ? "none"
+                  : "inline-block"
+              }
               onClick={() => setShowAnotherEmail(false)}
             >
               <Icon as={Minus} />
@@ -78,7 +102,7 @@ const CompletedByForm = () => {
         )}
         <Flex gap="24px" width="100%">
           <InputField
-            name="phone"
+            name="phone_number"
             label="Phone"
             placeholder="(651)-323-8082"
             width="56%"
@@ -104,7 +128,39 @@ const CompletedByForm = () => {
         size="sm"
         mt="32px"
         variant={"outline"}
-        onClick={handleSubmit((data) => console.log(data))}
+        onClick={handleSubmit(async (data) => {
+          contact
+            ? await updateContact(data, {
+                onSuccess: async () => {
+                  await queryClient.invalidateQueries(
+                    ServerStateCompanyContactsEnum.CompanyContacts,
+                  );
+                  alertContext.show({
+                    status: "success",
+                  });
+                },
+
+                onError: (error) => {
+                  console.log("error :>> ", error);
+                  alertContext.show({
+                    status: "error",
+                    message: error.message,
+                    // handleRetry:()=>,
+                  });
+                },
+              })
+            : await addContact(
+                { ...data, main_contact: true },
+                {
+                  onSuccess: async () => {
+                    await queryClient.invalidateQueries(
+                      ServerStateCompanyContactsEnum.CompanyContacts,
+                    );
+                    alertContext.show({ status: "success" });
+                  },
+                },
+              );
+        })}
       >
         Save changes
       </Button>

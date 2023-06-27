@@ -1,5 +1,12 @@
 import React from "react";
-import { Alert as AlertChakra, Box, Flex, Text } from "@chakra-ui/react";
+import {
+  Alert as AlertChakra,
+  Box,
+  Flex,
+  Icon,
+  IconButton,
+  Text,
+} from "@chakra-ui/react";
 import {
   Cancel,
   CheckCircle,
@@ -17,30 +24,58 @@ interface PropsError
   message: React.ReactNode;
   handleRetry: () => void;
 }
-const BodyWarning = () => {
+const BodyWarning = ({ close }: { close: () => void }) => {
   return (
     <Flex align="center" justify="space-between" w="100%">
       <Flex gap="20px" align="center">
         <WarningTriangle />
         <Text>This is a warning message</Text>
       </Flex>
-      <Cancel color="#B26B1A" />
+      <IconButton
+        variant="outline"
+        px="0"
+        borderRadius="50%"
+        color="#B26B1A"
+        border={"none"}
+        minW="24px"
+        height="24px"
+        backgroundColor="inherit"
+        _hover={"none"}
+        onClick={close}
+      >
+        <Icon as={Cancel} color="#B26B1A" w="100%" h="100%" />
+      </IconButton>
     </Flex>
   );
 };
-const BodySuccess = () => {
+const BodySuccess = ({ close }: { close: () => void }) => {
   return (
     <Flex gap="20px" align="center" w="100%">
       <CheckCircle />
       <Text>Your changes were successfully saved.</Text>
+      <IconButton
+        variant="outline"
+        px="0"
+        borderRadius="50%"
+        ml="auto"
+        border="none"
+        minW="24px"
+        height="24px"
+        backgroundColor="inherit"
+        _hover={"none"}
+        onClick={close}
+      >
+        <Icon as={Cancel} w="100%" h="100%" color="#0E3E25" />
+      </IconButton>
     </Flex>
   );
 };
 interface BodyErrorProps {
   message: React.ReactNode;
   handleRetry: () => void;
+  close: () => void;
 }
-const BodyError = ({ message, handleRetry }: BodyErrorProps) => {
+const BodyError = ({ message, handleRetry, close }: BodyErrorProps) => {
   return (
     <Box w="100%">
       <Flex
@@ -65,25 +100,42 @@ const BodyError = ({ message, handleRetry }: BodyErrorProps) => {
           <Refresh />
         </Flex>
       </Flex>
-      <Text mt="18px" pr="40px">
-        {message}
-      </Text>
+      <Flex align="center" mt="18px">
+        <Text>{message}</Text>
+        <IconButton
+          variant="outline"
+          px="0"
+          borderRadius="50%"
+          ml="auto"
+          border="none"
+          minW="24px"
+          height="24px"
+          backgroundColor="inherit"
+          _hover={"none"}
+          onClick={close}
+        >
+          <Icon as={Cancel} w="100%" h="100%" color="#BF2C31" />
+        </IconButton>
+      </Flex>
     </Box>
   );
 };
 const content = {
-  success: <BodySuccess />,
-  warning: <BodyWarning />,
-  error: (message: React.ReactNode, handleRetry: () => void) => (
-    <BodyError message={message} handleRetry={handleRetry} />
-  ),
+  success: (close: () => void) => <BodySuccess close={close} />,
+  warning: (close: () => void) => <BodyWarning close={close} />,
+  error: (
+    message: React.ReactNode,
+    handleRetry: () => void,
+    close: () => void,
+  ) => <BodyError message={message} handleRetry={handleRetry} close={close} />,
 };
 const Alert = ({
   message,
   handleRetry,
   status,
+  close,
   ...rest
-}: Props | PropsError) => {
+}: (Props | PropsError) & { close: () => void }) => {
   return (
     <AlertChakra
       status={status}
@@ -94,8 +146,8 @@ const Alert = ({
       {...rest}
     >
       {status === "error"
-        ? content[status](message, handleRetry)
-        : content[status]}
+        ? content[status](message, handleRetry, close)
+        : content[status](close)}
     </AlertChakra>
   );
 };

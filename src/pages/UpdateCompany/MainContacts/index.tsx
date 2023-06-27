@@ -1,8 +1,11 @@
 import { Box, Card, CardBody, Flex, Text } from "@chakra-ui/react";
 import CompletedByForm from "./completedByForm";
 import PreviousTrackingForm from "./previousTrackingForm";
+import { useGetContacts } from "../../../hooks/api/company/contacts";
+import { getMainContact, getPreviousContact } from "../../../utils";
 
 const MainContacts = () => {
+  const { data: contacts } = useGetContacts();
   return (
     <Flex direction={{ base: "column", md: "row" }} gap="35px" mb="46px">
       <Box width={{ md: "50%" }}>
@@ -14,7 +17,7 @@ const MainContacts = () => {
           pl={{ base: "10px", md: "36px" }}
         >
           <CardBody px="0">
-            <CompletedByForm />
+            <CompletedByForm contact={getMainContact(contacts)} />
           </CardBody>
         </Card>
       </Box>
@@ -28,7 +31,7 @@ const MainContacts = () => {
           flex="1"
         >
           <CardBody px="0">
-            <PreviousTrackingForm />
+            <PreviousTrackingForm contact={getPreviousContact(contacts)} />
           </CardBody>
         </Card>
       </Flex>
