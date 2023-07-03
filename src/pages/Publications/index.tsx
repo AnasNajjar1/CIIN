@@ -37,9 +37,13 @@ import CapSuppliersReport2020 from "../../assets/cap_suppliers_report_2020.svg";
 import CapSuppliersReport2021 from "../../assets/cap_suppliers_report_2021.svg";
 import PlansReport2020 from "../../assets/plans_report_2020.svg";
 import { ArrowLeft, ArrowRight } from "iconoir-react";
+import { useNavigate } from "react-router-dom";
 import Publication from "../../components/Publication";
+import { ROUTES } from "../../utils/constants";
 
 const Publications = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <Flex direction="column" p="20px 60px">
@@ -55,6 +59,9 @@ const Publications = () => {
               leftIcon={
                 <Image src={EditIcon} color="black" alt="edit publication" />
               }
+              onClick={() => {
+                navigate(`/${ROUTES.USER}/${ROUTES.EDITPUBLICATIONS}`);
+              }}
             >
               Edit publications
             </Button>
