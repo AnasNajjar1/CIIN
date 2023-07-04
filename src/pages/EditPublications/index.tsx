@@ -21,10 +21,10 @@ import {
 import Button from "../../components/Shared/Button";
 import { ArrowLeft, ArrowRight, Plus } from "iconoir-react";
 import FundsReport2022 from "../../assets/funds_report_2022.svg";
+import MoneyManagersReport2021 from "../../assets/money_managers_report_2021.svg";
 import MoneyManagersReport2022 from "../../assets/money_managers_report_2022.svg";
-import CiinOverview2020 from "../../assets/ciin_overview_2020.svg";
 import CiinOverview2021 from "../../assets/ciin_overview_2021.svg";
-import CapSuppliersReport2020 from "../../assets/cap_suppliers_report_2020.svg";
+import PlansReport2021 from "../../assets/plans_report_2021.svg";
 import CapSuppliersReport2021 from "../../assets/cap_suppliers_report_2021.svg";
 import EditPublicationCard from "../../components/Card/EditPublicationCard";
 import { useState } from "react";
@@ -186,7 +186,6 @@ const EditPublications = () => {
             <Box>
               <EditPublicationCard
                 posterImage={FundsReport2022}
-                posterImageAlternative="funds report 2022"
                 posterTitle="2022 Spring Top-40 Money Managers Report"
                 posterSubTitle="Benefits Canada"
                 pdfFileName="2022-06_Top-100-PensionFunds_Report.pdf"
@@ -196,7 +195,6 @@ const EditPublications = () => {
             <Box pt={4}>
               <EditPublicationCard
                 posterImage={MoneyManagersReport2022}
-                posterImageAlternative="money managers report 2022"
                 posterTitle="2022 Spring Top-40 Money Managers Report"
                 posterSubTitle="Benefits Canada"
                 pdfFileName="2022-05_Top-40-MoneyManagers1_Report.pdf"
@@ -206,7 +204,6 @@ const EditPublications = () => {
             <Box pt={4}>
               <EditPublicationCard
                 posterImage={CiinOverview2021}
-                posterImageAlternative="ciin overview 2021"
                 posterTitle="2021 CIIN Overview"
                 posterSubTitle="CIIN"
                 pdfFileName="2022-06_Top-100-PensionFunds_Report.pdf"
@@ -216,7 +213,6 @@ const EditPublications = () => {
             <Box pt={4}>
               <EditPublicationCard
                 posterImage={CapSuppliersReport2021}
-                posterImageAlternative="cap suppliers report 2021"
                 posterTitle="2021 CAP Suppliers Report"
                 posterSubTitle="Benefits Canada"
                 pdfFileName="2022-06_Top-100-PensionFunds_Report.pdf"
@@ -225,9 +221,8 @@ const EditPublications = () => {
             </Box>
             <Box pt={4}>
               <EditPublicationCard
-                posterImage={CiinOverview2020}
-                posterImageAlternative="ciin overview 2020"
-                posterTitle="2020 CIIN Overview"
+                posterImage={MoneyManagersReport2021}
+                posterTitle="2021 Fall Top-40 Money Managers Report"
                 posterSubTitle="CIIN"
                 pdfFileName="2022-06_Top-100-PensionFunds_Report.pdf"
                 imageFileName="2022-06_Top-100-PensionFunds_Image.jpg"
@@ -235,9 +230,8 @@ const EditPublications = () => {
             </Box>
             <Box pt={4}>
               <EditPublicationCard
-                posterImage={CapSuppliersReport2020}
-                posterImageAlternative="cap suppliers report 2020"
-                posterTitle="2020 CAP Suppliers Report"
+                posterImage={PlansReport2021}
+                posterTitle="2021 Top-50 DC Plans Report"
                 posterSubTitle="Benefits Canada"
                 pdfFileName="2022-06_Top-100-PensionFunds_Report.pdf"
                 imageFileName="2022-06_Top-100-PensionFunds_Image.jpg"

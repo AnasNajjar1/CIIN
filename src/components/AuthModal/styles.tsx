@@ -31,3 +31,24 @@ export const textFooterStyle = {
   lineHeight: "24px",
   cursor: "pointer",
 };
+
+export const alertMessageContainerStyle = {
+  alignItems: "center",
+  justifyContent: "center",
+  width: "270px",
+  bgColor: "#FFF3CD",
+  height: "43px",
+  borderRadius: "8px",
+};
+
+export const alertIconStyle = {
+  fontSize: "20px",
+  color: "#0E3E25",
+};
+
+export const alertMessageTextStyle = {
+  fontSize: { base: "10px", md: "14px", lg: "16px" },
+  fontFamily: "heading",
+  fontWeight: 400,
+  lineHeight: { base: "12px", md: "18px", lg: "24px" },
+};

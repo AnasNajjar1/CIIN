@@ -49,6 +49,7 @@ export const pageNumberStyle = {
 export const posterStyle = {
   width: "100%",
   height: { base: "110px", md: "146.6px", lg: "220px" },
+  cursor: "pointer",
 };
 
 export const posterFirstTextStyle = {

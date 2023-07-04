@@ -17,21 +17,20 @@ export const Layout = () => {
   const isHomeView: boolean = location.pathname.includes("/user");
 
   useEffect(() => {
-    if(location.pathname.includes("/dashboard")) {
+    if (location.pathname.includes("/dashboard")) {
       setHeaderTitle("");
-    } else if(location.pathname.includes("/user-profile")) {
+    } else if (location.pathname.includes("/user-profile")) {
       setHeaderTitle("User profile");
-    } else if(location.pathname.includes("/publications")) {
+    } else if (location.pathname.includes("/publications")) {
       setHeaderTitle("Publications");
-    } else if(location.pathname.includes("/edit-publications")) {
+    } else if (location.pathname.includes("/edit-publications")) {
       setHeaderTitle("Edit publications");
-    } else if(location.pathname.includes("/faq")) {
+    } else if (location.pathname.includes("/faq")) {
       setHeaderTitle("FAQ");
-    } else if(location.pathname.includes("/contacts")) {
+    } else if (location.pathname.includes("/contacts")) {
       setHeaderTitle("Contacts");
     }
   }, [location]);
-  
 
   return (
     <>
@@ -83,7 +82,9 @@ export const Layout = () => {
           bg={appBackgroundColor}
           px={{ base: "10px", md: "0" }}
         >
-          {isHomeView && <DashboardHeader headerTitle={headerTitle} />}
+          {(isHomeView || location.pathname.includes("/publications")) && (
+            <DashboardHeader headerTitle={headerTitle} />
+          )}
           <Outlet />
         </GridItem>
         <GridItem area={"footer"} px={{ base: "10px", md: "0" }}>
