@@ -20,15 +20,18 @@ function App() {
                 path={`/${ROUTES.USER}`}
                 element={<AuthentificationGuard />}
               >
+                <Route path={`${ROUTES.FAQ}`} element={<Faq />} />
+                <Route path={`${ROUTES.CONTACTS}`} element={<Contacts />} />
+                <Route
+                  path={`${ROUTES.PUBLICATIONS}`}
+                  element={<Publications />}
+                />
+                <Route path={`${ROUTES.EDITPUBLICATIONS}`} element={<EditPublications />} />
                 <Route path={`${ROUTES.DASHBOARD}`} element={<Dashboard />} />
                 <Route
                   path={`${ROUTES.USERPROFILE}`}
                   element={<UserProfile />}
                 />
-                <Route path={`${ROUTES.FAQ}`} element={<Faq />} />
-                <Route path={`${ROUTES.CONTACTS}`} element={<Contacts />} />
-                <Route path={`${ROUTES.PUBLICATIONS}`} element={<Publications />} />
-                <Route path={`${ROUTES.EDITPUBLICATIONS}`} element={<EditPublications />} />
                 <Route path={`${ROUTES.COMPANY}`} element={<Company />} />
                 <Route
                   path={`${ROUTES.UPDATECOMPANY}`}

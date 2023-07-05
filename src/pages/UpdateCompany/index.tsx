@@ -12,9 +12,11 @@ import Contacts from "./Contacts";
 import { tabsPensionFund } from "./PensionFund";
 import { tabsFoundationsEndowment } from "./FoundationsEndowment";
 import AlertContext from "../../store/context/alertContext";
+import { tabsMoneyManager } from "./MoneyManager";
 const companyTypes = {
   pensionFund: tabsPensionFund,
   foundationsEndowment: tabsFoundationsEndowment,
+  moneyManager: tabsMoneyManager,
 };
 interface Alert {
   status: "success" | "warning" | "error";
@@ -35,7 +37,7 @@ const UpdateCompany = () => {
     }
   }, [showAlert]);
   return (
-    <Box p={{ base: "85px 0 0 0", md: "176px 190px 50px 50px" }}>
+    <Box p={{ base: "85px 0 0 0", md: "20px 190px 50px 50px" }}>
       <FirstSectionCompany />
       <DashboardCard icon={BarChartIcon} title="Last Update">
         <Flex align={"center"} gap="16px">
@@ -78,6 +80,8 @@ const UpdateCompany = () => {
                 component: <Contacts />,
               },
               ...companyTypes.pensionFund,
+              // ...companyTypes.foundationsEndowment,
+              // ...companyTypes.moneyManager,
             ]}
             tabPanelsProps={{
               pt: "164px",

@@ -1,7 +1,6 @@
-import { Flex, Icon, IconButton, VStack } from "@chakra-ui/react";
+import { Flex, Icon, IconButton, Text, VStack } from "@chakra-ui/react";
 import { AddCircle, EditPencil, Trash } from "iconoir-react";
-import { useMemo, useState } from "react";
-import GlobalModal from "../../../../components/Shared/GlobalModal";
+import { useState, useContext } from "react";
 import AssociateForm from "./associateForm";
 import Button from "../../../../components/Shared/Button";
 import Accordion from "../../../../components/Shared/Accodion";
@@ -13,11 +12,8 @@ import {
   useGetAssociates,
 } from "../../../../hooks/api/company/associates";
 import { useQueryClient } from "react-query";
+import AlertContext from "../../../../store/context/alertContext";
 
-interface HeaderModalProps {
-  formType: "update" | "add";
-  suffixLabel: string;
-}
 export const planTypeList = [
   { label: "Defined Benefit", value: "DB" },
   { label: "Defined Contribution", value: "DC" },
@@ -66,13 +62,10 @@ export const specialityList = [
   { label: "U.S. Bonds", value: "U.S. Bonds" },
   { label: "U.S. Equity", value: "U.S. Equity" },
 ];
-const HeaderModal = ({ formType, suffixLabel }: HeaderModalProps) => {
-  return (
-    <p>
-      {formType === "update" ? `Update ${suffixLabel}` : `Add ${suffixLabel}`}
-    </p>
-  );
-};
+
+const updateAssociateForm = (row: Associate, close: () => void) => (
+  <AssociateForm data={row} close={close} type="update" />
+);
 const initialValue = {
   company:
     "http://localhost:8000/companies/d3f58dda-3a6e-400e-88d0-e53072eaee65/",
@@ -86,326 +79,233 @@ const initialValueMoneyManager = {
   value: "",
   type: "m",
 };
+const standardCompanies = ["m", "c", "p", "r", "i", "a"];
+const titles = {
+  m: "Money Manager",
+  i: "Investment Consultants",
+  c: "Custodian/Trustees",
+  a: "Actuaries",
+  p: "Performance Measurers",
+  r: "Record Keepers/Administrators",
+};
 const Associates = () => {
   const { data: associates } = useGetAssociates();
-  const { mutate: deleteAssociate } = useDeleteAssociate();
+  const alertContext = useContext(AlertContext);
   const queryClient = useQueryClient();
-  const [openModal, setOpenModal] = useState(false);
-  const [modalType, setModalType] = useState<"update" | "add">("add");
-  const [suffixLabel, setSuffixLabel] = useState("");
-  const [selectedCompany, setSelectedCompany] = useState<Associate>(
-    {} as Associate,
-  );
-  const columnsMoneyManager = useMemo(
-    () => [
-      {
-        label: "Company",
-        key: "name",
-        width: "22%",
-      },
-      {
-        label: "Plan Type",
-        key: "plan_type",
-        width: "22%",
-        Cell: ({ row }: { row: Associate }) => {
-          return (
-            <p>
-              {planTypeList.find((x) => x.value === row.plan_type)?.label || ""}
-            </p>
-          );
-        },
-      },
-      {
-        label: "Specialty/Mandate",
-        key: "associate_specialty",
-        Cell: ({ row }: { row: Associate }) => {
-          return (
-            <p>
-              {specialityList.find((x) => x.value === row.associate_specialty)
-                ?.label || ""}
-            </p>
-          );
-        },
-        width: "15%",
-      },
-      {
-        label: "Value ($mil)",
-        key: "value",
-        width: "17%",
-      },
+  const [showAddAssociate, setShowAddAssociate] = useState({
+    m: false,
+    c: false,
+    p: false,
+    r: false,
+    i: false,
+    a: false,
+  });
+  const { mutate: deleteAssociate } = useDeleteAssociate({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(
+        ServerStateCompanyAssociatesEnum.CompanyAssociates,
+      );
+      alertContext.show({
+        status: "success",
+      });
+    },
+    onSettled: (_, error, variables) => {
+      if (error) {
+        alertContext.show({
+          status: "error",
+          message: error.message,
+          handleRetry: () => deleteAssociate(variables),
+        });
+      }
+    },
+  });
 
-      {
-        label: " ",
-        key: "action",
-        width: "11%",
-        Cell: ({ row }: { row: Associate }) => {
-          return (
-            <Flex align="center" justify="center" gap="16px">
-              <IconButton
-                bg="white"
-                color="gray.200"
-                _hover={{ bg: "white" }}
-                minWidth="20px"
-                height="20px"
-                fontSize="20px"
-                onClick={() => {
-                  setModalType("update");
-                  setSelectedCompany(row);
-                  setOpenModal(true);
-                  setSuffixLabel(` ${row?.name || ""}`);
-                }}
-              >
-                <Icon as={EditPencil} strokeWidth="3" />
-              </IconButton>
-              <IconButton
-                bg="white"
-                color="gray.200"
-                _hover={{ bg: "white" }}
-                minWidth="20px"
-                height="20px"
-                fontSize="20px"
-                onClick={() => {
-                  deleteAssociate(row.id, {
-                    onSuccess: async () => {
-                      queryClient.invalidateQueries(
-                        ServerStateCompanyAssociatesEnum.CompanyAssociates,
-                      );
-                    },
-                  });
-                }}
-              >
-                <Icon strokeWidth="3" as={Trash} />
-              </IconButton>
-            </Flex>
-          );
-        },
+  const columnsMoneyManager = [
+    {
+      label: "Company",
+      key: "name",
+      width: "22%",
+    },
+    {
+      label: "Plan Type",
+      key: "plan_type",
+      width: "22%",
+      Cell: ({ row }: { row: Associate }) => {
+        return (
+          <p>
+            {planTypeList.find((x) => x.value === row.plan_type)?.label || ""}
+          </p>
+        );
       },
-    ],
-    [setModalType, setOpenModal, setSelectedCompany, setSuffixLabel],
-  );
+    },
+    {
+      label: "Specialty/Mandate",
+      key: "associate_specialty",
+      Cell: ({ row }: { row: Associate }) => {
+        return (
+          <p>
+            {specialityList.find((x) => x.value === row.associate_specialty)
+              ?.label || ""}
+          </p>
+        );
+      },
+      width: "15%",
+    },
+    {
+      label: "Value ($mil)",
+      key: "value",
+      width: "17%",
+    },
 
-  const columnsStandardCompany = useMemo(
-    () => [
-      {
-        label: "Company",
-        key: "name",
-        width: "22%",
+    {
+      label: " ",
+      key: "action",
+      width: "11%",
+      Cell: ({ row, setOpen }: { row: Associate }) => {
+        return (
+          <Flex align="center" justify="center" gap="16px">
+            <IconButton
+              bg="white"
+              color="gray.200"
+              _hover={{ bg: "white" }}
+              minWidth="20px"
+              height="20px"
+              fontSize="20px"
+              onClick={() => {
+                setOpen((open) => ({ ...open, [row.id]: !open[row.id] }));
+              }}
+            >
+              <Icon as={EditPencil} strokeWidth="3" />
+            </IconButton>
+            <IconButton
+              bg="white"
+              color="gray.200"
+              _hover={{ bg: "white" }}
+              minWidth="20px"
+              height="20px"
+              fontSize="20px"
+              onClick={() => {
+                deleteAssociate(row.id);
+              }}
+            >
+              <Icon strokeWidth="3" as={Trash} />
+            </IconButton>
+          </Flex>
+        );
       },
-      {
-        label: "Plan Type",
-        key: "plan_type",
-        width: "22%",
-        Cell: ({ row }: { row: Associate }) => {
-          return (
-            <p>
-              {planTypeList.find((x) => x.value === row.plan_type)?.label || ""}
-            </p>
-          );
-        },
+    },
+  ];
+  const columnsStandardCompany = [
+    {
+      label: "Company",
+      key: "name",
+      width: "22%",
+    },
+    {
+      label: "Plan Type",
+      key: "plan_type",
+      width: "22%",
+      Cell: ({ row }: { row: Associate }) => {
+        return (
+          <p>
+            {planTypeList.find((x) => x.value === row.plan_type)?.label || ""}
+          </p>
+        );
       },
-      {
-        label: " ",
-        key: "action",
-        width: "11%",
-        Cell: ({ row }: { row: Associate }) => {
-          return (
-            <Flex align="center" justify="center" gap="16px">
-              <IconButton
-                bg="white"
-                color="gray.200"
-                _hover={{ bg: "white" }}
-                minWidth="20px"
-                height="20px"
-                fontSize="20px"
-                onClick={() => {
-                  setModalType("update");
-                  setSelectedCompany(row);
-                  setOpenModal(true);
-                  setSuffixLabel(` ${row.name}`);
-                }}
-              >
-                <Icon as={EditPencil} strokeWidth="3" />
-              </IconButton>
-              <IconButton
-                bg="white"
-                color="gray.200"
-                _hover={{ bg: "white" }}
-                minWidth="20px"
-                height="20px"
-                fontSize="20px"
-                onClick={() => {
-                  deleteAssociate(row.id, {
-                    onSuccess: async () => {
-                      queryClient.invalidateQueries(
-                        ServerStateCompanyAssociatesEnum.CompanyAssociates,
-                      );
-                    },
-                  });
-                }}
-              >
-                <Icon strokeWidth="3" as={Trash} />
-              </IconButton>
-            </Flex>
-          );
-        },
+    },
+    {
+      label: " ",
+      key: "action",
+      width: "11%",
+      Cell: ({ row, setOpen }: { row: Associate }) => {
+        return (
+          <Flex align="center" justify="center" gap="16px">
+            <IconButton
+              bg="white"
+              color="gray.200"
+              _hover={{ bg: "white" }}
+              minWidth="20px"
+              height="20px"
+              fontSize="20px"
+              onClick={() => {
+                setOpen((open) => ({ ...open, [row.id]: !open[row.id] }));
+              }}
+            >
+              <Icon as={EditPencil} strokeWidth="3" />
+            </IconButton>
+            <IconButton
+              bg="white"
+              color="gray.200"
+              _hover={{ bg: "white" }}
+              minWidth="20px"
+              height="20px"
+              fontSize="20px"
+              onClick={() => {
+                deleteAssociate(row.id);
+              }}
+            >
+              <Icon strokeWidth="3" as={Trash} />
+            </IconButton>
+          </Flex>
+        );
       },
-    ],
-    [setModalType, setOpenModal, setSelectedCompany, setSuffixLabel],
-  );
+    },
+  ];
   return (
     <>
-      <GlobalModal
-        isOpen={openModal}
-        onClose={() => setOpenModal(false)}
-        modalHeader={
-          <HeaderModal formType={modalType} suffixLabel={suffixLabel} />
-        }
-      >
-        <AssociateForm
-          close={() => setOpenModal(false)}
-          data={selectedCompany}
-          type={modalType}
-        />
-      </GlobalModal>
       <VStack spacing="26px" w="100%">
-        <Accordion title="Money Manager">
-          <Table
-            columns={columnsMoneyManager}
-            data={
-              associates?.filter((associate) => associate.type === "m") || []
-            }
-          />
-          <Button
-            variant={"outline"}
-            rightIcon={<Icon mt="3px" as={AddCircle} />}
-            size="sm"
-            my="16px"
-            float="right"
-            onClick={() => {
-              setModalType("add");
-              setSelectedCompany(initialValueMoneyManager);
-              setSuffixLabel(" Company Money Manager");
-              setOpenModal(true);
-            }}
-          >
-            Add New
-          </Button>
-        </Accordion>
-        <Accordion title="Investment Consultants">
-          <Table
-            columns={columnsStandardCompany}
-            data={
-              associates?.filter((associate) => associate.type === "i") || []
-            }
-          />
-          <Button
-            variant={"outline"}
-            rightIcon={<Icon mt="3px" as={AddCircle} />}
-            size="sm"
-            my="16px"
-            float="right"
-            onClick={() => {
-              setModalType("add");
-              setSelectedCompany({ ...initialValue, type: "i" });
-              setSuffixLabel(" Company Investment Consultants");
-              setOpenModal(true);
-            }}
-          >
-            Add New
-          </Button>
-        </Accordion>
-        <Accordion title="Custodian/Trustees">
-          <Table
-            columns={columnsStandardCompany}
-            data={
-              associates?.filter((associate) => associate.type === "c") || []
-            }
-          />
-          <Button
-            variant={"outline"}
-            rightIcon={<Icon mt="3px" as={AddCircle} />}
-            size="sm"
-            my="16px"
-            float="right"
-            onClick={() => {
-              setModalType("add");
-              setSelectedCompany({ ...initialValue, type: "c" });
-              setSuffixLabel(" Company Custodian/Trustees");
-              setOpenModal(true);
-            }}
-          >
-            Add New
-          </Button>
-        </Accordion>
-        <Accordion title="Actuaries">
-          <Table
-            columns={columnsStandardCompany}
-            data={
-              associates?.filter((associate) => associate.type === "a") || []
-            }
-          />
-          <Button
-            variant={"outline"}
-            rightIcon={<Icon mt="3px" as={AddCircle} />}
-            size="sm"
-            my="16px"
-            float="right"
-            onClick={() => {
-              setModalType("add");
-              setSelectedCompany({ ...initialValue, type: "a" });
-              setSuffixLabel(" Company Actuaries");
-              setOpenModal(true);
-            }}
-          >
-            Add New
-          </Button>
-        </Accordion>
-        <Accordion title="Performance Measurers">
-          <Table
-            columns={columnsStandardCompany}
-            data={
-              associates?.filter((associate) => associate.type === "p") || []
-            }
-          />
-          <Button
-            variant={"outline"}
-            rightIcon={<Icon mt="3px" as={AddCircle} />}
-            size="sm"
-            my="16px"
-            float="right"
-            onClick={() => {
-              setModalType("add");
-              setSelectedCompany({ ...initialValue, type: "p" });
-              setSuffixLabel(" Company Performance Measurers");
-              setOpenModal(true);
-            }}
-          >
-            Add New
-          </Button>
-        </Accordion>
-        <Accordion title="Record Keepers/Administrators">
-          <Table
-            columns={columnsStandardCompany}
-            data={
-              associates?.filter((associate) => associate.type === "r") || []
-            }
-          />
-          <Button
-            variant={"outline"}
-            rightIcon={<Icon mt="3px" as={AddCircle} />}
-            size="sm"
-            my="16px"
-            float="right"
-            onClick={() => {
-              setModalType("add");
-              setSelectedCompany({ ...initialValue, type: "r" });
-              setSuffixLabel(" Company Record Keepers/Administrators");
-              setOpenModal(true);
-            }}
-          >
-            Add New
-          </Button>
-        </Accordion>
+        {standardCompanies.map((company) => (
+          <Accordion key={company} title={titles[company]}>
+            <Table
+              columns={
+                company === "m" ? columnsMoneyManager : columnsStandardCompany
+              }
+              data={
+                associates?.filter((associate) => associate.type === company) ||
+                []
+              }
+              enableExpanding
+              renderDetailPanel={updateAssociateForm}
+            />
+            {showAddAssociate[company] ? (
+              <>
+                <Text variant="h4" textAlign="center" my="24px">
+                  Add New Associate
+                </Text>
+                <AssociateForm
+                  data={
+                    company === "m"
+                      ? initialValueMoneyManager
+                      : { ...initialValue, type: company }
+                  }
+                  type="add"
+                  close={() =>
+                    setShowAddAssociate((showAddAssociate) => ({
+                      ...showAddAssociate,
+                      [company]: false,
+                    }))
+                  }
+                />
+              </>
+            ) : (
+              <Button
+                variant={"outline"}
+                rightIcon={<Icon mt="3px" as={AddCircle} />}
+                size="sm"
+                my="16px"
+                float="right"
+                onClick={() => {
+                  setShowAddAssociate((showAddAssociate) => ({
+                    ...showAddAssociate,
+                    [company]: true,
+                  }));
+                }}
+              >
+                Add New
+              </Button>
+            )}
+          </Accordion>
+        ))}
       </VStack>
     </>
   );

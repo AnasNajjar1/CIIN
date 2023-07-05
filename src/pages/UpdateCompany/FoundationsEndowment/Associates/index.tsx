@@ -1,59 +1,65 @@
-import { Flex, Icon, IconButton, VStack } from "@chakra-ui/react";
+import { Flex, Icon, IconButton, Text, VStack } from "@chakra-ui/react";
 import { AddCircle, EditPencil, Trash } from "iconoir-react";
-import { useMemo, useState } from "react";
-import GlobalModal from "../../../../components/Shared/GlobalModal";
-import MoneyManagerForm from "./moneyManagerForm";
+import { useState } from "react";
+import AssociateForm from "./AssociateForm";
 import Button from "../../../../components/Shared/Button";
 import Accordion from "../../../../components/Shared/Accodion";
 import Table from "../../../../components/Shared/Table";
-import StandardCompanyForm from "./standardCompanyForm";
-export interface StandardCompany {
+type AssociateType = "m" | "i" | "c" | "a" | "p" | "r";
+export interface Associate {
+  type: AssociateType;
   id: string;
   company: string;
-}
-export interface MoneyManager extends StandardCompany {
   speciality: string;
   value: string;
 }
+const standardCompanies = ["m", "c", "p", "r", "i", "a"];
+const titles = {
+  m: "Money Manager",
+  i: "Investment Consultants",
+  c: "Custodian/Trustees",
+  a: "Actuaries",
+  p: "Performance Measurers",
+  r: "Record Keepers/Administrators",
+};
 const initialValueMoneyManager = {
+  type: "m",
   id: "",
   company: "",
   speciality: "",
   value: "",
 };
-const initialValueStandardCompany = {
+const initialValue = {
   id: "",
   company: "",
 };
 
-const tableMoneyManager = [
+const associates = [
   {
+    type: "m",
     id: "1",
     company: "Company1",
     speciality: "Specialties",
     value: "1000",
   },
   {
+    type: "m",
     id: "2",
     company: "Company2",
     speciality: "Canadian Bonds",
     value: "1000",
   },
-];
-const tableStandardCompany = [
   {
+    type: "i",
     id: "1",
     company: "Company1",
   },
   {
+    type: "c",
     id: "2",
     company: "Company2",
   },
 ];
-interface HeaderModalProps {
-  type: "update" | "add";
-  suffixLabel?: string;
-}
 
 export const specialityList = [
   { label: "- Select  -", value: "" },
@@ -95,262 +101,177 @@ export const specialityList = [
   { label: "U.S. Bonds", value: "U.S. Bonds" },
   { label: "U.S. Equity", value: "U.S. Equity" },
 ];
-const HeaderModal = ({ type, suffixLabel }: HeaderModalProps) => {
-  return (
-    <p>{type === "update" ? `Update ${suffixLabel}` : `Add ${suffixLabel}`}</p>
-  );
-};
+const updateAssociateForm = (row: Associate, close: () => void) => (
+  <AssociateForm data={row} close={close} type="update" />
+);
 const Associates = () => {
-  const [openModal, setOpenModal] = useState(false);
-  const [modalType, setModalType] = useState<"update" | "add">("add");
-  const [suffixLabel, setSuffixLabel] = useState("");
-  const [selectedCompany, setSelectedCompany] = useState<StandardCompany>(
-    initialValueMoneyManager,
-  );
-  const columnsMoneyManager = useMemo(
-    () => [
-      {
-        label: "Company",
-        key: "company",
-        width: "22%",
-      },
-    
-      {
-        label: "Specialty/Mandate",
-        key: "speciality",
-        Cell: ({ row }: { row: MoneyManager }) => {
-          return (
-            <p>
-              {specialityList.find((x) => x.value === row.speciality)?.label ||
-                ""}
-            </p>
-          );
-        },
-        width: "15%",
-      },
-      {
-        label: "Value ($mil)",
-        key: "value",
-        width: "17%",
-      },
+  const [showAddAssociate, setShowAddAssociate] = useState({
+    m: false,
+    c: false,
+    p: false,
+    r: false,
+    i: false,
+    a: false,
+  });
+  const columnsMoneyManager = [
+    {
+      label: "Company",
+      key: "company",
+      width: "22%",
+    },
 
-      {
-        label: " ",
-        key: "action",
-        width: "11%",
-        Cell: ({ row }: { row: MoneyManager }) => {
-          return (
-            <Flex align="center" justify="center" gap="16px">
-              <IconButton
-                bg="white"
-                color="gray.200"
-                _hover={{ bg: "white" }}
-                minWidth="20px"
-                height="20px"
-                fontSize="20px"
-                onClick={() => {
-                  setModalType("update");
-                  setSelectedCompany(row);
-                  setOpenModal(true);
-                  setSuffixLabel("Company Money Manager");
-                }}
-              >
-                <Icon as={EditPencil} strokeWidth="3" />
-              </IconButton>
-              <IconButton
-                bg="white"
-                color="gray.200"
-                _hover={{ bg: "white" }}
-                minWidth="20px"
-                height="20px"
-                fontSize="20px"
-              >
-                <Icon strokeWidth="3" as={Trash} />
-              </IconButton>
-            </Flex>
-          );
-        },
+    {
+      label: "Specialty/Mandate",
+      key: "speciality",
+      Cell: ({ row }: { row: Associate }) => {
+        return (
+          <p>
+            {specialityList.find((x) => x.value === row.speciality)?.label ||
+              ""}
+          </p>
+        );
       },
-    ],
-    [setModalType, setOpenModal, setSelectedCompany, setSuffixLabel],
-  );
+      width: "15%",
+    },
+    {
+      label: "Value ($mil)",
+      key: "value",
+      width: "17%",
+    },
 
-  const columnsStandardCompany = useMemo(
-    () => [
-      {
-        label: "Company",
-        key: "company",
-        width: "22%",
+    {
+      label: " ",
+      key: "action",
+      width: "11%",
+      Cell: ({ row, setOpen }: { row: Associate }) => {
+        return (
+          <Flex align="center" justify="center" gap="16px">
+            <IconButton
+              bg="white"
+              color="gray.200"
+              _hover={{ bg: "white" }}
+              minWidth="20px"
+              height="20px"
+              fontSize="20px"
+              onClick={() => {
+                setOpen((open) => ({ ...open, [row.id]: !open[row.id] }));
+              }}
+            >
+              <Icon as={EditPencil} strokeWidth="3" />
+            </IconButton>
+            <IconButton
+              bg="white"
+              color="gray.200"
+              _hover={{ bg: "white" }}
+              minWidth="20px"
+              height="20px"
+              fontSize="20px"
+            >
+              <Icon strokeWidth="3" as={Trash} />
+            </IconButton>
+          </Flex>
+        );
       },
-   
-      {
-        label: " ",
-        key: "action",
-        width: "11%",
-        Cell: ({ row }: { row: StandardCompany }) => {
-          return (
-            <Flex align="center" justify="center" gap="16px">
-              <IconButton
-                bg="white"
-                color="gray.200"
-                _hover={{ bg: "white" }}
-                minWidth="20px"
-                height="20px"
-                fontSize="20px"
-                onClick={() => {
-                  setModalType("update");
-                  setSelectedCompany(row);
-                  setOpenModal(true);
-                  setSuffixLabel(` ${row.company}`);
-                }}
-              >
-                <Icon as={EditPencil} strokeWidth="3" />
-              </IconButton>
-              <IconButton
-                bg="white"
-                color="gray.200"
-                _hover={{ bg: "white" }}
-                minWidth="20px"
-                height="20px"
-                fontSize="20px"
-              >
-                <Icon strokeWidth="3" as={Trash} />
-              </IconButton>
-            </Flex>
-          );
-        },
+    },
+  ];
+
+  const columnsStandardCompany = [
+    {
+      label: "Company",
+      key: "company",
+      width: "22%",
+    },
+
+    {
+      label: " ",
+      key: "action",
+      width: "11%",
+      Cell: ({ row, setOpen }: { row: Associate }) => {
+        return (
+          <Flex align="center" justify="center" gap="16px">
+            <IconButton
+              bg="white"
+              color="gray.200"
+              _hover={{ bg: "white" }}
+              minWidth="20px"
+              height="20px"
+              fontSize="20px"
+              onClick={() => {
+                setOpen((open) => ({ ...open, [row.id]: !open[row.id] }));
+              }}
+            >
+              <Icon as={EditPencil} strokeWidth="3" />
+            </IconButton>
+            <IconButton
+              bg="white"
+              color="gray.200"
+              _hover={{ bg: "white" }}
+              minWidth="20px"
+              height="20px"
+              fontSize="20px"
+            >
+              <Icon strokeWidth="3" as={Trash} />
+            </IconButton>
+          </Flex>
+        );
       },
-    ],
-    [setModalType, setOpenModal, setSelectedCompany, setSuffixLabel],
-  );
+    },
+  ];
   return (
     <>
-      <GlobalModal
-        isOpen={openModal}
-        onClose={() => setOpenModal(false)}
-        modalHeader={<HeaderModal type={modalType} suffixLabel={suffixLabel} />}
-      >
-        {"speciality" in selectedCompany ? (
-          <MoneyManagerForm
-            close={() => setOpenModal(false)}
-            data={selectedCompany}
-          />
-        ) : (
-          <StandardCompanyForm
-            close={() => setOpenModal(false)}
-            data={selectedCompany}
-          />
-        )}
-      </GlobalModal>
       <VStack spacing="26px" w="100%">
-        <Accordion title="Money Manager">
-          <Table columns={columnsMoneyManager} data={tableMoneyManager} />
-          <Button
-            variant={"outline"}
-            rightIcon={<Icon mt="3px" as={AddCircle} />}
-            size="sm"
-            my="16px"
-            float="right"
-            onClick={() => {
-              setModalType("add");
-              setSelectedCompany(initialValueMoneyManager);
-              setSuffixLabel(" Company Money Manager");
-              setOpenModal(true);
-            }}
-          >
-            Add New
-          </Button>
-        </Accordion>
-        <Accordion title="Investment Consultants">
-          <Table columns={columnsStandardCompany} data={tableStandardCompany} />
-          <Button
-            variant={"outline"}
-            rightIcon={<Icon mt="3px" as={AddCircle} />}
-            size="sm"
-            my="16px"
-            float="right"
-            onClick={() => {
-              setModalType("add");
-              setSelectedCompany(initialValueStandardCompany);
-              setSuffixLabel(" Company Investment Consultants");
-              setOpenModal(true);
-            }}
-          >
-            Add New
-          </Button>
-        </Accordion>
-        <Accordion title="Custodian/Trustees">
-          <Table columns={columnsStandardCompany} data={tableStandardCompany} />
-          <Button
-            variant={"outline"}
-            rightIcon={<Icon mt="3px" as={AddCircle} />}
-            size="sm"
-            my="16px"
-            float="right"
-            onClick={() => {
-              setModalType("add");
-              setSelectedCompany(initialValueStandardCompany);
-              setSuffixLabel(" Company Custodian/Trustees");
-              setOpenModal(true);
-            }}
-          >
-            Add New
-          </Button>
-        </Accordion>
-        <Accordion title="Actuaries">
-          <Table columns={columnsStandardCompany} data={tableStandardCompany} />
-          <Button
-            variant={"outline"}
-            rightIcon={<Icon mt="3px" as={AddCircle} />}
-            size="sm"
-            my="16px"
-            float="right"
-            onClick={() => {
-              setModalType("add");
-              setSelectedCompany(initialValueStandardCompany);
-              setSuffixLabel(" Company Actuaries");
-              setOpenModal(true);
-            }}
-          >
-            Add New
-          </Button>
-        </Accordion>
-        <Accordion title="Performance Measurers">
-          <Table columns={columnsStandardCompany} data={tableStandardCompany} />
-          <Button
-            variant={"outline"}
-            rightIcon={<Icon mt="3px" as={AddCircle} />}
-            size="sm"
-            my="16px"
-            float="right"
-            onClick={() => {
-              setModalType("add");
-              setSelectedCompany(initialValueStandardCompany);
-              setSuffixLabel(" Company Performance Measurers");
-              setOpenModal(true);
-            }}
-          >
-            Add New
-          </Button>
-        </Accordion>
-        <Accordion title="Record Keepers/Administrators">
-          <Table columns={columnsStandardCompany} data={tableStandardCompany} />
-          <Button
-            variant={"outline"}
-            rightIcon={<Icon mt="3px" as={AddCircle} />}
-            size="sm"
-            my="16px"
-            float="right"
-            onClick={() => {
-              setModalType("add");
-              setSelectedCompany(initialValueStandardCompany);
-              setSuffixLabel(" Company Record Keepers/Administrators");
-              setOpenModal(true);
-            }}
-          >
-            Add New
-          </Button>
-        </Accordion>
+        {standardCompanies.map((company) => (
+          <Accordion key={company} title={titles[company]}>
+            <Table
+              columns={
+                company === "m" ? columnsMoneyManager : columnsStandardCompany
+              }
+              data={
+                associates?.filter((associate) => associate.type === company) ||
+                []
+              }
+              enableExpanding
+              renderDetailPanel={updateAssociateForm}
+            />
+            {showAddAssociate[company] ? (
+              <>
+                <Text variant="h4" textAlign="center" my="24px">
+                  Add New Associate
+                </Text>
+                <AssociateForm
+                  data={
+                    company === "m"
+                      ? initialValueMoneyManager
+                      : { ...initialValue, type: company }
+                  }
+                  type="add"
+                  close={() =>
+                    setShowAddAssociate((showAddAssociate) => ({
+                      ...showAddAssociate,
+                      [company]: false,
+                    }))
+                  }
+                />
+              </>
+            ) : (
+              <Button
+                variant={"outline"}
+                rightIcon={<Icon mt="3px" as={AddCircle} />}
+                size="sm"
+                my="16px"
+                float="right"
+                onClick={() => {
+                  setShowAddAssociate((showAddAssociate) => ({
+                    ...showAddAssociate,
+                    [company]: true,
+                  }));
+                }}
+              >
+                Add New
+              </Button>
+            )}
+          </Accordion>
+        ))}
       </VStack>
     </>
   );

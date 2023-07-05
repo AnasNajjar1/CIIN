@@ -1,8 +1,8 @@
-import { Checkbox, CheckboxGroup, Flex, Stack } from "@chakra-ui/react";
+import { useContext } from "react";
+import { Checkbox, Flex, Stack } from "@chakra-ui/react";
 import InputField from "../../../components/Forms/InputField";
 import Select from "../../../components/Forms/Select";
 import { useForm, FormProvider } from "react-hook-form";
-import Button from "../../../components/Shared/Button";
 import InputLabel from "../../../components/Shared/InputLabel";
 import { Contact } from "../../../services/apiTypes/types";
 import {
@@ -13,6 +13,8 @@ import {
 import { useQueryClient } from "react-query";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { contactSchema } from "../../../schemas/contact";
+import AlertContext from "../../../store/context/alertContext";
+import RowForm from "../RowForm";
 const contactTypes = [
   { value: "P", label: "Primary" },
   { value: "S", label: "Secondary" },
@@ -40,139 +42,157 @@ interface Props {
 }
 const ContactForm = ({ data, close, type }: Props) => {
   const queryClient = useQueryClient();
-  const { mutate: updateContact } = useUpdateContact();
-  const { mutate: addContact } = useAddContact();
+  const alertContext = useContext(AlertContext);
+  const { mutate: updateContact } = useUpdateContact({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(
+        ServerStateCompanyContactsEnum.CompanyContacts,
+      );
+      alertContext.show({
+        status: "success",
+      });
+    },
+
+    onSettled: (_, error, variables) => {
+      if (error) {
+        alertContext.show({
+          status: "error",
+          message: error.message,
+          handleRetry: () => updateContact(variables),
+        });
+      }
+      close();
+    },
+  });
+  const { mutate: addContact } = useAddContact({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(
+        ServerStateCompanyContactsEnum.CompanyContacts,
+      );
+      alertContext.show({
+        status: "success",
+      });
+    },
+
+    onSettled: (_, error, variables) => {
+      if (error) {
+        alertContext.show({
+          status: "error",
+          message: error.message,
+          handleRetry: () => addContact(variables),
+        });
+      }
+      close();
+    },
+  });
   const methods = useForm({
-    defaultValues: data,
+    values: data,
     resolver: yupResolver(contactSchema),
   });
   const { handleSubmit, register } = methods;
   return (
     <FormProvider {...methods}>
-      <Stack>
-        <Select
-          name="type"
-          label="Contact Type"
-          placeholder="- Contact Type -"
-          w="100%"
-          options={contactTypes}
-        />
-        <InputField
-          name="first_name"
-          label="First Name"
-          placeholder="First Name"
-          width="100%"
-        />
-        <InputField
-          name="last_name"
-          label="Last Name"
-          placeholder="Last Name"
-          width="100%"
-        />
-        <InputField
-          name="title"
-          label="Title"
-          placeholder="Title"
-          width="100%"
-        />
-        <Flex width="100%" align="center" gap="24px" justify="space-between">
-          <InputField
-            name="email"
-            label="Email"
-            type="email"
-            placeholder="Email"
-            width="100%"
+      <Stack spacing="24px">
+        <RowForm label="Contact Type">
+          <Select
+            name="type"
+            placeholder="- Contact Type -"
+            w="75%"
+            options={contactTypes}
           />
-          <Checkbox {...register("publish")} mt="21px">
-            Publish
-          </Checkbox>
-        </Flex>
-
-        <InputField
-          name="phone_number"
-          label="Phone"
-          placeholder="Phone"
-          width="100%"
-        />
-        <InputField name="ext" label="Ext" placeholder="Ext" width="100%" />
-        <Checkbox
-          {...register("main_contact")}
-          disabled={type === "update" && data.main_contact === true}
-          mt="21px"
-        >
-          Main Contact
-        </Checkbox>
-        <InputLabel>Job Functions</InputLabel>
-        <Flex gap={"12px"}>
-          <Stack w="50%" spacing="12px">
-            {firstListJobFunctions.map((item) => {
-              return (
-                <Checkbox
-                  key={item.value}
-                  name={item.value}
-                  {...register(item.value)}
-                >
-                  {item.label}
-                </Checkbox>
-              );
-            })}
-          </Stack>
-          <Stack w="50%" spacing="12px">
-            {secondListJobFunctions.map((item) => {
-              return (
-                <Checkbox
-                  key={item.value}
-                  name={item.value}
-                  {...register(item.value)}
-                >
-                  {item.label}
-                </Checkbox>
-              );
-            })}
-          </Stack>
-        </Flex>
-
-        <Flex gap="12px" w="100%" borderTop={"1px solid #E5E5E5"} pt="12px">
-          <Button size="sm" variant="outline" ml="auto" onClick={close}>
-            Cancel
-          </Button>
-          <Button
-            size="sm"
-            onClick={handleSubmit(async (data) => {
-              const {
-                previous_main_contact,
-                previous_main_contact_date_left,
-                ...rest
-              } = data;
-              type === "add"
-                ? await addContact(rest, {
-                    onSuccess: async () => {
-                      await queryClient.invalidateQueries(
-                        ServerStateCompanyContactsEnum.CompanyContacts,
-                      );
-                    },
-                    onSettled: () => {
-                      close();
-                    },
-                  })
-                : await updateContact(rest, {
-                    onSuccess: async () => {
-                      await queryClient.invalidateQueries(
-                        ServerStateCompanyContactsEnum.CompanyContacts,
-                      );
-                    },
-                    onSettled: () => {
-                      close();
-                    },
-                  });
-            })}
-          >
-            Submit
-          </Button>
-        </Flex>
+        </RowForm>
+        <RowForm label="First Name">
+          <InputField
+            required
+            name="first_name"
+            placeholder="First Name"
+            width="75%"
+          />
+        </RowForm>
+        <RowForm label="Last Name">
+          <InputField
+            required
+            name="last_name"
+            placeholder="Last Name"
+            width="75%"
+          />
+        </RowForm>
+        <RowForm label="Title">
+          <InputField name="title" placeholder="Title" width="75%" />
+        </RowForm>
+        <RowForm label="Email">
+          <Flex width="40%" ml="-5%">
+            <InputField
+              name="email"
+              type="email"
+              placeholder="Email"
+              width="95%"
+            />
+            <Checkbox {...register("publish")}>Publish</Checkbox>
+          </Flex>
+        </RowForm>
+        <RowForm label="Phone">
+          <Flex width="40%" ml="-5%">
+            <InputField name="phone_number" placeholder="Phone" width="90%" />
+            <Flex align="center" gap="12px">
+              <InputLabel>Ext</InputLabel>
+              <InputField name="ext" placeholder="Ext" width="100%" />
+            </Flex>
+          </Flex>
+        </RowForm>
+        <RowForm label="Job Functions">
+          <Flex gap={"12px"} w="75%" ml="-5%">
+            <Stack w="75%" spacing="12px">
+              {firstListJobFunctions.map((item) => {
+                return (
+                  <Checkbox
+                    key={item.value}
+                    name={item.value}
+                    {...register(item.value)}
+                  >
+                    {item.label}
+                  </Checkbox>
+                );
+              })}
+            </Stack>
+            <Stack w="75%" spacing="12px">
+              {secondListJobFunctions.map((item) => {
+                return (
+                  <Checkbox
+                    key={item.value}
+                    name={item.value}
+                    {...register(item.value)}
+                  >
+                    {item.label}
+                  </Checkbox>
+                );
+              })}
+            </Stack>
+          </Flex>
+        </RowForm>
       </Stack>
     </FormProvider>
   );
 };
 
 export default ContactForm;
+//  <Checkbox
+//    {...register("main_contact")}
+//    disabled={type === "update" && data?.main_contact === true}
+//    mt="21px"
+//  >
+//    Main Contact
+//  </Checkbox>;
+// <Button
+//   size="sm"
+//   onClick={handleSubmit(async (data) => {
+//     const {
+//       previous_main_contact,
+//       previous_main_contact_date_left,
+//       ...rest
+//     } = data;
+//     type === "add" ? await addContact(rest) : await updateContact(rest);
+//   })}
+// >
+//   Submit
+// </Button>;
