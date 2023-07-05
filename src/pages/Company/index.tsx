@@ -10,7 +10,7 @@ import FirstSectionCompany from "./firstSectionCompany";
 
 const Company = () => {
   return (
-    <Box p={{ base: "85px 0 0 0", md: "176px 190px 50px 50px" }}>
+    <Box p={{ base: "85px 0 0 0", md: "20px 190px 50px 50px" }}>
       <FirstSectionCompany />
       <DashboardCard icon={EmailIcon} title="Contacts">
         <Flex

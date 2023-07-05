@@ -11,6 +11,8 @@ import {
   useUpdateContact,
 } from "../../../hooks/api/company/contacts";
 import { useQueryClient } from "react-query";
+import AlertContext from "../../../store/context/alertContext";
+import { useContext } from "react";
 interface Props {
   contact: Contact | undefined;
 }
@@ -20,12 +22,13 @@ const PreviousTrackingForm = ({ contact }: Props) => {
   const methods = useForm({
     resolver: yupResolver(previousTrackingSchema),
     values: {
-      contactName: `${contact?.first_name || ''} ${contact?.last_name || ''}`,
+      contactName: `${contact?.first_name || ""} ${contact?.last_name || ""}`,
       date: contact?.previous_main_contact_date_left,
       notes: contact?.notes,
     },
   });
   const { handleSubmit } = methods;
+  const alertContext = useContext(AlertContext);
   return (
     <FormProvider {...methods}>
       <Stack spacing="24px">
@@ -64,6 +67,16 @@ const PreviousTrackingForm = ({ contact }: Props) => {
                   queryClient.invalidateQueries(
                     ServerStateCompanyContactsEnum.CompanyContacts,
                   );
+                  alertContext.show({
+                    status: "success",
+                  });
+                },
+                onError: (error) => {
+                  alertContext.show({
+                    status: "error",
+                    message: error.message,
+                    // handleRetry:()=>,
+                  });
                 },
               },
             );

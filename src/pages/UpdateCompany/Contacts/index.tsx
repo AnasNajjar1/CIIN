@@ -1,11 +1,11 @@
-import Table, { Column } from "../../../components/Shared/Table";
-import { Flex, Icon, IconButton, VStack } from "@chakra-ui/react";
+import { useMemo, useState } from "react";
+import { useContext } from "react";
+import Table from "../../../components/Shared/Table";
+import { Box, Flex, Icon, IconButton, VStack } from "@chakra-ui/react";
 import Accordion from "../../../components/Shared/Accodion";
 import CardIcon from "../../../components/Shared/CardIcon";
-import { AddCircle, EditPencil, Trash, User } from "iconoir-react";
+import { AddCircle, EditPencil, MinusCircle, Trash, User } from "iconoir-react";
 import Button from "../../../components/Shared/Button";
-import GlobalModal from "../../../components/Shared/GlobalModal";
-import { useMemo, useState } from "react";
 import ContactForm from "./contactForm";
 import {
   ServerStateCompanyContactsEnum,
@@ -14,13 +14,8 @@ import {
 } from "../../../hooks/api/company/contacts";
 import { Contact } from "../../../services/apiTypes/types";
 import { useQueryClient } from "react-query";
+import AlertContext from "../../../store/context/alertContext";
 
-interface HeaderModalProps {
-  type: "update" | "add";
-}
-const HeaderModal = ({ type }: HeaderModalProps) => {
-  return <p>{type === "update" ? "Update Contact" : "Add Contact"}</p>;
-};
 const initialContact = {
   phone_number: "",
   ext: 0,
@@ -38,151 +33,167 @@ const initialContact = {
   previous_main_contact: false,
   previous_main_contact_date_left: null,
 } as Contact;
+const UpdateContactForm = (row: Contact, close: () => void) => (
+  <ContactForm data={row} close={close} type="update" />
+);
+
 const Contacts = () => {
-  const [openModal, setOpenModal] = useState(false);
-  const [modalType, setModalType] = useState<"update" | "add">("add");
   const { data: contacts } = useGetContacts();
-  const { mutate: deleteContact } = useDeleteContact();
-  const [selectedContact, setSelectedContact] =
-    useState<Contact>(initialContact);
-    const queryClient = useQueryClient();
-  const columns = useMemo(
-    () => [
-      {
-        label: "Name",
-        key: "first_name",
-        width: "22%",
-        Cell: ({ row }: { row: Contact }) => {
-          return (
-            <Flex align="center" gap="12px">
-              <CardIcon icon={User} />
-              <span>
-                {row.first_name} {row.last_name}
-              </span>
-            </Flex>
-          );
-        },
+  const [showAddContact, setShowAddContact] = useState(false);
+  const queryClient = useQueryClient();
+  const alertContext = useContext(AlertContext);
+  const { mutate: deleteContact } = useDeleteContact({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(
+        ServerStateCompanyContactsEnum.CompanyContacts,
+      );
+      alertContext.show({
+        status: "success",
+      });
+    },
+
+    onSettled: (_, error, variables) => {
+      if (error) {
+        alertContext.show({
+          status: "error",
+          message: error.message,
+          handleRetry: () => deleteContact(variables),
+        });
+      }
+    },
+  });
+
+  const columns = useMemo(() => [
+    {
+      label: "Name",
+      key: "first_name",
+      width: "22%",
+      Cell: ({ row }: { row: Contact }) => {
+        return (
+          <Flex align="center" gap="12px">
+            <CardIcon icon={User} />
+            <span>
+              {row.first_name} {row.last_name}
+            </span>
+          </Flex>
+        );
       },
-      {
-        label: "Title",
-        key: "title",
-        width: "22%",
+    },
+    {
+      label: "Title",
+      key: "title",
+      width: "22%",
+    },
+    {
+      label: "Job Function",
+      key: "title",
+      Cell: ({ row }: { row: Contact }) => {
+        return <p>{row.title}</p>;
       },
-      {
-        label: "Job Function",
-        key: "title",
-        Cell: ({ row }: { row: Contact }) => {
-          return <p>{row.title}</p>;
-        },
-        width: "15%",
+      width: "15%",
+    },
+    {
+      label: "Email",
+      key: "email",
+      width: "17%",
+    },
+    {
+      label: "Phone",
+      key: "phone_number",
+      width: "13%",
+    },
+    {
+      label: " ",
+      key: "action",
+      width: "11%",
+      Cell: ({ row, setOpen }: { row: Contact }) => {
+        return (
+          <Flex align="center" justify="center" gap="16px">
+            <IconButton
+              bg="white"
+              color="gray.200"
+              _hover={{ bg: "white" }}
+              minWidth="20px"
+              height="20px"
+              fontSize="20px"
+              onClick={() => {
+                setOpen((open) => ({ ...open, [row.id]: !open[row.id] }));
+              }}
+            >
+              <Icon as={EditPencil} strokeWidth="3" />
+            </IconButton>
+            <IconButton
+              bg="white"
+              color="gray.200"
+              _hover={{ bg: "white" }}
+              minWidth="20px"
+              height="20px"
+              fontSize="20px"
+              onClick={() => {
+                deleteContact(row.id);
+              }}
+            >
+              <Icon strokeWidth="3" as={Trash} />
+            </IconButton>
+          </Flex>
+        );
       },
-      {
-        label: "Email",
-        key: "email",
-        width: "17%",
-      },
-      {
-        label: "Phone",
-        key: "phone_number",
-        width: "13%",
-      },
-      {
-        label: " ",
-        key: "action",
-        width: "11%",
-        Cell: ({ row }: { row: Contact }) => {
-          return (
-            <Flex align="center" justify="center" gap="16px">
-              <IconButton
-                bg="white"
-                color="gray.200"
-                _hover={{ bg: "white" }}
-                minWidth="20px"
-                height="20px"
-                fontSize="20px"
-                onClick={() => {
-                  setModalType("update");
-                  setSelectedContact(row);
-                  setOpenModal(true);
-                }}
-              >
-                <Icon as={EditPencil} strokeWidth="3" />
-              </IconButton>
-              <IconButton
-                bg="white"
-                color="gray.200"
-                _hover={{ bg: "white" }}
-                minWidth="20px"
-                height="20px"
-                fontSize="20px"
-                onClick={() => {
-                  deleteContact(row.id, {
-                    onSuccess: () => {
-                      queryClient.invalidateQueries(
-                        ServerStateCompanyContactsEnum.CompanyContacts,
-                      );
-                    },
-                  });
-                }}
-              >
-                <Icon strokeWidth="3" as={Trash} />
-              </IconButton>
-            </Flex>
-          );
-        },
-      },
-    ],
-    [setModalType, setOpenModal, setSelectedContact, deleteContact],
-  );
+    },
+  ]);
   return (
     <>
-      <GlobalModal
-        isOpen={openModal}
-        onClose={() => setOpenModal(false)}
-        modalHeader={<HeaderModal type={modalType} />}
-      >
-        <ContactForm
-          type={modalType}
-          close={() => setOpenModal(false)}
-          data={selectedContact}
-        />
-      </GlobalModal>
       <VStack spacing="26px" w="100%">
         <Button
           variant={"outline"}
           size="sm"
-          rightIcon={<Icon mt="3px" as={AddCircle} />}
+          rightIcon={
+            <Icon mt="3px" as={showAddContact ? MinusCircle : AddCircle} />
+          }
           onClick={() => {
-            setModalType("add");
-            setSelectedContact(initialContact);
-            setOpenModal(true);
+            setShowAddContact((showAddContact) => !showAddContact);
           }}
         >
           Add a Contact
         </Button>
-
+        {showAddContact && (
+          <Box w="100%" mx="auto">
+            <ContactForm
+              data={initialContact}
+              close={() => setShowAddContact(false)}
+              type={"add"}
+            />
+          </Box>
+        )}
         <Accordion title="Primary">
           <Table
             columns={columns}
             data={contacts?.filter((item) => item.type === "P") || []}
+            enableExpanding
+            renderDetailPanel={UpdateContactForm}
           />
         </Accordion>
         <Accordion title="Secondary">
           <Table
             columns={columns}
             data={contacts?.filter((item) => item.type === "S") || []}
+            enableExpanding
+            renderDetailPanel={UpdateContactForm}
           />
         </Accordion>
         <Accordion title="Board member">
           <Table
             columns={columns}
             data={contacts?.filter((item) => item.type === "B") || []}
+            enableExpanding
+            renderDetailPanel={UpdateContactForm}
           />
         </Accordion>
         <Accordion title="Consultant">
           <Table
             columns={columns}
             data={contacts?.filter((item) => item.type === "C") || []}
+            enableExpanding
+            renderDetailPanel={UpdateContactForm}
           />
         </Accordion>
       </VStack>

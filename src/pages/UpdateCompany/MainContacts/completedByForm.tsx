@@ -19,26 +19,67 @@ interface Props {
 }
 const CompletedByForm = ({ contact }: Props) => {
   const [showAnotherEmail, setShowAnotherEmail] = useState(false);
-  const { mutate: updateContact } = useUpdateContact();
-  const { mutate: addContact } = useAddContact();
+  const queryClient = useQueryClient();
+  const alertContext = useContext(AlertContext);
+  const { mutate: updateContact } = useUpdateContact({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(
+        ServerStateCompanyContactsEnum.CompanyContacts,
+      );
+      alertContext.show({
+        status: "success",
+      });
+    },
+
+    onSettled: (_, error, variables) => {
+      if (error) {
+        alertContext.show({
+          status: "error",
+          message: error.message,
+          handleRetry: () => updateContact(variables),
+        });
+      }
+    },
+  });
+  const { mutate: addContact } = useAddContact({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(
+        ServerStateCompanyContactsEnum.CompanyContacts,
+      );
+      alertContext.show({
+        status: "success",
+      });
+    },
+
+    onSettled: (_, error, variables) => {
+      if (error) {
+        alertContext.show({
+          status: "error",
+          message: error.message,
+          handleRetry: () => addContact(variables),
+        });
+      }
+    },
+  });
   const methods = useForm({
     values: contact,
     resolver: yupResolver(contactSchema),
   });
   const { handleSubmit } = methods;
-  const queryClient = useQueryClient();
-  const alertContext = useContext(AlertContext);
+
   return (
     <FormProvider {...methods}>
       <Stack spacing="24px">
         <InputField
           name="first_name"
+          required
           label="First Name"
           placeholder="First Name"
           w="100%"
         />
         <InputField
           name="last_name"
+          required
           label="Last Name"
           placeholder="Last Name"
           w="100%"
@@ -111,6 +152,7 @@ const CompletedByForm = ({ contact }: Props) => {
           <InputField
             name="ext"
             label="Ext"
+            type="number"
             placeholder="123"
             width="44%"
             flex="1"
@@ -130,36 +172,13 @@ const CompletedByForm = ({ contact }: Props) => {
         variant={"outline"}
         onClick={handleSubmit(async (data) => {
           contact
-            ? await updateContact(data, {
-                onSuccess: async () => {
-                  await queryClient.invalidateQueries(
-                    ServerStateCompanyContactsEnum.CompanyContacts,
-                  );
-                  alertContext.show({
-                    status: "success",
-                  });
-                },
-
-                onError: (error) => {
-                  console.log("error :>> ", error);
-                  alertContext.show({
-                    status: "error",
-                    message: error.message,
-                    // handleRetry:()=>,
-                  });
-                },
-              })
-            : await addContact(
-                { ...data, main_contact: true },
-                {
-                  onSuccess: async () => {
-                    await queryClient.invalidateQueries(
-                      ServerStateCompanyContactsEnum.CompanyContacts,
-                    );
-                    alertContext.show({ status: "success" });
-                  },
-                },
-              );
+            ? await updateContact(data)
+            : await addContact({
+                ...data,
+                company:
+                  "http://localhost:8000/companies/d3f58dda-3a6e-400e-88d0-e53072eaee65/",
+                main_contact: true,
+              });
         })}
       >
         Save changes

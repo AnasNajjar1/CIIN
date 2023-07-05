@@ -4,18 +4,26 @@ import { useFormContext } from "react-hook-form";
 import InputLabel from "../Shared/InputLabel";
 interface Props {
   label?: string;
+  required?: boolean;
   name: string;
   Input: React.ReactElement;
   helperText?: React.ReactNode;
 }
-const Field = ({ label, name, helperText, Input, ...rest }: Props) => {
+const Field = ({
+  label,
+  name,
+  helperText,
+  Input,
+  required = false,
+  ...rest
+}: Props) => {
   const {
     register,
     formState: { errors },
   } = useFormContext();
   return (
     <Flex direction="column" w="100%">
-      {label && <InputLabel>{label}</InputLabel>}
+      {label && <InputLabel required={required}>{label}</InputLabel>}
       <Input {...register(name)} {...rest} />
       {helperText && !errors[name] && (
         <Text
