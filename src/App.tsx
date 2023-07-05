@@ -1,7 +1,15 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
-import { Dashboard, Home, UserProfile, Contacts, Faq, Publications, Company } from "./pages";
+import {
+  Dashboard,
+  Home,
+  UserProfile,
+  Contacts,
+  Faq,
+  Publications,
+  Company,
+} from "./pages";
 import { AxiosInterceptor } from "./services/request.ts";
 import { ROUTES } from "./utils/constants.ts";
 import { AuthUserProvider } from "./store/context/authContext.tsx";
@@ -20,14 +28,17 @@ function App() {
                 path={`/${ROUTES.USER}`}
                 element={<AuthentificationGuard />}
               >
+                <Route path={`${ROUTES.FAQ}`} element={<Faq />} />
+                <Route path={`${ROUTES.CONTACTS}`} element={<Contacts />} />
+                <Route
+                  path={`${ROUTES.PUBLICATIONS}`}
+                  element={<Publications />}
+                />
                 <Route path={`${ROUTES.DASHBOARD}`} element={<Dashboard />} />
                 <Route
                   path={`${ROUTES.USERPROFILE}`}
                   element={<UserProfile />}
                 />
-                <Route path={`${ROUTES.FAQ}`} element={<Faq />} />
-                <Route path={`${ROUTES.CONTACTS}`} element={<Contacts />} />
-                <Route path={`${ROUTES.PUBLICATIONS}`} element={<Publications />} />
                 <Route path={`${ROUTES.COMPANY}`} element={<Company />} />
                 <Route
                   path={`${ROUTES.UPDATECOMPANY}`}

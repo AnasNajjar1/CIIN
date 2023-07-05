@@ -41,8 +41,8 @@ const Login = ({ switchSignUp, closeModal }: LoginProps) => {
         <InputField
           leftIcon={User}
           name="username"
-          label="Username"
-          placeholder="Username"
+          label="Email"
+          placeholder="Email"
         />
       </Box>
       <Box mb={6}>

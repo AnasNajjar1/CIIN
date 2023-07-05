@@ -41,7 +41,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
         }
       >
         <Box pb={6}>
-          <Text sx={textSubHeadingStyle}>
+          <Text sx={textSubHeadingStyle} textAlign={"center"}>
             {view === "signup" && "Sign Up for a demonstration"}
             {view === "login" && "Please login to have access to all features"}
           </Text>
@@ -51,7 +51,10 @@ const AuthModal: React.FC<AuthModalProps> = ({
             <SignUp switchLogin={() => switchView("login")} />
           )}
           {view === "login" && (
-            <Login switchSignUp={() => switchView("signup")} closeModal={onClose}/>
+            <Login
+              switchSignUp={() => switchView("signup")}
+              closeModal={onClose}
+            />
           )}
         </Flex>
       </GlobalModal>
