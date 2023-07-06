@@ -24,25 +24,28 @@ import EditIcon from "../../assets/edit-blue.svg";
 import BenefitsIcon from "../../assets/benefits_icon.svg";
 import AdvantagesIcon from "../../assets/advantages_icon.svg";
 import CirIcon from "../../assets/cir_icon.svg";
-import FundsReport2020 from "../../assets/funds_report_2020.svg";
+import CiinOverview2020 from "../../assets/ciin_overview_2020.svg";
+import CiinOverview2021 from "../../assets/ciin_overview_2021.svg";
+import FundsReport2021 from "../../assets/funds_report_2021.svg";
 import FundsReport2022 from "../../assets/funds_report_2022.svg";
-import MoneyManagersReport2019 from "../../assets/money_managers_report_2019.svg";
+import CapSuppliersReport2020 from "../../assets/cap_suppliers_report_2020.svg";
+import CapSuppliersReport2021 from "../../assets/cap_suppliers_report_2021.svg";
 import MoneyManagersReport2020 from "../../assets/money_managers_report_2020.svg";
 import MoneyManagersReport2021 from "../../assets/money_managers_report_2021.svg";
 import MoneyManagersReport2022 from "../../assets/money_managers_report_2022.svg";
-import CiinOverview2020 from "../../assets/ciin_overview_2020.svg";
-import CiinOverview2021 from "../../assets/ciin_overview_2021.svg";
-import CapSuppliersReport2019 from "../../assets/cap_suppliers_report_2019.svg";
-import CapSuppliersReport2020 from "../../assets/cap_suppliers_report_2020.svg";
-import CapSuppliersReport2021 from "../../assets/cap_suppliers_report_2021.svg";
 import PlansReport2020 from "../../assets/plans_report_2020.svg";
+import PlansReport2021 from "../../assets/plans_report_2021.svg";
+import MoneyManagersReportBenfits2021 from "../../assets/money_managers_report_2021_benefits.svg";
 import { ArrowLeft, ArrowRight } from "iconoir-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuthUser } from "../../store/context/authContext";
 import Publication from "../../components/Publication";
 import { ROUTES } from "../../utils/constants";
 
 const Publications = () => {
   const navigate = useNavigate();
+  const { authUser } = useAuthUser();
+  const location = useLocation();
 
   return (
     <>
@@ -51,7 +54,7 @@ const Publications = () => {
           <Box>
             <Text sx={titleTextStyle}>Publications</Text>
           </Box>
-          <Box pt={8}>
+          <Box pt={8} display={location.pathname !== "/publications" ? "block" : "none"}>
             <Button
               variant="outlineSolid"
               size="md"
@@ -134,97 +137,109 @@ const Publications = () => {
               <GridItem>
                 <Publication
                   image={FundsReport2022}
-                  imageAlternative="funds report 2022"
                   title="2022 Top-100 Pension Funds Report"
                   subTitle="Benefits Canada"
+                  pdfFileName="funds_report_2022"
+                  connectedUser={authUser?.isConnected}
                 />
               </GridItem>
               <GridItem>
                 <Publication
                   image={MoneyManagersReport2022}
-                  imageAlternative="money managers report 2022"
                   title="2022 Spring Top-40 Money Managers Report"
                   subTitle="Benefits Canada"
+                  pdfFileName="money_managers_report_2022"
+                  connectedUser={authUser?.isConnected}
                 />
               </GridItem>
               <GridItem>
                 <Publication
                   image={CiinOverview2021}
-                  imageAlternative="ciin overview 2021"
                   title="2021 CIIN Overview"
                   subTitle="CIIN"
+                  pdfFileName="ciin_overview_2021"
+                  connectedUser={authUser?.isConnected}
                 />
               </GridItem>
               <GridItem>
                 <Publication
                   image={CapSuppliersReport2021}
-                  imageAlternative="cap suppliers report 2021"
                   title="2021 CAP Suppliers Report"
                   subTitle="Benefits Canada"
-                />
-              </GridItem>
-              <GridItem>
-                <Publication
-                  image={CiinOverview2020}
-                  imageAlternative="ciin overview 2020"
-                  title="2020 CIIN Overview"
-                  subTitle="CIIN"
-                />
-              </GridItem>
-              <GridItem>
-                <Publication
-                  image={CapSuppliersReport2020}
-                  imageAlternative="cap suppliers report 2020"
-                  title="2020 CAP Suppliers Report"
-                  subTitle="Benefits Canada"
+                  pdfFileName="cap_suppliers_report_2021"
+                  connectedUser={authUser?.isConnected}
                 />
               </GridItem>
               <GridItem>
                 <Publication
                   image={MoneyManagersReport2021}
-                  imageAlternative="money managers report 2021"
                   title="2021 Fall Top-40 Money Managers Report"
                   subTitle="CIIN"
+                  pdfFileName="money_managers_report_2021"
+                  connectedUser={authUser?.isConnected}
                 />
               </GridItem>
               <GridItem>
                 <Publication
-                  image={PlansReport2020}
-                  imageAlternative="plans report 2020"
-                  title="2020 Top-50 DC Plans Report"
+                  image={PlansReport2021}
+                  title="2021 Top-50 DC Plans Report"
                   subTitle="Benefits Canada"
+                  pdfFileName="plans_report_2021"
+                  connectedUser={authUser?.isConnected}
                 />
               </GridItem>
               <GridItem>
                 <Publication
-                  image={FundsReport2020}
-                  imageAlternative="funds report 2020"
-                  title="2020 Top-100 PensionFunds Report"
+                  image={FundsReport2021}
+                  title="2021 Top-100 Pension Funds Report"
                   subTitle="CIIN"
+                  pdfFileName="funds_report_2021"
+                  connectedUser={authUser?.isConnected}
+                />
+              </GridItem>
+              <GridItem>
+                <Publication
+                  image={MoneyManagersReportBenfits2021}
+                  title="2021 Fall Top-40 Money Managers Report"
+                  subTitle="Benefits Canada"
+                  pdfFileName="money_managers_report_2021_benefits"
+                  connectedUser={authUser?.isConnected}
+                />
+              </GridItem>
+              <GridItem>
+                <Publication
+                  image={CiinOverview2020}
+                  title="2020 CIIN Overview"
+                  subTitle="CIIN"
+                  pdfFileName="ciin_overview_2020"
+                  connectedUser={authUser?.isConnected}
+                />
+              </GridItem>
+              <GridItem>
+                <Publication
+                  image={CapSuppliersReport2020}
+                  title="2020 CAP Suppliers Report"
+                  subTitle="Benefits Canada"
+                  pdfFileName="cap_suppliers_report_2020"
+                  connectedUser={authUser?.isConnected}
                 />
               </GridItem>
               <GridItem>
                 <Publication
                   image={MoneyManagersReport2020}
-                  imageAlternative="money managers report 2020"
-                  title="2020 Spring Top-40 Money Managers Report"
+                  title="2020 Fall Top-40 Money Managers Report"
                   subTitle="Benefits Canada"
+                  pdfFileName="money_managers_report_2020"
+                  connectedUser={authUser?.isConnected}
                 />
               </GridItem>
               <GridItem>
                 <Publication
-                  image={CapSuppliersReport2019}
-                  imageAlternative="cap suppliers report report 2019"
-                  title="2019 CAP Suppliers Report"
-                  subTitle="CIIN"
-                />
-              </GridItem>
-              <GridItem>
-                <Publication
-                  image={MoneyManagersReport2019}
-                  imageAlternative="money managers report 2019"
-                  title="2019 Fall Top-40 Money Managers Report"
+                  image={PlansReport2020}
+                  title="2020 Top-50 DC Plans Report"
                   subTitle="Benefits Canada"
+                  pdfFileName="plans_report_2020"
+                  connectedUser={authUser?.isConnected}
                 />
               </GridItem>
             </Grid>

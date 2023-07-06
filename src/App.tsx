@@ -1,7 +1,16 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
-import { Dashboard, Home, UserProfile, Contacts, Faq, Publications, Company, EditPublications } from "./pages";
+import {
+  Dashboard,
+  Home,
+  UserProfile,
+  Contacts,
+  Faq,
+  Publications,
+  Company,
+  EditPublications,
+} from "./pages";
 import { AxiosInterceptor } from "./services/request.ts";
 import { ROUTES } from "./utils/constants.ts";
 import { AuthUserProvider } from "./store/context/authContext.tsx";
@@ -17,6 +26,10 @@ function App() {
             <Route element={<Layout />}>
               <Route path="/" element={<Home />} />
               <Route
+                path={`${ROUTES.PUBLICATIONS}`}
+                element={<Publications />}
+              />
+              <Route
                 path={`/${ROUTES.USER}`}
                 element={<AuthentificationGuard />}
               >
@@ -26,7 +39,10 @@ function App() {
                   path={`${ROUTES.PUBLICATIONS}`}
                   element={<Publications />}
                 />
-                <Route path={`${ROUTES.EDITPUBLICATIONS}`} element={<EditPublications />} />
+                <Route
+                  path={`${ROUTES.EDITPUBLICATIONS}`}
+                  element={<EditPublications />}
+                />
                 <Route path={`${ROUTES.DASHBOARD}`} element={<Dashboard />} />
                 <Route
                   path={`${ROUTES.USERPROFILE}`}

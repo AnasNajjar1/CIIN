@@ -31,7 +31,6 @@ import Button from "../../components/Shared/Button";
 
 type EditPublicationProps = {
   posterImage: any;
-  posterImageAlternative: string;
   posterTitle: string;
   posterSubTitle: string;
   pdfFileName: string;
@@ -40,7 +39,6 @@ type EditPublicationProps = {
 
 const EditPublicationCard = ({
   posterImage,
-  posterImageAlternative,
   posterTitle,
   posterSubTitle,
   pdfFileName,
@@ -57,11 +55,7 @@ const EditPublicationCard = ({
               {/* Upper Side */}
               <Flex justify="space-between" width="100%">
                 <Flex width="70%">
-                  <Image
-                    sx={posterStyle}
-                    src={posterImage}
-                    alt={posterImageAlternative}
-                  />
+                  <Image sx={posterStyle} src={posterImage} />
                   <Flex direction="column" alignSelf="flex-start" pl={3}>
                     <Box>
                       <Text sx={posterTitleStyle}>{posterTitle}</Text>

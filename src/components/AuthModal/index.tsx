@@ -1,19 +1,24 @@
 import React from "react";
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Icon, Image, Text } from "@chakra-ui/react";
 import Person from "../../assets/menuIcons/person.svg";
 import SignUp from "../SignUp";
 import Login from "../Login";
 import {
+  alertIconStyle,
+  alertMessageContainerStyle,
+  alertMessageTextStyle,
   imageContainerStyle,
   textHeadingStyle,
   textSubHeadingStyle,
 } from "./styles";
 import GlobalModal from "../Shared/GlobalModal";
+import { MessageAlert } from "iconoir-react";
 
 type AuthModalProps = {
   isOpen: boolean;
   onClose: () => void;
   view: string;
+  isPublication?: boolean;
   switchView: (viewType: string) => void;
 };
 
@@ -21,6 +26,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
   isOpen,
   onClose,
   view,
+  isPublication = false,
   switchView,
 }) => {
   return (
@@ -51,10 +57,24 @@ const AuthModal: React.FC<AuthModalProps> = ({
             <SignUp switchLogin={() => switchView("login")} />
           )}
           {view === "login" && (
-            <Login
-              switchSignUp={() => switchView("signup")}
-              closeModal={onClose}
-            />
+            <>
+              {isPublication && (
+                <Box pb={4}>
+                  <Flex sx={alertMessageContainerStyle}>
+                    <Box pt={2} pr={2}>
+                      <Icon as={MessageAlert} sx={alertIconStyle} />
+                    </Box>
+                    <Text sx={alertMessageTextStyle}>
+                      To continue, please log in.
+                    </Text>
+                  </Flex>
+                </Box>
+              )}
+              <Login
+                switchSignUp={() => switchView("signup")}
+                closeModal={onClose}
+              />
+            </>
           )}
         </Flex>
       </GlobalModal>
